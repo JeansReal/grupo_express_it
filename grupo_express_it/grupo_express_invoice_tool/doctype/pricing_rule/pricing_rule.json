@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "creation": "2021-01-13 18:04:25.770155",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "applicable_for_section",
+  "item",
+  "margin_section",
+  "margin_type",
+  "column_break_7",
+  "margin_rate_or_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "margin_section",
+   "fieldtype": "Section Break",
+   "label": "Margin"
+  },
+  {
+   "fieldname": "margin_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Margin Type",
+   "options": "\nPercentage\nAmount",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "margin_rate_or_amount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Margin Rate or Amount",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "applicable_for_section",
+   "fieldtype": "Section Break",
+   "label": "Applicable For"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1,
+   "search_index": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2021-01-19 15:04:51.357440",
+ "modified_by": "Administrator",
+ "module": "Grupo Express Invoice Tool",
+ "name": "Pricing Rule",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
