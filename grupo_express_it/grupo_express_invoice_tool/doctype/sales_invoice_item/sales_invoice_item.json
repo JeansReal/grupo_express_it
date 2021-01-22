@@ -51,8 +51,9 @@
   },
   {
    "fieldname": "qty",
-   "fieldtype": "Data",
-   "label": "Quantity"
+   "fieldtype": "Int",
+   "label": "Quantity",
+   "non_negative": 1
   },
   {
    "fieldname": "uom",
@@ -95,9 +96,10 @@
   },
   {
    "fieldname": "invoiced_amount",
-   "fieldtype": "Float",
+   "fieldtype": "Currency",
    "label": "Invoiced Amount",
-   "options": "currency"
+   "non_negative": 1,
+   "options": "USD"
   },
   {
    "fieldname": "margin_section",
@@ -121,19 +123,19 @@
    "read_only": 1
   },
   {
+   "default": "0.00",
    "fieldname": "amount",
-   "fieldtype": "Float",
+   "fieldtype": "Currency",
    "in_preview": 1,
    "label": "Amount",
    "non_negative": 1,
-   "options": "Currency",
-   "precision": "2"
+   "options": "USD"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-01-21 08:34:23.155833",
+ "modified": "2021-01-22 10:19:46.177416",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice Item",

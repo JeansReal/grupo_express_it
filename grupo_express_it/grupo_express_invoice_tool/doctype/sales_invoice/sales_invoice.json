@@ -13,6 +13,8 @@
   "posting_time",
   "section_break_6",
   "items",
+  "section_break_8",
+  "total",
   "in_words"
  ],
  "fields": [
@@ -70,15 +72,30 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "total",
    "fieldname": "in_words",
    "fieldtype": "Data",
    "label": "In Words",
    "read_only": 1
+  },
+  {
+   "bold": 1,
+   "default": "0.00",
+   "depends_on": "items",
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "options": "USD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-21 09:18:40.318326",
+ "modified": "2021-01-22 10:18:02.398114",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice",
