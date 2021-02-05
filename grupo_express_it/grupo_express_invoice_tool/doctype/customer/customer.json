@@ -10,6 +10,9 @@
  "field_order": [
   "full_name",
   "mobile_no",
+  "column_break_3",
+  "aliases",
+  "section_break_5",
   "pricing_rules"
  ],
  "fields": [
@@ -39,9 +42,24 @@
    "label": "Pricing Rule",
    "options": "Pricing Rule",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Ingrese la lista de opciones, cada una en una nueva l\u00ednea.",
+   "fieldname": "aliases",
+   "fieldtype": "Small Text",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
+   "label": "Alias"
   }
  ],
- "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [
   {
@@ -49,7 +67,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2021-01-22 14:28:17.907486",
+ "modified": "2021-01-27 08:05:22.404563",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Customer",
@@ -68,7 +86,7 @@
    "write": 1
   }
  ],
- "search_fields": "full_name,mobile_no",
+ "search_fields": "full_name,aliases,mobile_no",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

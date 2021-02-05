@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "item",
+  "item_type",
   "column_break_2",
   "invoice_no",
   "section_break_2",
@@ -24,6 +25,7 @@
   "margin_type",
   "column_break_18",
   "margin_rate_or_amount",
+  "valuation_rate",
   "column_break_16",
   "amount"
  ],
@@ -69,7 +71,8 @@
    "fieldname": "uom",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Type"
+   "label": "Type",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_7",
@@ -145,7 +148,8 @@
    "in_preview": 1,
    "label": "Total",
    "non_negative": 1,
-   "options": "USD"
+   "options": "USD",
+   "read_only_depends_on": "eval: doc.item_type != 'Complemento';\n"
   },
   {
    "fieldname": "column_break_2",
@@ -162,11 +166,23 @@
   {
    "fieldname": "column_break_18",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "valuation_rate",
+   "fieldtype": "Currency",
+   "label": "Valuation Rate",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.type",
+   "fieldname": "item_type",
+   "fieldtype": "Data",
+   "label": "Item Type"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-01-22 14:45:10.507137",
+ "modified": "2021-01-29 16:18:12.747877",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice Item",

@@ -6,10 +6,13 @@ frappe.ui.form.on('Customer', {
         frm.set_query('item', 'pricing_rules', (doc) => {
             return {
                 filters: {
-                    item_name: ['not in', doc.pricing_rules.map(p => p.item)] // Only shows no added items
+                    item_name: ['not in', doc.pricing_rules.map(p => p.item)], // Only shows no added items
+                    type: ['not in', ['Complemento']]
                 }
             };
         });
+
+        frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
     }
 });
 

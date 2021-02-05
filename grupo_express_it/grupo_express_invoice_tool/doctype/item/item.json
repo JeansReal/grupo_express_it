@@ -9,7 +9,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item_name"
+  "item_name",
+  "type"
  ],
  "fields": [
   {
@@ -22,21 +23,24 @@
    "label": "Item Name",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Regular",
+   "description": "Tipo Regular son productos espec\u00edficos.\nTipo Contenedor se refiere a un Contenedor.\nTipo Complemento son costos extras a un Contenedor.",
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Type",
+   "options": "Regular\nContenedor\nComplemento",
+   "reqd": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
- "links": [
-  {
-   "link_doctype": "Customer",
-   "link_fieldname": "item"
-  },
-  {
-   "link_doctype": "Sales Invoice",
-   "link_fieldname": "item"
-  }
- ],
- "modified": "2021-01-20 19:02:28.510757",
+ "links": [],
+ "modified": "2021-01-29 08:25:20.523889",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Item",
