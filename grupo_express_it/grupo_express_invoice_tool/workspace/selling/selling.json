@@ -1,18 +1,20 @@
 {
- "cards": [],
  "category": "Modules",
  "charts": [],
- "creation": "2021-01-21 16:54:12.461263",
+ "creation": "2021-04-07 09:08:54.888627",
  "developer_mode_only": 0,
- "disable_user_customization": 1,
+ "disable_user_customization": 0,
  "docstatus": 0,
- "doctype": "Desk Page",
+ "doctype": "Workspace",
  "extends_another_page": 0,
  "hide_custom": 0,
+ "icon": "sell",
  "idx": 0,
+ "is_default": 0,
  "is_standard": 1,
  "label": "Selling",
- "modified": "2021-01-21 17:00:47.572868",
+ "links": [],
+ "modified": "2021-04-07 09:11:40.943087",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Selling",
@@ -21,19 +23,22 @@
  "pin_to_top": 1,
  "shortcuts": [
   {
-   "doc_view": "",
+   "doc_view": "List",
+   "icon": "sell",
    "label": "Sales Invoice",
    "link_to": "Sales Invoice",
    "type": "DocType"
   },
   {
-   "doc_view": "",
+   "doc_view": "List",
+   "icon": "customer",
    "label": "Customer",
    "link_to": "Customer",
    "type": "DocType"
   },
   {
-   "doc_view": "",
+   "doc_view": "List",
+   "icon": "stock",
    "label": "Item",
    "link_to": "Item",
    "type": "DocType"

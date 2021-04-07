@@ -2,12 +2,14 @@
  "actions": [],
  "allow_copy": 1,
  "allow_import": 1,
- "autoname": "NI-.#####",
+ "allow_rename": 1,
+ "autoname": "field:full_name",
  "creation": "2021-01-13 11:37:35.819791",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "code",
   "full_name",
   "mobile_no",
   "column_break_3",
@@ -33,15 +35,15 @@
    "in_standard_filter": 1,
    "label": "Full Name",
    "options": "Name",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "allow_bulk_edit": 1,
    "fieldname": "pricing_rules",
    "fieldtype": "Table",
    "label": "Pricing Rule",
-   "options": "Pricing Rule",
-   "reqd": 1
+   "options": "Pricing Rule"
   },
   {
    "fieldname": "column_break_3",
@@ -56,10 +58,24 @@
    "fieldname": "aliases",
    "fieldtype": "Small Text",
    "in_global_search": 1,
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Alias"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "bold": 1,
+   "description": "Customer Code",
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Code",
+   "search_index": 1
   }
  ],
+ "icon": "customer",
  "index_web_pages_for_search": 1,
  "links": [
   {
@@ -67,7 +83,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2021-01-27 08:05:22.404563",
+ "modified": "2021-04-07 09:24:39.052757",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Customer",
@@ -86,7 +102,7 @@
    "write": 1
   }
  ],
- "search_fields": "full_name,aliases,mobile_no",
+ "search_fields": "code,full_name,aliases,mobile_no",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

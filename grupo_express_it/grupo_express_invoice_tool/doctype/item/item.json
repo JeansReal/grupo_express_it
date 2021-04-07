@@ -40,7 +40,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-29 08:25:20.523889",
+ "modified": "2021-04-07 09:38:07.211833",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Item",
@@ -60,7 +60,7 @@
   }
  ],
  "quick_entry": 1,
- "search_fields": "item_name",
+ "search_fields": "item_name,type",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

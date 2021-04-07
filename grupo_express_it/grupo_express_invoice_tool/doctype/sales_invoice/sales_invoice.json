@@ -113,10 +113,9 @@
    "fieldtype": "Section Break"
   }
  ],
- "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-22 15:56:38.916991",
+ "modified": "2021-04-07 10:32:41.538351",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice",

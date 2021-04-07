@@ -46,7 +46,7 @@ frappe.ui.form.on('Sales Invoice', {
                 frappe.throw(__('Please select the customer.') + ' ' + __('It is needed to fetch Item Details.'));
             }
 
-            if (cur_frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is a invoice for a container
+            if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is a invoice for a container
                 return {
                     filters: {type: 'Complemento'}
                 }
@@ -75,23 +75,24 @@ frappe.ui.form.on("Sales Invoice Item", {
 
         if (!item_row.item) return; // Exit if there is no item
 
-        frappe.db.get_value(
-            'Pricing Rule',
-            {'parent': frm.doc.customer, 'item': item_row.item},
-            ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate'],
-            (price_rule) => {
-                item_row.uom = price_rule.uom;
-                item_row.margin_type = price_rule.margin_type;
-                item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
-                item_row.valuation_rate = price_rule.valuation_rate;
-                frm.refresh_field('items'); // Refreshing the values in grid.
-
-                console.log("Querying for unnecesary data!");
-
-                calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
+        frappe.db.get_list('Pricing Rule', {
+            fields: ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate'],
+            filters: {
+                'parent': frm.doc.customer,
+                'item': item_row.item
             },
-            'Customer'
-        );
+            limit: 1
+        }).then(price_rule => {
+            price_rule = price_rule[0];  // Will only use the first
+
+            item_row.uom = price_rule.uom;
+            item_row.margin_type = price_rule.margin_type;
+            item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
+            item_row.valuation_rate = price_rule.valuation_rate;
+            frm.refresh_field('items'); // Refreshing the values in grid.
+
+            calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
+        });
     },
 
     invoiced_amount: function (frm, cdt, cdn) {
