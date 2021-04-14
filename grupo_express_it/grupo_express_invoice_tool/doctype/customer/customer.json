@@ -14,6 +14,8 @@
   "mobile_no",
   "column_break_3",
   "aliases",
+  "ruc",
+  "email",
   "section_break_5",
   "pricing_rules"
  ],
@@ -73,6 +75,17 @@
    "in_standard_filter": 1,
    "label": "Code",
    "search_index": 1
+  },
+  {
+   "fieldname": "ruc",
+   "fieldtype": "Data",
+   "label": "Cedula\\RUC"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
   }
  ],
  "icon": "customer",
@@ -83,7 +96,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2021-04-07 09:24:39.052757",
+ "modified": "2021-04-14 10:49:33.793452",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Customer",
