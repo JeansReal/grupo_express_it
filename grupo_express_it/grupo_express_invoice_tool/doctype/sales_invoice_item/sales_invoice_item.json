@@ -23,6 +23,7 @@
   "invoiced_amount",
   "margin_section",
   "margin_type",
+  "extra_costs",
   "column_break_18",
   "margin_rate_or_amount",
   "valuation_rate",
@@ -178,11 +179,18 @@
    "fieldname": "item_type",
    "fieldtype": "Data",
    "label": "Item Type"
+  },
+  {
+   "default": "0",
+   "fieldname": "extra_costs",
+   "fieldtype": "Check",
+   "label": "Mas Gastos",
+   "read_only": 1
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-01-29 16:18:12.747877",
+ "modified": "2021-04-14 08:02:26.736492",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice Item",

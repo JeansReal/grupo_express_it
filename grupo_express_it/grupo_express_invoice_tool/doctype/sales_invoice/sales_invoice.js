@@ -48,7 +48,7 @@ frappe.ui.form.on('Sales Invoice', {
 
             if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is a invoice for a container
                 return {
-                    filters: {type: 'Complemento'}
+                    filters: {type: 'Complemento'} // TODO: Add Extra Costs
                 }
             }
 
@@ -76,7 +76,7 @@ frappe.ui.form.on("Sales Invoice Item", {
         if (!item_row.item) return; // Exit if there is no item
 
         frappe.db.get_list('Pricing Rule', {
-            fields: ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate'],
+            fields: ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'],
             filters: {
                 'parent': frm.doc.customer,
                 'item': item_row.item
@@ -89,6 +89,7 @@ frappe.ui.form.on("Sales Invoice Item", {
             item_row.margin_type = price_rule.margin_type;
             item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
             item_row.valuation_rate = price_rule.valuation_rate;
+            item_row.extra_costs = price_rule.extra_costs;
             frm.refresh_field('items'); // Refreshing the values in grid.
 
             calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
