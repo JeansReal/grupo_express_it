@@ -73,8 +73,7 @@
    "in_global_search": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Code",
-   "unique": 1
+   "label": "Code"
   },
   {
    "fieldname": "ruc",
@@ -96,7 +95,7 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2021-04-14 21:46:08.093336",
+ "modified": "2021-04-17 07:34:32.019946",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Customer",
