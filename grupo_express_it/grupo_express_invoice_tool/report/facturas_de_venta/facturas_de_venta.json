@@ -14,15 +14,33 @@
    "width": 0
   },
   {
-   "fieldname": "date",
-   "fieldtype": "Date",
-   "label": "Date",
-   "width": 0
-  },
-  {
    "fieldname": "exp",
    "fieldtype": "Data",
    "label": "Expediente",
+   "width": 0
+  },
+  {
+   "fieldname": "policy_number",
+   "fieldtype": "Data",
+   "label": "Poliza",
+   "width": 0
+  },
+  {
+   "fieldname": "packages",
+   "fieldtype": "Int",
+   "label": "Bultos",
+   "width": 0
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "width": 0
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
    "width": 0
   }
  ],
@@ -38,12 +56,19 @@
    "label": "Expediente",
    "mandatory": 0,
    "wildcard_filter": 0
+  },
+  {
+   "fieldname": "policy_number",
+   "fieldtype": "Data",
+   "label": "Poliza",
+   "mandatory": 0,
+   "wildcard_filter": 0
   }
  ],
  "idx": 0,
  "is_standard": "Yes",
  "json": "{}",
- "modified": "2021-04-29 12:17:10.935684",
+ "modified": "2021-04-29 15:42:05.050648",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Facturas de Venta",
