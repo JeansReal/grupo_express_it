@@ -5,8 +5,6 @@ function calculate_invoice_total_and_words(frm) {
     // Set new 'total' and 'in_words' fields. // TODO: Delete the if (frm.doc.total) ?
     frm.doc.total = frm.get_sum('items', 'amount'); // Using built-in function: get_sum(). avoid frm.set_value()
 
-    // if (frm.doc.total)
-
     if (frm.doc.total) { // If the amount is valid and not zero.
         frappe.call({
             method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
@@ -28,8 +26,12 @@ function calculate_item_amount(frm, cdt, cdn, item_row = null) {
 
     if (item_row.margin_type === 'Sobre Factura' && item_row.invoiced_amount) {
         item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
-    } else if (item_row.margin_type === 'Cantidad Fija' && item_row.qty) {
-        item_row.amount = (item_row.qty * item_row.margin_rate_or_amount);
+    } else if (item_row.margin_type === 'Cantidad Fija') {
+        if (item_row.item_type === 'Contenedor') { // If is a container, then the amount if fixed!
+            item_row.amount = item_row.margin_rate_or_amount;
+        } else if (item_row.qty) { // If not a container but have a quantity then calculate.
+            item_row.amount = (item_row.qty * item_row.margin_rate_or_amount);
+        }
     } else if (item_row.margin_type === 'Valoracion' && item_row.qty) {
         item_row.invoiced_amount = item_row.qty * item_row.valuation_rate;  // Calculate the invoice from valuation.
         item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
@@ -74,8 +76,11 @@ frappe.ui.form.on("Sales Invoice Item", {
 
     item: function (frm, cdt, cdn) {
         let item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
-
         if (!item_row.item) return; // Exit if there is no item
+
+        if (item_row.item_type === 'Complemento') {
+            return;
+        }
 
         frappe.db.get_list('Pricing Rule', {
             fields: ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'],
@@ -105,6 +110,14 @@ frappe.ui.form.on("Sales Invoice Item", {
     qty: function (frm, cdt, cdn) {
         calculate_item_amount(frm, cdt, cdn);
     },
+
+    amount: function (frm, cdt, cdn) {
+        let item_row = frappe.get_doc(cdt, cdn);
+
+        if (item_row.item_type === 'Complemento') {
+            calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
+        }
+    }
 
     // margin_type: function (frm) { // TODO: Make this Work?
     //     frm.set_df_property('margin_rate_or_amount', 'description', frm.doc.margin_type == 'Percentage' ? 'In Percentage %' : 'In Amount');
