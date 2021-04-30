@@ -5,6 +5,8 @@ function calculate_invoice_total_and_words(frm) {
     // Set new 'total' and 'in_words' fields. // TODO: Delete the if (frm.doc.total) ?
     frm.doc.total = frm.get_sum('items', 'amount'); // Using built-in function: get_sum(). avoid frm.set_value()
 
+    // if (frm.doc.total)
+
     if (frm.doc.total) { // If the amount is valid and not zero.
         frappe.call({
             method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
