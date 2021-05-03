@@ -6,6 +6,13 @@ function calculate_invoice_total_and_words(frm) {
     frm.doc.total = frm.get_sum('items', 'amount'); // Using built-in function: get_sum(). avoid frm.set_value()
 
     if (frm.doc.total) { // If the amount is valid and not zero.
+        let decimals_in_total = frm.doc.total % 1;  // Getting decimal value.
+        if (decimals_in_total >= 0.35 && decimals_in_total < 0.50) {
+            frm.doc.total = Math.round(frm.doc.total * 2) / 2;
+        } else if (decimals_in_total >= 0.80) {
+            frm.doc.total = Math.ceil(frm.doc.total);
+        }
+
         frappe.call({
             method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
             args: {number: frm.doc.total},
@@ -33,6 +40,7 @@ function calculate_item_amount(frm, cdt, cdn, item_row = null) {
             item_row.amount = (item_row.qty * item_row.margin_rate_or_amount);
         }
     } else if (item_row.margin_type === 'Valoracion' && item_row.qty) {
+        // TODO: ASK, How it works here
         item_row.invoiced_amount = item_row.qty * item_row.valuation_rate;  // Calculate the invoice from valuation.
         item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
     } else {
@@ -76,22 +84,11 @@ frappe.ui.form.on("Sales Invoice Item", {
 
     item: function (frm, cdt, cdn) {
         let item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
-        if (!item_row.item) return; // Exit if there is no item
+        if (!item_row.item || item_row.item_type === 'Complemento') return; // No item is selected or is a 'Complement'.
 
-        if (item_row.item_type === 'Complemento') {
-            return;
-        }
-
-        frappe.db.get_list('Pricing Rule', {
-            fields: ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'],
-            filters: {
-                'parent': frm.doc.customer,
-                'item': item_row.item
-            },
-            limit: 1
-        }).then(price_rule => {
-            price_rule = price_rule[0];  // Will only use the first
-
+        frappe.db.get_value('Pricing Rule', {
+            'parent': frm.doc.customer, 'item': item_row.item
+        }, ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'], (price_rule) => {
             item_row.uom = price_rule.uom;
             item_row.margin_type = price_rule.margin_type;
             item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
@@ -100,7 +97,7 @@ frappe.ui.form.on("Sales Invoice Item", {
             frm.refresh_field('items'); // Refreshing the values in grid.
 
             calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
-        });
+        }, 'Customer');
     },
 
     invoiced_amount: function (frm, cdt, cdn) {
@@ -123,3 +120,4 @@ frappe.ui.form.on("Sales Invoice Item", {
     //     frm.set_df_property('margin_rate_or_amount', 'description', frm.doc.margin_type == 'Percentage' ? 'In Percentage %' : 'In Amount');
     // }
 });
+//126

@@ -11,7 +11,7 @@ class SalesInvoice(Document):
 
 
 @frappe.whitelist(allow_guest=False)
-def money_in_words(number='2231.1') -> str:
+def money_in_words(number) -> str:
     whole, _, fraction = number.partition('.')  # Split the number and the fraction. Even if number is integer
 
     out = '{0} dólares'.format(in_words(whole)[:-1] if whole[-1:] == '1' else in_words(whole))  # Ends with 1 then trim last char
