@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "vendor",
   "item",
   "item_type",
   "column_break_2",
@@ -13,7 +14,7 @@
   "policy_number",
   "column_break_3",
   "exp",
-  "column_break_8",
+  "data_10",
   "packages",
   "section_break_5",
   "qty",
@@ -157,10 +158,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_8",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_12",
    "fieldtype": "Column Break"
   },
@@ -178,6 +175,7 @@
    "fetch_from": "item.type",
    "fieldname": "item_type",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Item Type"
   },
   {
@@ -186,11 +184,21 @@
    "fieldtype": "Check",
    "label": "Mas Gastos",
    "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "vendor",
+   "fieldtype": "Data",
+   "label": "Proveedor"
+  },
+  {
+   "fieldname": "data_10",
+   "fieldtype": "Column Break"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-04-14 08:02:26.736492",
+ "modified": "2021-05-04 11:00:44.011415",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice Item",
