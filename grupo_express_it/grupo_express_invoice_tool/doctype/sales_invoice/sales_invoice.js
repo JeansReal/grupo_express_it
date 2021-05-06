@@ -52,6 +52,10 @@ function calculate_item_amount(frm, cdt, cdn, item_row = null) {
 
 // Parent Doctype
 frappe.ui.form.on('Sales Invoice', {
+    setup: function (frm) {
+        $('.layout-side-section').hide(); // Little Trick to work better
+    },
+
     onload: function (frm) {
         frm.set_query('item', 'items', (doc) => {
             if (!doc.customer) { // Its more fastest to throw from here than server side code.
@@ -71,7 +75,7 @@ frappe.ui.form.on('Sales Invoice', {
         });
 
         frm.set_currency_labels(['total', 'in_words'], 'USD');
-        frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
+        // frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
     }
 });
 

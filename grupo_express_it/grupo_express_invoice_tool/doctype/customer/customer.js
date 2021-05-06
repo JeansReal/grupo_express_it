@@ -2,6 +2,10 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Customer', {
+    setup: function (frm) {
+        $('.layout-side-section').hide(); // Little Trick to work better
+    },
+
     onload: function (frm) {
         frm.set_query('item', 'pricing_rules', (doc) => {
             return {
@@ -12,7 +16,7 @@ frappe.ui.form.on('Customer', {
             };
         });
 
-        frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
+        // frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
     }
 });
 
