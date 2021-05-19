@@ -50,9 +50,8 @@ function calculate_item_amount(frm, cdt, cdn, item_row = null) {
     calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
 }
 
-// Parent Doctype
 frappe.ui.form.on('Sales Invoice', {
-    setup: function (frm) {
+    setup: function () {
         $('.layout-side-section').hide(); // Little Trick to work better
     },
 
@@ -75,11 +74,20 @@ frappe.ui.form.on('Sales Invoice', {
         });
 
         frm.set_currency_labels(['total', 'in_words'], 'USD');
-        // frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
+        // FIXME: frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
+    },
+
+    customer: function (frm) {
+        if (!frm.doc.customer) {
+            frm.doc.customer_name = '';
+        }
+        frm.doc.in_words = '';
+        frm.clear_table('items');
+
+        frm.refresh_fields(); // Refresh all changes
     }
 });
 
-// Child Doctype
 frappe.ui.form.on("Sales Invoice Item", {
 
     items_remove: function (frm) {
@@ -119,9 +127,4 @@ frappe.ui.form.on("Sales Invoice Item", {
             calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
         }
     }
-
-    // margin_type: function (frm) { // TODO: Make this Work?
-    //     frm.set_df_property('margin_rate_or_amount', 'description', frm.doc.margin_type == 'Percentage' ? 'In Percentage %' : 'In Amount');
-    // }
 });
-//126
