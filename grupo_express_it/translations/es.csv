@@ -1,23 +1,30 @@
-Name, Nombre
+Name,Nombre
 
-List View, Vista de Lista
-Save,Guardar
-Refresh, Actualizar
+Selling,Facturación
+Sales Invoice,Factura de Venta
+Customer,Cliente
+Customer Name,Nombre del Cliente
+Item,Producto
 
-Assigned To, Asignado A
-Attachments, Adjuntos
-Attach File, Adjuntar Archivo
+Assigned To,Asignado A
+Attachments,Adjuntos
+Attach File,Adjuntar Archivo
 Reviews,Calificaciones
-Shared With, Compartido con
+Shared With,Compartido con
 Tags,Etiquetas
-Follow, Seguir
+Follow,Seguir
+
+{0} edited this {1},{0} editó esto {1}
+{0} created this {1},{0} creo esto {1}
 
 Filter,Filtro
-Last Modified On, Ultima Modificacion
+Add a Filter,Agregar un Filtro
+Apply Filters,Aplicar Filtros
+Last Modified On,Ultima Modificacion
 
 Connections,Conexiones
 
-Add Row, Agregar Fila
-Add a comment, Agregar un comentario
+Add Row,Agregar Fila
+Add a comment,Agregar un comentario
 
-Counter, Contador
+Counter,Contador
