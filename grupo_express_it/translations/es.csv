@@ -2,15 +2,26 @@ Name,Nombre
 
 Selling,Facturación
 Sales Invoice,Factura de Venta
+
 Customer,Cliente
 Customer Name,Nombre del Cliente
-Item,Producto
+In Words,En Palabras
+Posting Time,Hora de Contabilización
 
-Assigned To,Asignado A
-Attachments,Adjuntos
-Attach File,Adjuntar Archivo
-Reviews,Calificaciones
-Shared With,Compartido con
+Invoice No,Factura No.
+Item,Producto
+Quantity,Cantidad
+
+Pricing Rule,Regla de Precios
+Margin Type,Tipo de Margen
+
+Print,Imprimir
+Copy to Clipboard,Copiar al portapapeles
+
+Insert Above,Insertar Arriba
+Insert After,Insertar Debajo
+Move,Mover
+
 Tags,Etiquetas
 Follow,Seguir
 
@@ -20,11 +31,7 @@ Follow,Seguir
 Filter,Filtro
 Add a Filter,Agregar un Filtro
 Apply Filters,Aplicar Filtros
-Last Modified On,Ultima Modificacion
 
 Connections,Conexiones
 
-Add Row,Agregar Fila
-Add a comment,Agregar un comentario
-
-Counter,Contador
+Load More,Cargar Más
