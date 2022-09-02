@@ -96,7 +96,12 @@ frappe.ui.form.on("Sales Invoice Item", {
 
     item: function (frm, cdt, cdn) {
         let item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
-        if (!item_row.item || item_row.item_type === 'Complemento') return; // No item is selected or is a 'Complement'.
+        if (!item_row.item) return; // No item is selected
+        
+        if (item_row.item_type === 'Complemento') {
+            frm.fields_dict['items'].grid.grid_rows_by_docname[item_row.name].toggle_editable('amount', true);
+            return;
+        }
 
         frappe.db.get_value('Pricing Rule', {
             'parent': frm.doc.customer, 'item': item_row.item
