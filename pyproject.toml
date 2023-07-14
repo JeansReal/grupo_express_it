@@ -1,0 +1,18 @@
+[project]
+name = "grupo_express_it"
+description = "Grupo Express Invoice Tool"
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+dynamic = ["version"]
+
+requires-python = ">=3.11"
+
+authors = [
+    { name = "Agile Shift", email = "contacto@gruporeal.org" }
+]
+
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
