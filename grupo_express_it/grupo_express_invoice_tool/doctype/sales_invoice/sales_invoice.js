@@ -1,6 +1,3 @@
-// Copyright (c) 2021, Agile Shift and contributors
-// For license information, please see license.txt
-
 function calculate_invoice_total_and_words(frm) {
     // Set new 'total' and 'in_words' fields. // TODO: Delete the if (frm.doc.total) ?
     frm.doc.total = frm.get_sum('items', 'amount'); // Using built-in function: get_sum(). avoid frm.set_value()
@@ -52,7 +49,7 @@ function calculate_item_amount(frm, cdt, cdn, item_row = null) {
 
 frappe.ui.form.on('Sales Invoice', {
     setup: function () {
-        $('.layout-side-section').hide(); // Little Trick to work better
+        // $('.layout-side-section').hide(); // Little Trick to work better
     },
 
     onload: function (frm) {
@@ -97,7 +94,7 @@ frappe.ui.form.on("Sales Invoice Item", {
     item: function (frm, cdt, cdn) {
         let item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
         if (!item_row.item) return; // No item is selected
-        
+
         if (item_row.item_type === 'Complemento') {
             frm.fields_dict['items'].grid.grid_rows_by_docname[item_row.name].toggle_editable('amount', true);
             return;

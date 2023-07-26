@@ -1,7 +1,3 @@
-## Grupo Express Invoice Tool
+## GE Invoice Tool
 
-Custom Invoice Tool
-
-#### License
-
-MIT
+Frappe v14

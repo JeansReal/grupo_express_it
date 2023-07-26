@@ -2,7 +2,6 @@
 name = "grupo_express_it"
 description = "Grupo Express Invoice Tool"
 readme = "README.md"
-license = { file = "LICENSE.txt" }
 dynamic = ["version"]
 
 requires-python = ">=3.11"

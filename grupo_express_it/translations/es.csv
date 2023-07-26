@@ -1,5 +1,3 @@
-Name,Nombre
-
 Selling,Facturación
 Sales Invoice,Factura de Venta
 
@@ -10,6 +8,7 @@ Posting Time,Hora de Contabilización
 
 Invoice No,Factura No.
 Item,Producto
+Items,Productos
 Quantity,Cantidad
 
 Pricing Rule,Regla de Precios
@@ -22,16 +21,15 @@ Insert Above,Insertar Arriba
 Insert After,Insertar Debajo
 Move,Mover
 
-Tags,Etiquetas
-Follow,Seguir
-
 {0} edited this {1},{0} editó esto {1}
 {0} created this {1},{0} creo esto {1}
 
-Filter,Filtro
 Add a Filter,Agregar un Filtro
 Apply Filters,Aplicar Filtros
 
 Connections,Conexiones
+Comment,Comentar
 
+List View,Lista
+Report View,Reporte
 Load More,Cargar Más

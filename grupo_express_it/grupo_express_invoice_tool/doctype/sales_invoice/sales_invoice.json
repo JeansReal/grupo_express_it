@@ -4,6 +4,7 @@
  "allow_import": 1,
  "autoname": "format:Recibo No. {######}",
  "creation": "2021-01-13 13:14:25.985768",
+ "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -111,12 +112,12 @@
    "fieldtype": "Section Break"
   }
  ],
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-19 07:44:49.839197",
+ "modified": "2023-07-26 14:42:54.292650",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -136,5 +137,7 @@
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "track_changes": 1
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1
 }
