@@ -28,7 +28,6 @@
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_global_search": 1,
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Customer",
@@ -52,6 +51,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "bold": 1,
    "default": "Today",
    "fieldname": "posting_date",
    "fieldtype": "Date",
@@ -91,8 +91,12 @@
    "depends_on": "items",
    "fieldname": "total",
    "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_preview": 1,
    "label": "Total",
+   "non_negative": 1,
    "options": "USD",
+   "precision": "2",
    "read_only": 1
   },
   {
@@ -113,7 +117,7 @@
   }
  ],
  "links": [],
- "modified": "2023-07-26 14:42:54.292650",
+ "modified": "2023-07-26 16:31:43.988818",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice",

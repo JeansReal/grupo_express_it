@@ -5,6 +5,7 @@
  "allow_rename": 1,
  "autoname": "field:item_name",
  "creation": "2021-01-13 12:59:28.405687",
+ "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -15,6 +16,7 @@
  "fields": [
   {
    "allow_in_quick_entry": 1,
+   "bold": 1,
    "fieldname": "item_name",
    "fieldtype": "Data",
    "in_global_search": 1,
@@ -38,12 +40,12 @@
   }
  ],
  "hide_toolbar": 1,
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-07 09:38:07.211833",
+ "modified": "2023-07-26 15:48:05.345073",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Item",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -64,6 +66,7 @@
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "title_field": "item_name",
  "track_changes": 1
 }

@@ -1,12 +1,9 @@
-// Copyright (c) 2021, Agile Shift and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on('Customer', {
-    setup: function (frm) {
-        $('.layout-side-section').hide(); // Little Trick to work better
+    setup(frm) {
+        frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
     },
 
-    onload: function (frm) {
+    onload(frm) {
         frm.set_query('item', 'pricing_rules', (doc) => {
             return {
                 filters: {
@@ -15,9 +12,11 @@ frappe.ui.form.on('Customer', {
                 }
             };
         });
+    },
 
-        // frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
-    }
+	refresh(frm) {
+		frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
+	}
 });
 
 // Child Table

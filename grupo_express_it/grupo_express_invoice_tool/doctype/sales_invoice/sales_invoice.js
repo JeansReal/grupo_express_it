@@ -1,80 +1,33 @@
-function calculate_invoice_total_and_words(frm) {
-    // Set new 'total' and 'in_words' fields. // TODO: Delete the if (frm.doc.total) ?
-    frm.doc.total = frm.get_sum('items', 'amount'); // Using built-in function: get_sum(). avoid frm.set_value()
-
-    if (frm.doc.total) { // If the amount is valid and not zero.
-        let decimals_in_total = frm.doc.total % 1;  // Getting decimal value.
-        if (decimals_in_total >= 0.35 && decimals_in_total < 0.50) {
-            frm.doc.total = Math.round(frm.doc.total * 2) / 2;
-        } else if (decimals_in_total >= 0.80) {
-            frm.doc.total = Math.ceil(frm.doc.total);
-        }
-
-        frappe.call({
-            method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
-            args: {number: frm.doc.total},
-            callback: (r) => frm.doc.in_words = r.message,
-            async: false
-        });
-    } else {
-        frm.doc.in_words = '';
-    }
-
-    frm.refresh_fields(); // This finally refresh all the fields!
-}
-
-function calculate_item_amount(frm, cdt, cdn, item_row = null) {
-    // TODO: Make some option to dont recalculate if the same value is set OR if a field not used for calculation is set
-    if (!item_row) item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
-    if (!item_row.item) return; // If the item has been deleted.
-
-    if (item_row.margin_type === 'Sobre Factura' && item_row.invoiced_amount) {
-        item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
-    } else if (item_row.margin_type === 'Cantidad Fija') {
-        if (item_row.item_type === 'Contenedor') { // If is a container, then the amount if fixed!
-            item_row.amount = item_row.margin_rate_or_amount;
-        } else if (item_row.qty) { // If not a container but have a quantity then calculate.
-            item_row.amount = (item_row.qty * item_row.margin_rate_or_amount);
-        }
-    } else if (item_row.margin_type === 'Valoracion' && item_row.qty) {
-        // TODO: ASK, How it works here
-        item_row.invoiced_amount = item_row.qty * item_row.valuation_rate;  // Calculate the invoice from valuation.
-        item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
-    } else {
-        return;
-    }
-
-    calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
-}
-
 frappe.ui.form.on('Sales Invoice', {
-    setup: function () {
-        // $('.layout-side-section').hide(); // Little Trick to work better
+    setup(frm) {
+        frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
     },
 
-    onload: function (frm) {
+    onload(frm) {
         frm.set_query('item', 'items', (doc) => {
-            if (!doc.customer) { // Its more fastest to throw from here than server side code.
+            if (!doc.customer) { // It's fastest to throw from here than server side code.
                 frappe.throw(__('Please select the customer.') + ' ' + __('It is needed to fetch Item Details.'));
             }
 
-            if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is a invoice for a container
+            if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is an invoice for a container
                 return {
                     filters: {type: 'Complemento'} // TODO: Add Extra Costs
                 }
             }
 
             return {
-                query: 'grupo_express_it.grupo_express_invoice_tool.doctype.queries.items_with_pricing_rule_query',
+                query: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.items_with_pricing_rule_query',
                 filters: {customer: doc.customer},
             }
         });
-
-        frm.set_currency_labels(['total', 'in_words'], 'USD');
-        // FIXME: frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
     },
 
-    customer: function (frm) {
+	refresh(frm) {
+		frm.set_currency_labels(['total', 'in_words'], 'USD');
+		frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
+	},
+
+    customer(frm) {
         if (!frm.doc.customer) {
             frm.doc.customer_name = '';
         }
@@ -82,18 +35,67 @@ frappe.ui.form.on('Sales Invoice', {
         frm.clear_table('items');
 
         frm.refresh_fields(); // Refresh all changes
-    }
+    },
+
+	calculate_invoice_total_and_words(frm) {
+		frm.doc.total = frm.get_sum('items', 'amount');
+
+		if (frm.doc.total) { // If the amount is valid and not zero.
+			let decimals_in_total = frm.doc.total % 1;  // Getting decimal value
+
+			if (decimals_in_total >= 0.35 && decimals_in_total < 0.50) {
+				frm.doc.total = Math.round(frm.doc.total * 2) / 2;
+			} else if (decimals_in_total >= 0.80) {
+				frm.doc.total = Math.ceil(frm.doc.total);
+			}
+
+			frappe.call({
+				method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
+				args: {number: frm.doc.total},
+				callback: (r) => frm.doc.in_words = r.message,
+				async: false
+			});
+		} else {
+			frm.doc.in_words = '';
+		}
+
+		frm.refresh_fields(); // This finally refresh all the fields!
+	},
+
+	calculate_item_amount(frm, cdt, cdn, item_row = null) {
+		// TODO: Make some option to dont recalculate if the same value is set OR if a field not used for calculation is set
+		if (!item_row) item_row = locals[cdt][cdn]; // Getting item row being edited
+		if (!item_row.item) return; // If the item has been deleted.
+
+		if (item_row.margin_type === 'Sobre Factura' && item_row.invoiced_amount) {
+			item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
+		} else if (item_row.margin_type === 'Cantidad Fija') {
+			if (item_row.item_type === 'Contenedor') { // If is a container, then the amount if fixed!
+				item_row.amount = item_row.margin_rate_or_amount;
+			} else if (item_row.qty) { // If not a container but have a quantity then calculate.
+				item_row.amount = (item_row.qty * item_row.margin_rate_or_amount);
+			}
+		} else if (item_row.margin_type === 'Valoracion' && item_row.qty) {
+			// TODO: ASK, How it works here
+			item_row.invoiced_amount = item_row.qty * item_row.valuation_rate;  // Calculate the invoice from valuation.
+			item_row.amount = (item_row.invoiced_amount / 100) * item_row.margin_rate_or_amount;
+		} else {
+			return;
+		}
+
+		frm.events.calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
+	}
 });
 
 frappe.ui.form.on("Sales Invoice Item", {
 
     items_remove: function (frm) {
-        calculate_invoice_total_and_words(frm);
+        frm.events.calculate_invoice_total_and_words(frm);
     },
 
     item: function (frm, cdt, cdn) {
-        let item_row = frappe.get_doc(cdt, cdn); // Getting item row being edited
-        if (!item_row.item) return; // No item is selected
+        let item_row = locals[cdt][cdn]; // Getting item row being edited
+        if (!item_row.item) return;      // No item is selected
 
         if (item_row.item_type === 'Complemento') {
             frm.fields_dict['items'].grid.grid_rows_by_docname[item_row.name].toggle_editable('amount', true);
@@ -110,23 +112,23 @@ frappe.ui.form.on("Sales Invoice Item", {
             item_row.extra_costs = price_rule.extra_costs;
             frm.refresh_field('items'); // Refreshing the values in grid.
 
-            calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
+            frm.events.calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
         }, 'Customer');
     },
 
     invoiced_amount: function (frm, cdt, cdn) {
-        calculate_item_amount(frm, cdt, cdn);
+        frm.events.calculate_item_amount(frm, cdt, cdn);
     },
 
     qty: function (frm, cdt, cdn) {
-        calculate_item_amount(frm, cdt, cdn);
+        frm.events.calculate_item_amount(frm, cdt, cdn);
     },
 
     amount: function (frm, cdt, cdn) {
-        let item_row = frappe.get_doc(cdt, cdn);
+        let item_row = locals[cdt][cdn];
 
         if (item_row.item_type === 'Complemento') {
-            calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
+            frm.events.calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
         }
     }
 });
