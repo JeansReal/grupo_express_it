@@ -1,41 +1,41 @@
 frappe.ui.form.on('Sales Invoice', {
-    setup(frm) {
-        frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
-    },
+	setup(frm) {
+		frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
+	},
 
-    onload(frm) {
-        frm.set_query('item', 'items', (doc) => {
-            if (!doc.customer) { // It's fastest to throw from here than server side code.
-                frappe.throw(__('Please select the customer.') + ' ' + __('It is needed to fetch Item Details.'));
-            }
+	onload(frm) {
+		frm.set_query('item', 'items', (doc) => {
+			if (!doc.customer) { // It's fastest to throw from here than server side code.
+				frappe.throw(__('Please select the customer.') + ' ' + __('It is needed to fetch Item Details.'));
+			}
 
-            if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is an invoice for a container
-                return {
-                    filters: {type: 'Complemento'} // TODO: Add Extra Costs
-                }
-            }
+			if (frm.doc.items.map(item => item.item_type).includes('Contenedor')) { // Is an invoice for a container
+				return {
+					filters: {type: 'Complemento'} // TODO: Add Extra Costs
+				}
+			}
 
-            return {
-                query: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.items_with_pricing_rule_query',
-                filters: {customer: doc.customer},
-            }
-        });
-    },
+			return {
+				query: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.items_with_pricing_rule_query',
+				filters: {customer: doc.customer},
+			}
+		});
+	},
 
 	refresh(frm) {
 		frm.set_currency_labels(['total', 'in_words'], 'USD');
 		frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
 	},
 
-    customer(frm) {
-        if (!frm.doc.customer) {
-            frm.doc.customer_name = '';
-        }
-        frm.doc.in_words = '';
-        frm.clear_table('items');
+	customer(frm) {
+		if (!frm.doc.customer) {
+			frm.doc.customer_name = '';
+		}
+		frm.doc.in_words = '';
+		frm.clear_table('items');
 
-        frm.refresh_fields(); // Refresh all changes
-    },
+		frm.refresh_fields(); // Refresh all changes
+	},
 
 	calculate_invoice_total_and_words(frm) {
 		frm.doc.total = frm.get_sum('items', 'amount');
@@ -89,46 +89,46 @@ frappe.ui.form.on('Sales Invoice', {
 
 frappe.ui.form.on("Sales Invoice Item", {
 
-    items_remove: function (frm) {
-        frm.events.calculate_invoice_total_and_words(frm);
-    },
+	items_remove(frm) {
+		frm.events.calculate_invoice_total_and_words(frm);
+	},
 
-    item: function (frm, cdt, cdn) {
-        let item_row = locals[cdt][cdn]; // Getting item row being edited
-        if (!item_row.item) return;      // No item is selected
+	item(frm, cdt, cdn) {
+		let item_row = locals[cdt][cdn]; // Getting item row being edited
+		if (!item_row.item) return;      // No item is selected
 
-        if (item_row.item_type === 'Complemento') {
-            frm.fields_dict['items'].grid.grid_rows_by_docname[item_row.name].toggle_editable('amount', true);
-            return;
-        }
+		if (item_row.item_type === 'Complemento') {
+			frm.fields_dict['items'].grid.grid_rows_by_docname[item_row.name].toggle_editable('amount', true);
+			return;
+		}
 
-        frappe.db.get_value('Pricing Rule', {
-            'parent': frm.doc.customer, 'item': item_row.item
-        }, ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'], (price_rule) => {
-            item_row.uom = price_rule.uom;
-            item_row.margin_type = price_rule.margin_type;
-            item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
-            item_row.valuation_rate = price_rule.valuation_rate;
-            item_row.extra_costs = price_rule.extra_costs;
-            frm.refresh_field('items'); // Refreshing the values in grid.
+		frappe.db.get_value('Pricing Rule', {
+			'parent': frm.doc.customer, 'item': item_row.item
+		}, ['uom', 'margin_type', 'margin_rate_or_amount', 'valuation_rate', 'extra_costs'], (price_rule) => {
+			item_row.uom = price_rule.uom;
+			item_row.margin_type = price_rule.margin_type;
+			item_row.margin_rate_or_amount = price_rule.margin_rate_or_amount;
+			item_row.valuation_rate = price_rule.valuation_rate;
+			item_row.extra_costs = price_rule.extra_costs;
+			frm.refresh_field('items'); // Refreshing the values in grid.
 
-            frm.events.calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
-        }, 'Customer');
-    },
+			frm.events.calculate_item_amount(frm, cdt, cdn, item_row); // This calculates the item amount and the total.
+		}, 'Customer');
+	},
 
-    invoiced_amount: function (frm, cdt, cdn) {
-        frm.events.calculate_item_amount(frm, cdt, cdn);
-    },
+	invoiced_amount(frm, cdt, cdn) {
+		frm.events.calculate_item_amount(frm, cdt, cdn);
+	},
 
-    qty: function (frm, cdt, cdn) {
-        frm.events.calculate_item_amount(frm, cdt, cdn);
-    },
+	qty(frm, cdt, cdn) {
+		frm.events.calculate_item_amount(frm, cdt, cdn);
+	},
 
-    amount: function (frm, cdt, cdn) {
-        let item_row = locals[cdt][cdn];
+	amount(frm, cdt, cdn) {
+		let item_row = locals[cdt][cdn];
 
-        if (item_row.item_type === 'Complemento') {
-            frm.events.calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
-        }
-    }
+		if (item_row.item_type === 'Complemento') {
+			frm.events.calculate_invoice_total_and_words(frm);  // Recalculate the total because we have updated the items amount.
+		}
+	}
 });
