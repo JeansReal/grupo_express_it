@@ -1,1 +1,2 @@
 Grupo Express Invoice Tool
+Stock Management

@@ -3,7 +3,7 @@ from . import __version__ as app_version
 app_name = "grupo_express_it"
 app_title = "Grupo Express Invoice Tool"
 app_publisher = "Agile Shift"
-app_description = "Custom Invoice Tool"
+app_description = "Invoice Tool"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "contacto@gruporeal.org"
@@ -140,4 +140,3 @@ app_license = "MIT"
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
-
