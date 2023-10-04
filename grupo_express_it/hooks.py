@@ -1,20 +1,17 @@
-from . import __version__ as app_version
-
 app_name = "grupo_express_it"
 app_title = "Grupo Express Invoice Tool"
 app_publisher = "Agile Shift"
 app_description = "Invoice Tool"
-app_icon = "octicon octicon-file-directory"
-app_color = "grey"
 app_email = "contacto@gruporeal.org"
 app_license = "MIT"
+# required_apps = []
 
 # Includes in <head>
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/grupo_express_it/css/grupo_express_it.css"
-# app_include_js = "/assets/grupo_express_it/js/grupo_express_it.js"
+app_include_css = "grupo_express.bundle.css"
+app_include_js = "grupo_express.bundle.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/grupo_express_it/css/grupo_express_it.css"
@@ -140,3 +137,5 @@ app_license = "MIT"
 # exempt linked doctypes from being automatically cancelled
 #
 # auto_cancel_exempted_doctypes = ["Auto Repeat"]
+
+export_python_type_annotations = True

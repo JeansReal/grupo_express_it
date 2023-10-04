@@ -1,0 +1,51 @@
+#page-Policy {
+
+  // This affects all tables header_row and header_search
+  .grid-heading-row {
+    > .grid-row:nth-child(1) > .row .col:last-child,
+    > .grid-row:nth-child(2) {
+      display: none !important;
+    }
+  }
+
+  // Change the Items Table
+  div[data-fieldname="items"] {
+
+    .form-grid {
+      //overflow-x: auto;
+
+      .grid-row > .row {
+        //flex-wrap: nowrap;
+
+        .col.sortable-handle {
+          background: indianred !important;
+          flex: 0 0 2.5%;
+        }
+      }
+    }
+
+    .grid-row > .row .grid-static-col {
+
+      &[data-fieldname="itema"] {
+        flex: 0 0 16.666666666%;
+        max-width: 16.666666666%;
+        background: aliceblue;
+      }
+
+      // Read-Only Currency Fields
+
+      //&[data-fieldname="qty"],
+      //&[data-fieldname="freight_cost"],
+      //&[data-fieldname="insurance_cost"],
+      //&[data-fieldname="total_price"],
+      &[data-fieldname="unit_price_DELETE"] {
+        flex: 0 0 4.165%;
+        max-width: 4.165%;
+        background: #B9B8FA;
+      }
+
+    }
+
+  }
+
+}
