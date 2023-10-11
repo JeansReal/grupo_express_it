@@ -1,51 +1,77 @@
 #page-Policy {
 
-  // This affects all tables header_row and header_search
-  .grid-heading-row {
-    > .grid-row:nth-child(1) > .row .col:last-child,
-    > .grid-row:nth-child(2) {
-      display: none !important;
-    }
-  }
-
   // Change the Items Table
   div[data-fieldname="items"] {
-
     .form-grid {
       //overflow-x: auto;
 
       .grid-row > .row {
         //flex-wrap: nowrap;
 
-        .col.sortable-handle {
-          background: indianred !important;
-          flex: 0 0 2.5%;
+        .col.grid-static-col {
+
+          // Read-Only SMALL Digits Currency Fields
+          &[data-fieldname="qty"],
+          &[data-fieldname="uom"],
+          &[data-fieldname="fob_unit_price"],
+          &[data-fieldname="freight_cost"],
+          &[data-fieldname="insurance_cost"],
+          &[data-fieldname="customs_taxes"],
+          &[data-fieldname="nationalization_total"],
+          &[data-fieldname="unit_price"] {
+            flex: 0 0 6%;
+            max-width: 6%;
+          }
+
+          // Read-Only BIG Digits Currency Fields(Totals
+          &[data-fieldname="fob_total_price"],
+          &[data-fieldname="cif_total_usd"],
+          &[data-fieldname="cif_total_nio"],
+          &[data-fieldname="total_price"] {
+            flex: 0 0 7.33%;
+            max-width: 7.33%;
+          }
+
         }
       }
     }
+  }
 
-    .grid-row > .row .grid-static-col {
+  // Change All Tables
+  .form-grid {
+    .grid-row > .row {
 
-      &[data-fieldname="itema"] {
-        flex: 0 0 16.666666666%;
-        max-width: 16.666666666%;
-        background: aliceblue;
+      .sortable-handle {
+        // Because its a col, it will automatically resize to fit the content
       }
 
-      // Read-Only Currency Fields
+      .col.grid-static-col[data-fieldtype="Select"], select[data-fieldtype="Select"],
+      .col.grid-static-col[data-fieldtype="Date"], input[data-fieldtype="Date"] {
+        text-align: center !important; // Center this two types of elements
+      }
+    }
 
-      //&[data-fieldname="qty"],
-      //&[data-fieldname="freight_cost"],
-      //&[data-fieldname="insurance_cost"],
-      //&[data-fieldname="total_price"],
-      &[data-fieldname="unit_price_DELETE"] {
-        flex: 0 0 4.165%;
-        max-width: 4.165%;
-        background: #B9B8FA;
+    > .grid-heading-row .grid-row-check {
+      pointer-events: auto; // Enable the Checkbox on header row. The entire row is Disabled from js code.
+    }
+
+    > .grid-footer-row {
+      border-top: 3px solid var(--table-border-color);
+
+      .grid-row-check,
+      .row-index > span {
+        display: none; // Hide this, is unnecessary
+      }
+
+      > .grid-row > .row > .col.grid-static-col {
+        &[data-fieldname="exchange_rate"],
+        &[data-fieldname="fob_unit_price"] {
+          > .static-area {
+            display: none; // Hide all exchange rate fields
+          }
+        }
       }
 
     }
-
   }
-
 }
