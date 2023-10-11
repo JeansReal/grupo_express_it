@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "prompt",
  "creation": "2023-07-26 19:17:37.104782",
@@ -8,17 +9,33 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "company",
   "column_break_9llxh",
+  "company",
   "column_break_6rsat",
-  "profit_margin",
+  "section_break_m8ye",
+  "provider",
+  "posting_date",
+  "column_break_bjbg",
+  "column_break_niyc",
+  "policy",
+  "invoice",
+  "exchange_rate",
   "section_break_tcxra",
   "items",
-  "section_break_qaidz",
+  "section_break_txgw",
+  "cif_costs",
+  "nationalization_costs",
+  "section_break_2pl7",
   "total_qty",
-  "column_break_x7kiz",
-  "column_break_7cssy",
-  "total"
+  "column_break_oost",
+  "column_break_gph5",
+  "total_fob",
+  "column_break_myn4",
+  "total_cif",
+  "total_freight",
+  "total_insurance",
+  "column_break_xf34",
+  "total_customs_taxes"
  ],
  "fields": [
   {
@@ -28,7 +45,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
-   "options": "Grupo Express\nGrupo SYM",
+   "options": "Grupo Express, S.A.\nGrupo SyM, S.A.\nImportadora Internacional, S.A.",
    "reqd": 1,
    "search_index": 1
   },
@@ -36,48 +53,16 @@
    "allow_bulk_edit": 1,
    "fieldname": "items",
    "fieldtype": "Table",
-   "label": "Items",
-   "options": "Policy Item"
+   "options": "Policy Item",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_tcxra",
    "fieldtype": "Section Break",
-   "hide_border": 1
-  },
-  {
-   "bold": 1,
-   "fieldname": "profit_margin",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Profit Margin %",
-   "non_negative": 1,
-   "precision": "2",
-   "reqd": 1
-  },
-  {
-   "fieldname": "column_break_x7kiz",
-   "fieldtype": "Column Break"
-  },
-  {
-   "bold": 1,
-   "fieldname": "total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Total",
-   "options": "USD",
-   "read_only": 1
+   "label": "Items"
   },
   {
    "fieldname": "column_break_9llxh",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_qaidz",
-   "fieldtype": "Section Break",
-   "hide_border": 1
-  },
-  {
-   "fieldname": "column_break_7cssy",
    "fieldtype": "Column Break"
   },
   {
@@ -87,21 +72,157 @@
   {
    "bold": 1,
    "fieldname": "total_qty",
-   "fieldtype": "Int",
-   "label": "Total Quantity",
+   "fieldtype": "Float",
+   "label": "Cantidad Total",
    "read_only": 1
+  },
+  {
+   "fieldname": "provider",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Provider"
+  },
+  {
+   "fieldname": "section_break_m8ye",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bjbg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "bold": 1,
+   "fieldname": "policy",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Policy",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_niyc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Date"
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Data",
+   "label": "Invoice No"
+  },
+  {
+   "fieldname": "section_break_2pl7",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "column_break_oost",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_myn4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_txgw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "cif_costs",
+   "fieldtype": "Table",
+   "label": "Costos CIF",
+   "options": "Policy CIF Cost"
+  },
+  {
+   "bold": 1,
+   "fieldname": "total_fob",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "FOB Total $",
+   "options": "USD",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "total_cif",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "CIF Total $",
+   "options": "USD",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_freight",
+   "fieldtype": "Currency",
+   "label": "Flete Total $",
+   "options": "USD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_insurance",
+   "fieldtype": "Currency",
+   "label": "Seguros Total $",
+   "options": "USD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_gph5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xf34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "nationalization_costs",
+   "fieldtype": "Table",
+   "label": "Costos de Nacionalizacion",
+   "options": "Policy Nationalization Cost"
+  },
+  {
+   "fieldname": "total_customs_taxes",
+   "fieldtype": "Currency",
+   "label": "Total Impuestos C$",
+   "options": "Currency:NIO:name",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "exchange_rate",
+   "fieldtype": "Currency",
+   "label": "Exchange Rate",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "7",
+   "reqd": 1
   }
  ],
- "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-07-26 22:02:08.608126",
+ "modified": "2023-10-11 09:13:14.341673",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
- "name_case": "UPPER CASE",
  "naming_rule": "Set by user",
  "owner": "Administrator",
  "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Desk User",
+   "share": 1,
+   "write": 1
+  },
   {
    "create": 1,
    "delete": 1,
@@ -115,9 +236,9 @@
    "write": 1
   }
  ],
+ "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "track_changes": 1,
- "track_seen": 1
+ "track_changes": 1
 }

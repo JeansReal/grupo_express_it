@@ -1,0 +1,82 @@
+{
+ "actions": [],
+ "creation": "2023-09-28 15:03:26.113889",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "provider",
+  "type",
+  "posting_date",
+  "amount_usd",
+  "exchange_rate",
+  "amount_nio"
+ ],
+ "fields": [
+  {
+   "columns": 6,
+   "fieldname": "provider",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Provider"
+  },
+  {
+   "columns": 1,
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "\nFlete\nSeguro",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "columns": 1,
+   "fieldname": "exchange_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Exchange Rate",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "7"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount_usd",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount_nio",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-10-10 11:49:48.720033",
+ "modified_by": "Administrator",
+ "module": "Stock Management",
+ "name": "Policy CIF Cost",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

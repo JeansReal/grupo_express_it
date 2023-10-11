@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "creation": "2023-09-29 11:06:49.367475",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "provider",
+  "description",
+  "type",
+  "posting_date",
+  "reference",
+  "amount_usd",
+  "exchange_rate",
+  "amount_nio",
+  "iva",
+  "total"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "provider",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Provider"
+  },
+  {
+   "columns": 2,
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Description"
+  },
+  {
+   "columns": 1,
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "\nImpuestos Aduaneros\nNacionalizacion",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "columns": 1,
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Reference"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount_usd",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "columns": 1,
+   "fieldname": "exchange_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Exchange Rate",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "7"
+  },
+  {
+   "columns": 1,
+   "fieldname": "amount_nio",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2"
+  },
+  {
+   "columns": 1,
+   "fieldname": "iva",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "IVA",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-10-10 11:51:46.880862",
+ "modified_by": "Administrator",
+ "module": "Stock Management",
+ "name": "Policy Nationalization Cost",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
