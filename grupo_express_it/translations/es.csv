@@ -1,4 +1,6 @@
 Selling,Facturación
+Stock,Inventario
+
 Sales Invoice,Factura de Venta
 
 Customer,Cliente
@@ -8,13 +10,16 @@ Posting Time,Hora de Contabilización
 
 Invoice No,Factura No.
 Item,Producto
+Item Name,Nombre del Producto
 Items,Productos
 Quantity,Cantidad
 
 Pricing Rule,Regla de Precios
 Margin Type,Tipo de Margen
 
-Policy,Poliza
+Policy,Póliza
+
+Exchange Rate,Tipo de Cambio
 
 Print,Imprimir
 Copy to Clipboard,Copiar al portapapeles
@@ -23,8 +28,16 @@ Insert Above,Insertar Arriba
 Insert After,Insertar Debajo
 Move,Mover
 
-{0} edited this {1},{0} editó esto {1}
-{0} created this {1},{0} creo esto {1}
+{0} created this,{0} creo esto
+added rows for {0},agrego filas en {0}
+removed rows for {0},elimino filas en {0}
+
+You created this,Tu creaste esto
+You changed the values for {0},Tu cambiaste los valores para {0}
+You changed the value of {0},Tu cambiaste el valor de {0}
+You last edited this,Tu editaste esto por última vez
+
+{0} from {1} to {2} in row #{3},{0} de {1} a {2} en la fila #{3}
 
 Add a Filter,Agregar un Filtro
 Apply Filters,Aplicar Filtros
