@@ -1,7 +1,6 @@
 from frappe.model.document import Document
 
 
-
 class PolicyItem(Document):
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
@@ -26,6 +25,6 @@ class PolicyItem(Document):
 		qty: DF.Float
 		total_price: DF.Currency
 		unit_price: DF.Currency
-		uom: DF.Literal['Unidad', 'Docenas', 'Gruesas', 'Millar']
+		uom: DF.Literal["Unidad", "Docenas", "Gruesas", "Millar"]
 	# end: auto-generated types
 	pass

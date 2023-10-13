@@ -8,7 +8,7 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 		if (!['Policy Item', 'Policy CIF Cost', 'Policy Nationalization Cost'].includes(this.df.options))
 			return; // No Personalization. Default controller
 
-		this.refresh_input = this.refresh_input_and_footer; // Override Control Function
+		this.refresh_input = this.control_refresh_input_append_footer; // Override Control Function
 
 		// Override Grid Functions See: frappe/frappe/public/js/frappe/form/grid.js
 		this.grid.df.on_setup = this.df_on_setup; // At execution the grid fields are not yet set. Only html elements
@@ -16,10 +16,9 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 		this.grid.setup_visible_columns = this.grid_setup_visible_columns; // Override Visible Columns Limit of 11
 	}
 
-	refresh_input_and_footer() {
-		super.refresh_input(); // Call Super
+	control_refresh_input_append_footer() {
+		super.refresh_input(); // Call Super of the ControlTable
 		this.grid_make_footer.call(this.grid); // We Use call to set the context to the grid
-		console.log('grupo_express.bundle.js: refresh_input_and_footer()');
 	}
 
 	df_on_setup(grid) {
@@ -43,14 +42,15 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 	}
 
 	grid_setup_visible_columns() {
-		if (this.visible_columns && this.visible_columns.length > 0) return; // Just Run Once per Grid
-		console.log('grupo_express.bundle.js: OVERRIDE setup_visible_columns() -> SETTING VISIBLE_COLUMNS');
+		this.df.in_place_edit = true; // To Hide the Edit Icon FIXME: This Runs many times. More than needed!
 
-		this.df.in_place_edit = true; // To Hide the Edit Icon
+		if (this.visible_columns && this.visible_columns.length > 0) return; // Just Run Once per Grid
 
 		// TODO: Optimize Using: for of this.docfields. With or without Logical (AND OR) Assignment. Setting the Array Length
-		this.visible_columns = this.docfields.map(df => [df, df.columns]); // Here is the magic of the custom columns
-		this.numeric_columns = this.docfields.filter((df) => frappe.model.is_numeric_field(df.fieldtype) && df.fieldname !== 'exchange_rate').map(df => df.fieldname);
+		this.visible_columns = this.docfields.map(df => [df, df.columns]);
+		this.total_columns = this.docfields
+			.filter((df) => frappe.model.is_numeric_field(df.fieldtype) && !['exchange_rate', 'fob_unit_price', 'unit_price'].includes(df.fieldname))
+			.map(df => df.fieldname);
 	}
 
 	grid_make_footer() {
@@ -66,8 +66,8 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 			docfields: this.docfields,
 			grid: this,
 			doc: this.data.reduce((acc, d) => {
-				this.numeric_columns.forEach((df) => {
-					acc[df] = (acc[df] || 0) + d[df];
+				this.total_columns.forEach((df) => {
+					acc[df] = (acc[df] || 0) + (d[df] || 0); // TODO: Improve here the: (property || 0)
 				});
 				return acc;
 			}, {idx: ''})

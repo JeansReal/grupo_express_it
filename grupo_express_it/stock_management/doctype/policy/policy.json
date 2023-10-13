@@ -35,7 +35,8 @@
   "total_freight",
   "total_insurance",
   "column_break_xf34",
-  "total_customs_taxes"
+  "total_customs_taxes",
+  "total_nationalization_costs"
  ],
  "fields": [
   {
@@ -45,7 +46,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
-   "options": "Grupo Express, S.A.\nGrupo SyM, S.A.\nImportadora Internacional, S.A.",
+   "options": "\nGrupo Express, S.A.\nGrupo SyM, S.A.\nImportadora Internacional, S.A.",
    "reqd": 1,
    "search_index": 1
   },
@@ -145,7 +146,6 @@
    "in_list_view": 1,
    "label": "FOB Total $",
    "options": "USD",
-   "precision": "2",
    "read_only": 1
   },
   {
@@ -155,7 +155,6 @@
    "in_list_view": 1,
    "label": "CIF Total $",
    "options": "USD",
-   "precision": "2",
    "read_only": 1
   },
   {
@@ -197,15 +196,22 @@
    "bold": 1,
    "fieldname": "exchange_rate",
    "fieldtype": "Currency",
-   "label": "Exchange Rate",
+   "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "7",
    "reqd": 1
+  },
+  {
+   "fieldname": "total_nationalization_costs",
+   "fieldtype": "Currency",
+   "label": "Total de Nacionalizacion",
+   "options": "Currency:NIO:name",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2023-10-11 09:13:14.341673",
+ "modified": "2023-10-12 15:28:30.801127",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",

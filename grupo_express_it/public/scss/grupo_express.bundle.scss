@@ -65,7 +65,8 @@
 
       > .grid-row > .row > .col.grid-static-col {
         &[data-fieldname="exchange_rate"],
-        &[data-fieldname="fob_unit_price"] {
+        &[data-fieldname="fob_unit_price"],
+        &[data-fieldname="unit_price"] {
           > .static-area {
             display: none; // Hide all exchange rate fields
           }

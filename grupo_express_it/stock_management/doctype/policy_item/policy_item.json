@@ -34,6 +34,7 @@
   {
    "bold": 1,
    "columns": 1,
+   "default": "0.00",
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -54,6 +55,7 @@
   {
    "bold": 1,
    "columns": 1,
+   "default": "0.00",
    "fieldname": "fob_unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -164,7 +166,7 @@
  ],
  "istable": 1,
  "links": [],
- "modified": "2023-10-11 09:07:13.053123",
+ "modified": "2023-10-12 09:38:59.443173",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Item",
