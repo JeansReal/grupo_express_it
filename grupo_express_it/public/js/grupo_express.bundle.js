@@ -54,7 +54,7 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 	}
 
 	grid_make_footer() {
-		if (this.prevent_build || this.data.length === 0) return; // See grid.make_head() + Custom data validation
+		if (this.prevent_build) return; // See grid.make_head(). if (this.data.length === 0) return -> Avoided
 
 		if (this.footer_row) {
 			this.form_grid.find(".grid-footer-row .grid-row").remove(); // Remove to redraw. Created on df_on_setup()
@@ -70,7 +70,7 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 					acc[df] = (acc[df] || 0) + (d[df] || 0); // TODO: Improve here the: (property || 0)
 				});
 				return acc;
-			}, {idx: ''})
+			}, {idx: ''}) // If this.data.length is empty. the column gets 0 for values. Which is ok!
 		});
 	}
 
