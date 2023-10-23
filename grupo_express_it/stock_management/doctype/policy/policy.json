@@ -35,6 +35,7 @@
   "total_freight",
   "total_insurance",
   "column_break_xf34",
+  "grand_total_nationalization",
   "total_customs_taxes",
   "total_nationalization_costs"
  ],
@@ -75,6 +76,8 @@
    "fieldname": "total_qty",
    "fieldtype": "Float",
    "label": "Cantidad Total",
+   "non_negative": 1,
+   "precision": "2",
    "read_only": 1
   },
   {
@@ -141,34 +144,42 @@
   },
   {
    "bold": 1,
+   "default": "0.00",
    "fieldname": "total_fob",
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "FOB Total $",
-   "options": "USD",
+   "non_negative": 1,
+   "precision": "2",
    "read_only": 1
   },
   {
    "bold": 1,
+   "default": "0.00",
    "fieldname": "total_cif",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "CIF Total $",
-   "options": "USD",
+   "label": "Total Costo CIF $",
+   "non_negative": 1,
+   "precision": "2",
    "read_only": 1
   },
   {
+   "default": "0.00",
    "fieldname": "total_freight",
    "fieldtype": "Currency",
    "label": "Flete Total $",
-   "options": "USD",
+   "non_negative": 1,
+   "precision": "2",
    "read_only": 1
   },
   {
+   "default": "0.00",
    "fieldname": "total_insurance",
    "fieldtype": "Currency",
    "label": "Seguros Total $",
-   "options": "USD",
+   "non_negative": 1,
+   "precision": "2",
    "read_only": 1
   },
   {
@@ -186,10 +197,13 @@
    "options": "Policy Nationalization Cost"
   },
   {
+   "default": "0.00",
    "fieldname": "total_customs_taxes",
    "fieldtype": "Currency",
-   "label": "Total Impuestos C$",
+   "label": "Total Impuestos Aduaneros C$",
+   "non_negative": 1,
    "options": "Currency:NIO:name",
+   "precision": "2",
    "read_only": 1
   },
   {
@@ -203,15 +217,29 @@
    "reqd": 1
   },
   {
+   "default": "0.00",
    "fieldname": "total_nationalization_costs",
    "fieldtype": "Currency",
-   "label": "Total de Nacionalizacion",
+   "label": "Total de Nacionalizacion C$",
+   "non_negative": 1,
    "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "default": "0.00",
+   "fieldname": "grand_total_nationalization",
+   "fieldtype": "Currency",
+   "label": "Costo Global de Nacionalizacion C$",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
    "read_only": 1
   }
  ],
  "links": [],
- "modified": "2023-10-12 15:28:30.801127",
+ "modified": "2023-10-19 18:05:53.246019",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",

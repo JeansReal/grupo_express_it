@@ -16,6 +16,7 @@ class Policy(Document):
 		cif_costs: DF.Table[PolicyCIFCost]
 		company: DF.Literal["", "Grupo Express, S.A.", "Grupo SyM, S.A.", "Importadora Internacional, S.A."]
 		exchange_rate: DF.Currency
+		grand_total_nationalization: DF.Currency
 		invoice: DF.Data | None
 		items: DF.Table[PolicyItem]
 		nationalization_costs: DF.Table[PolicyNationalizationCost]
