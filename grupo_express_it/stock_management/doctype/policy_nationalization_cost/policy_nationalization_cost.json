@@ -14,8 +14,7 @@
   "amount_usd",
   "exchange_rate",
   "amount_nio",
-  "iva",
-  "total"
+  "iva"
  ],
  "fields": [
   {
@@ -60,7 +59,7 @@
    "fieldname": "amount_usd",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Amount",
+   "label": "Monto $",
    "non_negative": 1,
    "precision": "2"
   },
@@ -69,7 +68,7 @@
    "fieldname": "exchange_rate",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Exchange Rate",
+   "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "7"
@@ -79,7 +78,7 @@
    "fieldname": "amount_nio",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Amount",
+   "label": "Monto C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2"
@@ -89,28 +88,16 @@
    "fieldname": "iva",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "IVA",
+   "label": "I.V.A C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "2",
-   "read_only": 1
-  },
-  {
-   "columns": 1,
-   "fieldname": "total",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Total",
-   "non_negative": 1,
-   "options": "Currency:NIO:name",
-   "precision": "2",
-   "read_only": 1
+   "precision": "2"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-10-10 11:51:46.880862",
+ "modified": "2023-10-19 16:41:52.471432",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Nationalization Cost",
