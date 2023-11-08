@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "prompt",
+ "creation": "2023-10-30 09:31:54.108850",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "column_break_gxbr",
+  "company",
+  "column_break_qsxc",
+  "section_break_di2r"
+ ],
+ "fields": [
+  {
+   "bold": 1,
+   "fieldname": "company",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "\nGrupo Express, S.A.\nGrupo SyM, S.A.\nImportadora Internacional, S.A.",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_gxbr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_qsxc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_di2r",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "links": [],
+ "modified": "2023-10-30 09:44:44.011610",
+ "modified_by": "Administrator",
+ "module": "Stock Management",
+ "name": "Stock Sales Invoice",
+ "naming_rule": "Set by user",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
