@@ -22,9 +22,8 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 	}
 
 	df_on_setup(grid) {
-		grid.grid_pagination.page_length = 75; // Increase Pagination
-		grid.form_grid.find('.grid-heading-row').addClass('disable-click'); // Disable Click on Header. See CSS for check
-		grid.form_grid.append('<div class="grid-footer-row bold disable-click"></div>'); // Make Footer Row for totals
+		grid.grid_pagination.page_length = 75; // Increase Pagination Limit
+		grid.form_grid.append('<div class="grid-footer-row disable-click bold"></div>'); // Make Footer Row for totals
 	}
 
 	grid_make_head() {
