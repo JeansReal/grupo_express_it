@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "provider",
+  "description",
   "type",
   "posting_date",
   "amount_usd",
@@ -14,7 +15,7 @@
  ],
  "fields": [
   {
-   "columns": 6,
+   "columns": 3,
    "fieldname": "provider",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -47,6 +48,7 @@
    "precision": "7"
   },
   {
+   "bold": 1,
    "columns": 1,
    "default": "0.00",
    "fieldname": "amount_usd",
@@ -54,7 +56,8 @@
    "in_list_view": 1,
    "label": "Monto $",
    "non_negative": 1,
-   "precision": "2"
+   "precision": "2",
+   "reqd": 1
   },
   {
    "columns": 1,
@@ -66,12 +69,18 @@
    "options": "Currency:NIO:name",
    "precision": "2",
    "read_only": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "label": "Description"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-10-19 16:41:12.988733",
+ "modified": "2023-11-08 22:43:35.145164",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy CIF Cost",

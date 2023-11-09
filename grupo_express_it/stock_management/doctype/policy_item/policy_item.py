@@ -17,7 +17,7 @@ class PolicyItem(Document):
 		fob_unit_price: DF.Currency
 		freight_cost: DF.Currency
 		insurance_cost: DF.Currency
-		item: DF.Link
+		item: DF.Data
 		nationalization_total: DF.Currency
 		parent: DF.Data
 		parentfield: DF.Data
@@ -25,6 +25,6 @@ class PolicyItem(Document):
 		qty: DF.Float
 		total_price: DF.Currency
 		unit_price: DF.Currency
-		uom: DF.Literal["Unidad", "Docenas", "Gruesas", "Millar"]
+		uom: DF.Literal["Unidad", "Docenas", "Gruesas", "Millar", "Yardas"]
 	# end: auto-generated types
 	pass

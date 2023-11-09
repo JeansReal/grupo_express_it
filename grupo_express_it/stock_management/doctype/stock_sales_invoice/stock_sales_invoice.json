@@ -11,7 +11,13 @@
   "column_break_gxbr",
   "company",
   "column_break_qsxc",
-  "section_break_di2r"
+  "section_break_dczd",
+  "column_break_odnr",
+  "column_break_fydf",
+  "posting_date",
+  "currency_exchange",
+  "section_break_d1jr",
+  "items"
  ],
  "fields": [
   {
@@ -34,18 +40,64 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_di2r",
+   "fieldname": "section_break_dczd",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_odnr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fydf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_d1jr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Stock Sales Invoice Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency_exchange",
+   "fieldtype": "Currency",
+   "label": "Tasa de Cambio C$",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "7",
+   "reqd": 1
   }
  ],
  "links": [],
- "modified": "2023-10-30 09:44:44.011610",
+ "modified": "2023-11-08 22:44:59.809121",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
  "naming_rule": "Set by user",
  "owner": "Administrator",
  "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Desk User",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
   {
    "create": 1,
    "delete": 1,
@@ -55,11 +107,13 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

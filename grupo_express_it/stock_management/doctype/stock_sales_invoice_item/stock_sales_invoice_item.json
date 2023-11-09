@@ -1,0 +1,38 @@
+{
+ "actions": [],
+ "creation": "2023-11-08 09:21:10.919296",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "qty",
+  "item"
+ ],
+ "fields": [
+  {
+   "columns": 1,
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Data",
+   "label": "Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-11-08 22:46:29.284144",
+ "modified_by": "Administrator",
+ "module": "Stock Management",
+ "name": "Stock Sales Invoice Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

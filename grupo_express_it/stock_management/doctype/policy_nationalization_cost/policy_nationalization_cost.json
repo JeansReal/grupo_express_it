@@ -8,9 +8,9 @@
  "field_order": [
   "provider",
   "description",
-  "type",
-  "posting_date",
   "reference",
+  "posting_date",
+  "type",
   "amount_usd",
   "exchange_rate",
   "amount_nio",
@@ -18,7 +18,7 @@
  ],
  "fields": [
   {
-   "columns": 1,
+   "columns": 2,
    "fieldname": "provider",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -74,6 +74,7 @@
    "precision": "7"
   },
   {
+   "bold": 1,
    "columns": 1,
    "fieldname": "amount_nio",
    "fieldtype": "Currency",
@@ -81,7 +82,8 @@
    "label": "Monto C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "2"
+   "precision": "2",
+   "reqd": 1
   },
   {
    "columns": 1,
@@ -97,7 +99,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-10-19 16:41:52.471432",
+ "modified": "2023-11-08 22:44:01.765269",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Nationalization Cost",

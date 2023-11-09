@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
@@ -241,7 +240,7 @@
   }
  ],
  "links": [],
- "modified": "2023-11-08 21:22:04.149987",
+ "modified": "2023-11-08 22:42:37.110520",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
@@ -256,6 +255,7 @@
    "read": 1,
    "report": 1,
    "role": "Desk User",
+   "select": 1,
    "share": 1,
    "write": 1
   },
