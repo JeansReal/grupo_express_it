@@ -14,7 +14,7 @@ class Policy(Document):
 		from grupo_express_it.stock_management.doctype.policy_nationalization_cost.policy_nationalization_cost import PolicyNationalizationCost
 
 		cif_costs: DF.Table[PolicyCIFCost]
-		company: DF.Literal["", "Grupo Express, S.A.", "Grupo SyM, S.A.", "Importadora Internacional, S.A."]
+		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		exchange_rate: DF.Currency
 		grand_total_nationalization: DF.Currency
 		invoice: DF.Data | None
