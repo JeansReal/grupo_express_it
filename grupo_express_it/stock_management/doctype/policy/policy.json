@@ -1,4 +1,6 @@
 {
+ "_comments": "[]",
+ "_liked_by": "[]",
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
@@ -240,7 +242,7 @@
   }
  ],
  "links": [],
- "modified": "2023-11-08 22:42:37.110520",
+ "modified": "2023-11-08 22:53:06.220109",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
@@ -268,6 +270,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   }
