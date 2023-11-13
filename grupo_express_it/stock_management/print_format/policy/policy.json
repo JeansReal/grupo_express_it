@@ -1,5 +1,5 @@
 {
- "absolute_value": 1,
+ "absolute_value": 0,
  "align_labels_right": 0,
  "creation": "2023-11-13 09:33:55.525623",
  "css": "h4 {\n    margin-top: 2px;\n    margin-bottom: 2px;\n    font-size: 14px;\n}\n\n.row > h4 {\n    text-align: center;\n}\n\n.table-bordered {\n    margin-top: 0px;\n    margin-bottom: 5px;\n}\n\n.table-bordered > thead > tr > th {\n    text-align: center;\n    vertical-align: middle !important;\n    line-height: 1.2;\n    \n}",
@@ -18,7 +18,7 @@
  "margin_left": 10.0,
  "margin_right": 10.0,
  "margin_top": 5.0,
- "modified": "2023-11-13 13:00:26.943848",
+ "modified": "2023-11-13 13:22:43.540071",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
