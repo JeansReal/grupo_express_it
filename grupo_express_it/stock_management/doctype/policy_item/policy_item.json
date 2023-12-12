@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "creation": "2023-07-26 19:15:51.131584",
  "doctype": "DocType",
@@ -48,7 +46,7 @@
    "fieldname": "uom",
    "fieldtype": "Select",
    "label": "UOM",
-   "options": "Unidad\nDocenas\nMillar\nGruesas\nYardas\nMetros\nRollo\nSet\nPaquetes\nKG",
+   "options": "Unidad\nDocenas\nMillar\nGruesas\nYardas\nMetros\nRollo\nSet\nPaquetes\nPieza\nKG\nLibras",
    "reqd": 1
   },
   {
@@ -166,7 +164,7 @@
  ],
  "istable": 1,
  "links": [],
- "modified": "2023-11-17 08:36:51.321075",
+ "modified": "2023-12-12 11:35:02.207977",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Item",

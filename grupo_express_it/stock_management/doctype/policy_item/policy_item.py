@@ -25,6 +25,6 @@ class PolicyItem(Document):
 		qty: DF.Float
 		total_price: DF.Currency
 		unit_price: DF.Currency
-		uom: DF.Literal["Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "KG"]
+		uom: DF.Literal["Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "KG", "Libras"]
 	# end: auto-generated types
 	pass
