@@ -16,7 +16,19 @@ frappe.ui.form.on('Policy', {
 	refresh(frm) {},
 	onload_post_render(frm) {},
 
-	exchange_rate: (frm) => frm.events.calculate_items_totals(frm), // Recalculate on Exchange Rate Change
+	exchange_rate: (frm) => {
+		(frm.doc.cif_costs).forEach((row) => {
+			row.exchange_rate = frm.doc.exchange_rate; // Update Exchange Rate in CIF Costs
+			frm.events.calculate_exchange_rate(frm, 'cif_costs', row); // Recalculate Amount in NIO
+		});
+
+		frm.events.calculate_items_totals(frm);  // Recalculate on Exchange Rate Change
+	},
+
+	calculate_exchange_rate(frm, table, table_row) {
+		table_row.amount_nio = table_row.amount_usd * table_row.exchange_rate;
+		frm.refresh_field(table);  // FIXME: Optimize, Only Update Row
+	},
 
 	calculate_items_totals(frm, item_row = null) {
 		if (item_row) {
@@ -71,11 +83,6 @@ frappe.ui.form.on('Policy', {
 		frm.events.calculate_items_totals(frm);  // We Must Recalculate Items Totals
 	},
 
-	calculate_exchange_rate(frm, table, table_row) {
-		table_row.amount_nio = table_row.amount_usd * table_row.exchange_rate;
-		frm.refresh_field(table);  // FIXME: Optimize, Only Update Row
-	},
-
 	calculate_cif_costs(frm) {
 		frm.events.calculate_table_totals(frm, 'cif_costs', 'amount_usd', 'total_cif',
 			{'Flete': 'total_freight', 'Seguro': 'total_insurance'}
@@ -97,6 +104,10 @@ frappe.ui.form.on("Policy Item", {
 
 frappe.ui.form.on('Policy CIF Cost', {
 	cif_costs_remove: (frm) => frm.events.calculate_cif_costs(frm),
+	cif_costs_add: (frm, cdt, cdn) => {
+		locals[cdt][cdn].exchange_rate = frm.doc.exchange_rate; // Set Exchange Rate on Row Add
+		frm.refresh_field('cif_costs');  // FIXME: Optimize, Only Update Row
+	},
 	type: (frm) => frm.events.calculate_cif_costs(frm),
 	amount_usd: (frm, cdt, cdn) => {
 		frm.events.calculate_cif_costs(frm);    // Recalculate Totals(CIF and Items)
@@ -115,4 +126,3 @@ frappe.ui.form.on('Policy Nationalization Cost', {
 	},
 	amount_nio: (frm) => frm.events.calculate_nationalization_costs(frm)
 });
-//118 -> TODO: Delete Exchange Rate from CIF Costs

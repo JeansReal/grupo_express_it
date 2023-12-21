@@ -38,6 +38,7 @@
    "label": "Date"
   },
   {
+   "bold": 1,
    "columns": 1,
    "fieldname": "exchange_rate",
    "fieldtype": "Currency",
@@ -45,7 +46,8 @@
    "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "7"
+   "precision": "7",
+   "read_only": 1
   },
   {
    "bold": 1,
@@ -80,7 +82,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-11-08 22:43:35.145164",
+ "modified": "2023-12-21 13:58:19.111142",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy CIF Cost",
