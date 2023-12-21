@@ -1,10 +1,18 @@
 frappe.ui.form.on('Policy', {
 
 	setup(frm) {
-		frm.page.sidebar.toggle(false); // Hide Sidebar
+		frm.page.sidebar.toggle(false);
 	},
 
-	before_load(frm) {},
+	before_load(frm) {
+		if (frm.is_new()) {  // Adding default Rows
+			frm.add_child('cif_costs', {type: 'Flete'});
+			frm.add_child('cif_costs', {type: 'Seguro'});
+			frm.add_child('nationalization_costs', {type: 'Impuestos Aduaneros'});
+			frm.add_child('nationalization_costs', {type: 'Nationalizacion'});
+		}
+	},
+
 	refresh(frm) {},
 	onload_post_render(frm) {},
 
@@ -107,3 +115,4 @@ frappe.ui.form.on('Policy Nationalization Cost', {
 	},
 	amount_nio: (frm) => frm.events.calculate_nationalization_costs(frm)
 });
+//118 -> TODO: Delete Exchange Rate from CIF Costs

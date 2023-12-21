@@ -24,6 +24,7 @@ class Policy(Document):
 		posting_date: DF.Date | None
 		provider: DF.Data | None
 		total_cif: DF.Currency
+		total_cost: DF.Currency
 		total_customs_taxes: DF.Currency
 		total_fob: DF.Currency
 		total_freight: DF.Currency

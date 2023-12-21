@@ -1,6 +1,4 @@
 {
- "_comments": "[]",
- "_liked_by": "[]",
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
@@ -29,6 +27,7 @@
   "nationalization_costs",
   "section_break_2pl7",
   "total_qty",
+  "total_cost",
   "column_break_oost",
   "column_break_gph5",
   "total_fob",
@@ -77,6 +76,7 @@
    "bold": 1,
    "fieldname": "total_qty",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "Cantidad Total",
    "non_negative": 1,
    "precision": "2",
@@ -100,7 +100,6 @@
    "bold": 1,
    "fieldname": "policy",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Policy",
    "reqd": 1,
@@ -118,8 +117,11 @@
    "label": "Date"
   },
   {
+   "bold": 1,
    "fieldname": "invoice",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Invoice No"
   },
   {
@@ -150,7 +152,6 @@
    "default": "0.00",
    "fieldname": "total_fob",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "FOB Total $",
    "non_negative": 1,
    "precision": "2",
@@ -161,7 +162,6 @@
    "default": "0.00",
    "fieldname": "total_cif",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "Total Costo CIF $",
    "non_negative": 1,
    "precision": "2",
@@ -239,10 +239,21 @@
    "options": "Currency:NIO:name",
    "precision": "2",
    "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Costo Total C$",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2023-11-08 22:53:06.220109",
+ "modified": "2023-12-20 11:15:53.604549",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
