@@ -28,7 +28,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Company",
-   "options": "\nGrupo Express, S.A.\nGrupo SyM, S.A.\nImportadora Internacional, S.A.",
+   "options": "\nGrupo SyM, S.A.\nGrupo Express, S.A.\nImportadora Internacional, S.A.\nGrupo de Importaciones Express, S.A.",
    "reqd": 1,
    "search_index": 1
   },
@@ -53,8 +53,11 @@
    "fieldtype": "Column Break"
   },
   {
+   "bold": 1,
    "fieldname": "posting_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Date",
    "reqd": 1
   },
@@ -80,7 +83,7 @@
   }
  ],
  "links": [],
- "modified": "2023-11-08 22:53:03.700602",
+ "modified": "2023-12-21 14:15:14.326519",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
