@@ -9,12 +9,21 @@ frappe.ui.form.on('Policy', {
 			frm.add_child('cif_costs', {type: 'Flete'});
 			frm.add_child('cif_costs', {type: 'Seguro'});
 			frm.add_child('nationalization_costs', {type: 'Impuestos Aduaneros'});
-			frm.add_child('nationalization_costs', {type: 'Nationalizacion'});
+			frm.add_child('nationalization_costs', {type: 'Nacionalizacion'});
 		}
 	},
 
 	refresh(frm) {},
 	onload_post_render(frm) {},
+	validate(frm) {
+		// These are here for a final check before saving
+		frm.doc.total_qty = frm.get_sum('items', 'qty'); // Calculate Total QTY
+		frm.doc.total_cost = frm.get_sum('items', 'total_price'); // Calculate Total QTY
+	},
+
+	policy: (frm) => frm.events.sanitize_field(frm, 'policy'),
+	invoice: (frm) => frm.events.sanitize_field(frm, 'invoice'),
+	provider: (frm) => frm.events.sanitize_field(frm, 'provider'),
 
 	exchange_rate: (frm) => {
 		(frm.doc.cif_costs).forEach((row) => {
@@ -23,6 +32,12 @@ frappe.ui.form.on('Policy', {
 		});
 
 		frm.events.calculate_items_totals(frm);  // Recalculate on Exchange Rate Change
+	},
+
+	// START Custom Functions
+	sanitize_field(frm, field) {
+		frm.doc[field] = frm.doc[field].trim();
+		frm.refresh_field(field);
 	},
 
 	calculate_exchange_rate(frm, table, table_row) {
@@ -60,9 +75,13 @@ frappe.ui.form.on('Policy', {
 				row.total_price = row.cif_total_nio + row.customs_taxes + row.nationalization_total; // Calculate Total Price
 				row.unit_price = row.total_price / row.qty || 0;									 // Calculate Unit Price
 			});
+
+			frm.doc.total_cost = frm.get_sum('items', 'total_price'); // Calculate Total Cost
+		} else {
+			frm.doc.total_cost = 0; // Reset Total Cost
 		}
 
-		frm.refresh_field('items'); // Always Refresh. Even when its empty. So we can clear the footer. See grid_make_footer()
+		refresh_many(['items', 'total_cost']); // Always Refresh. Even when its empty. So we can clear the footer. See grid_make_footer()
 	},
 
 	calculate_table_totals(frm, table, table_amount, frm_total_field, child_type_to_frm_mapping) {
@@ -98,6 +117,7 @@ frappe.ui.form.on('Policy', {
 
 frappe.ui.form.on("Policy Item", {
 	items_remove: (frm) => frm.events.calculate_items_totals(frm, 'item_removed'), // FIXME: Quick Fix
+	item: (frm, cdt, cdn) => locals[cdt][cdn].item = locals[cdt][cdn].item.trim(), // Sanitize Item Code
 	qty: (frm, cdt, cdn) => frm.events.calculate_items_totals(frm, locals[cdt][cdn]),
 	fob_unit_price: (frm, cdt, cdn) => frm.events.calculate_items_totals(frm, locals[cdt][cdn])
 });
@@ -108,6 +128,10 @@ frappe.ui.form.on('Policy CIF Cost', {
 		locals[cdt][cdn].exchange_rate = frm.doc.exchange_rate; // Set Exchange Rate on Row Add
 		frm.refresh_field('cif_costs');  // FIXME: Optimize, Only Update Row
 	},
+
+	provider: (frm, cdt, cdn) => locals[cdt][cdn].provider = locals[cdt][cdn].provider.trim(),          // Sanitize Field
+	description: (frm, cdt, cdn) => locals[cdt][cdn].description = locals[cdt][cdn].description.trim(), // Sanitize Field
+
 	type: (frm) => frm.events.calculate_cif_costs(frm),
 	amount_usd: (frm, cdt, cdn) => {
 		frm.events.calculate_cif_costs(frm);    // Recalculate Totals(CIF and Items)
@@ -118,6 +142,11 @@ frappe.ui.form.on('Policy CIF Cost', {
 
 frappe.ui.form.on('Policy Nationalization Cost', {
 	nationalization_costs_remove: (frm) => frm.events.calculate_nationalization_costs(frm),
+
+	provider: (frm, cdt, cdn) => locals[cdt][cdn].provider = locals[cdt][cdn].provider.trim(),        // Sanitize Fields
+	description: (frm, cdt, cdn) => locals[cdt][cdn].description = locals[cdt][cdn].description.trim(),
+	reference: (frm, cdt, cdn) => locals[cdt][cdn].reference = locals[cdt][cdn].reference.trim(),
+
 	type: (frm) => frm.events.calculate_nationalization_costs(frm),
 	amount_usd: (frm, cdt, cdn) => frm.trigger('exchange_rate', cdt, cdn), // Recalculate Amount in NIO
 	exchange_rate: (frm, cdt, cdn) => {
