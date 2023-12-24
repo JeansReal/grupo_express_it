@@ -4,7 +4,5 @@ frappe.ui.form.on("Stock Sales Invoice", {
 		frm.page.sidebar.toggle(false);
 	},
 
-	refresh(frm) {
-
-	},
+	refresh(frm) {},
 });

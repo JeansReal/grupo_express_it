@@ -15,5 +15,8 @@ class StockSalesInvoice(Document):
 		currency_exchange: DF.Currency
 		items: DF.Table[StockSalesInvoiceItem]
 		posting_date: DF.Date
+		subtotal: DF.Currency
+		taxes: DF.Currency
+		total: DF.Currency
 	# end: auto-generated types
 	pass

@@ -9,6 +9,8 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "section_break_ulpa",
+  "column_break_jkjt",
   "column_break_9llxh",
   "company",
   "column_break_6rsat",
@@ -56,13 +58,14 @@
    "allow_bulk_edit": 1,
    "fieldname": "items",
    "fieldtype": "Table",
+   "label": "Items",
    "options": "Policy Item",
    "reqd": 1
   },
   {
    "fieldname": "section_break_tcxra",
    "fieldtype": "Section Break",
-   "label": "Items"
+   "hide_border": 1
   },
   {
    "fieldname": "column_break_9llxh",
@@ -139,7 +142,8 @@
   },
   {
    "fieldname": "section_break_txgw",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hide_border": 1
   },
   {
    "fieldname": "cif_costs",
@@ -250,10 +254,18 @@
    "options": "Currency:NIO:name",
    "precision": "2",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ulpa",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_jkjt",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2023-12-20 11:15:53.604549",
+ "modified": "2023-12-24 13:18:02.726383",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",

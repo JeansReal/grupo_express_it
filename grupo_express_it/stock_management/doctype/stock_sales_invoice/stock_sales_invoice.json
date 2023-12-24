@@ -9,16 +9,26 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "column_break_gxbr",
+  "section_break_riaj",
+  "column_break_gdom",
+  "column_break_fiku",
   "company",
-  "column_break_qsxc",
-  "section_break_dczd",
-  "column_break_odnr",
-  "column_break_fydf",
+  "column_break_fsfs",
+  "section_break_qgjc",
+  "column_break_bdjq",
+  "column_break_iqfq",
+  "column_break_hzkv",
   "posting_date",
   "currency_exchange",
-  "section_break_d1jr",
-  "items"
+  "section_break_sjue",
+  "items",
+  "section_break_cvof",
+  "column_break_igqv",
+  "column_break_krqd",
+  "column_break_oiby",
+  "subtotal",
+  "taxes",
+  "total"
  ],
  "fields": [
   {
@@ -33,26 +43,6 @@
    "search_index": 1
   },
   {
-   "fieldname": "column_break_gxbr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_qsxc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_dczd",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_odnr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_fydf",
-   "fieldtype": "Column Break"
-  },
-  {
    "bold": 1,
    "fieldname": "posting_date",
    "fieldtype": "Date",
@@ -60,10 +50,6 @@
    "in_standard_filter": 1,
    "label": "Date",
    "reqd": 1
-  },
-  {
-   "fieldname": "section_break_d1jr",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "items",
@@ -80,10 +66,94 @@
    "options": "Currency:NIO:name",
    "precision": "7",
    "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "subtotal",
+   "fieldtype": "Currency",
+   "label": "Sub Total",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "taxes",
+   "fieldtype": "Currency",
+   "label": "IVA",
+   "non_negative": 1,
+   "options": "Currency:NIO:name",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_sjue",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "section_break_qgjc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bdjq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_hzkv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_iqfq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_riaj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_gdom",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fiku",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fsfs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_igqv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_cvof",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_oiby",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_krqd",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2023-12-21 14:15:14.326519",
+ "modified": "2023-12-24 13:13:29.420670",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
