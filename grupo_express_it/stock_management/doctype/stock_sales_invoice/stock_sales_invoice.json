@@ -28,7 +28,8 @@
   "column_break_oiby",
   "subtotal",
   "taxes",
-  "total"
+  "total",
+  "amended_from"
  ],
  "fields": [
   {
@@ -150,10 +151,21 @@
   {
    "fieldname": "column_break_krqd",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Stock Sales Invoice",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2023-12-24 13:13:29.420670",
+ "modified": "2023-12-26 10:08:59.308652",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",

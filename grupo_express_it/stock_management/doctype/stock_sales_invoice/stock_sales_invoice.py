@@ -11,6 +11,7 @@ class StockSalesInvoice(Document):
 		from frappe.types import DF
 		from grupo_express_it.stock_management.doctype.stock_sales_invoice_item.stock_sales_invoice_item import StockSalesInvoiceItem
 
+		amended_from: DF.Link | None
 		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		currency_exchange: DF.Currency
 		items: DF.Table[StockSalesInvoiceItem]
