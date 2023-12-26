@@ -22,7 +22,9 @@ frappe.ui.form.on('Sales Invoice', {
 		});
 	},
 
-	refresh(frm) {},
+	onload_post_render(frm) {
+		frm.fields_dict['items'].grid.set_multiple_add('item'); // This uses our custom query.
+	},
 
 	customer(frm) {
 		if (!frm.doc.customer) {
