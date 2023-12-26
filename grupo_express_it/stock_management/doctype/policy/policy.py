@@ -13,6 +13,7 @@ class Policy(Document):
 		from grupo_express_it.stock_management.doctype.policy_item.policy_item import PolicyItem
 		from grupo_express_it.stock_management.doctype.policy_nationalization_cost.policy_nationalization_cost import PolicyNationalizationCost
 
+		amended_from: DF.Link | None
 		cif_costs: DF.Table[PolicyCIFCost]
 		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		exchange_rate: DF.Currency
