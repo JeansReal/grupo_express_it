@@ -44,7 +44,7 @@
    "fieldname": "price",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Precio",
+   "label": "Precio C$",
    "non_negative": 1,
    "precision": "2"
   },
@@ -54,7 +54,7 @@
    "fieldname": "total",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total",
+   "label": "Total C$",
    "non_negative": 1,
    "precision": "2"
   }
@@ -62,7 +62,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-12-21 14:17:20.545145",
+ "modified": "2023-12-26 14:53:11.311135",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice Item",

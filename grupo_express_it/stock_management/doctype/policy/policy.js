@@ -15,11 +15,7 @@ frappe.ui.form.on('Policy', {
 
 	refresh(frm) {},
 	onload_post_render(frm) {},
-	validate(frm) {
-		// These are here for a final check before saving
-		frm.doc.total_qty = frm.get_sum('items', 'qty'); // Calculate Total QTY
-		frm.doc.total_cost = frm.get_sum('items', 'total_price'); // Calculate Total QTY
-	},
+	validate(frm) {},
 
 	policy: (frm) => frm.events.sanitize_field(frm, 'policy'),
 	invoice: (frm) => frm.events.sanitize_field(frm, 'invoice'),
@@ -76,9 +72,9 @@ frappe.ui.form.on('Policy', {
 				row.unit_price = row.total_price / row.qty || 0;									 // Calculate Unit Price
 			});
 
-			frm.doc.total_cost = frm.get_sum('items', 'total_price'); // Calculate Total Cost
+			frm.doc.total_cost = frm.get_sum('items', 'total_price') || 0.00; // Calculate Total Cost
 		} else {
-			frm.doc.total_cost = 0; // Reset Total Cost
+			frm.doc.total_cost = 0.00; // Reset Total Cost
 		}
 
 		refresh_many(['items', 'total_cost']); // Always Refresh. Even when its empty. So we can clear the footer. See grid_make_footer()

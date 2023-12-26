@@ -33,4 +33,12 @@ class Policy(Document):
 		total_nationalization_costs: DF.Currency
 		total_qty: DF.Float
 	# end: auto-generated types
-	pass
+
+	def before_validate(self):
+		# These are here for a final check before saving. THESE are the Most Important fields.
+		# FIXME: How about the others?
+		self.total_qty = self.total_cost = 0.00  # noqa type: ignore # FIXME
+
+		for item in self.items:
+			self.total_qty += item.qty           # Calculate Total QTY
+			self.total_cost += item.total_price  # Calculate Total Cost

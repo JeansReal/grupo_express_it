@@ -11,6 +11,7 @@
  "field_order": [
   "section_break_ulpa",
   "column_break_jkjt",
+  "amended_from",
   "column_break_9llxh",
   "company",
   "column_break_6rsat",
@@ -40,8 +41,7 @@
   "column_break_xf34",
   "grand_total_nationalization",
   "total_customs_taxes",
-  "total_nationalization_costs",
-  "amended_from"
+  "total_nationalization_costs"
  ],
  "fields": [
   {
@@ -78,6 +78,7 @@
   },
   {
    "bold": 1,
+   "default": "0.00",
    "fieldname": "total_qty",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -247,6 +248,7 @@
   },
   {
    "bold": 1,
+   "default": "0.00",
    "fieldname": "total_cost",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -277,7 +279,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-26 10:06:26.524127",
+ "modified": "2023-12-26 10:39:13.859078",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",

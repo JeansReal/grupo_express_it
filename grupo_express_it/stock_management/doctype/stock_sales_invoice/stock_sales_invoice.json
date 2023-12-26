@@ -11,6 +11,7 @@
  "field_order": [
   "section_break_riaj",
   "column_break_gdom",
+  "amended_from",
   "column_break_fiku",
   "company",
   "column_break_fsfs",
@@ -28,8 +29,7 @@
   "column_break_oiby",
   "subtotal",
   "taxes",
-  "total",
-  "amended_from"
+  "total"
  ],
  "fields": [
   {
@@ -72,7 +72,7 @@
    "bold": 1,
    "fieldname": "subtotal",
    "fieldtype": "Currency",
-   "label": "Sub Total",
+   "label": "Sub Total C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -83,7 +83,7 @@
    "fieldname": "total",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Total",
+   "label": "Total C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -93,7 +93,7 @@
    "bold": 1,
    "fieldname": "taxes",
    "fieldtype": "Currency",
-   "label": "IVA",
+   "label": "I.V.A C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -165,7 +165,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-26 10:08:59.308652",
+ "modified": "2023-12-26 14:52:06.389600",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
