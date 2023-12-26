@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"K7h5J-Fhad\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock Management</span><br>\",\"col\":12}},{\"id\":\"CPzba7YRYY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Policy\",\"col\":4}},{\"id\":\"e9Y-2Y4eS5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Sales Invoice\",\"col\":3}}]",
+ "content": "[{\"id\":\"K7h5J-Fhad\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock Management</span><br>\",\"col\":12}},{\"id\":\"PYfC6GMfoO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CPzba7YRYY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Policy\",\"col\":4}},{\"id\":\"e9Y-2Y4eS5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Sales Invoice\",\"col\":3}}]",
  "creation": "2023-07-26 22:50:29.445737",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Stock",
  "links": [],
- "modified": "2023-11-08 09:07:36.292084",
+ "modified": "2023-12-26 15:10:10.079551",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock",
