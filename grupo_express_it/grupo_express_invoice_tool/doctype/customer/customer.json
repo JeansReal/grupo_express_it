@@ -5,6 +5,7 @@
  "allow_rename": 1,
  "autoname": "field:full_name",
  "creation": "2021-01-13 11:37:35.819791",
+ "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -87,7 +88,6 @@
    "options": "Email"
   }
  ],
- "icon": "customer",
  "index_web_pages_for_search": 1,
  "links": [
   {
@@ -95,10 +95,11 @@
    "link_fieldname": "customer"
   }
  ],
- "modified": "2021-04-17 07:34:32.019946",
+ "modified": "2023-12-26 16:12:54.873448",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Customer",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -118,5 +119,6 @@
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "states": [],
  "track_changes": 1
 }

@@ -1,25 +1,24 @@
 frappe.ui.form.on('Customer', {
 	setup(frm) {
-		frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
+		frm.page.sidebar.toggle(false);
 	},
 
 	onload(frm) {
 		frm.set_query('item', 'pricing_rules', (doc) => {
 			return {
 				filters: {
-					item_name: ['not in', doc.pricing_rules.map(p => p.item)], // Only shows no added items
+					item_name: ['not in', doc.pricing_rules.map(p => p.item)], // Show products that are not the list
 					type: ['not in', ['Complemento']]
 				}
 			};
 		});
 	},
 
-	refresh(frm) {
-		frm.set_currency_labels(['valuation_rate'], 'USD', 'pricing_rules');
+	onload_post_render(frm) {
+		frm.fields_dict['pricing_rules'].grid.set_multiple_add('item'); // This uses our custom query.
 	}
 });
 
-// Child Table
 frappe.ui.form.on('Pricing Rule', {
 	//TODO: Dynamically change the description based on type of margin
 });

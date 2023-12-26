@@ -1,6 +1,6 @@
 frappe.ui.form.on('Sales Invoice', {
 	setup(frm) {
-		frm.page.sidebar.toggle(false); // Hide Sidebar to better focus on the doc
+		frm.page.sidebar.toggle(false);
 	},
 
 	onload(frm) {
@@ -22,10 +22,7 @@ frappe.ui.form.on('Sales Invoice', {
 		});
 	},
 
-	refresh(frm) {
-		frm.set_currency_labels(['total', 'in_words'], 'USD');
-		frm.set_currency_labels(['amount', 'invoiced_amount', 'valuation_rate'], 'USD', 'items');
-	},
+	refresh(frm) {},
 
 	customer(frm) {
 		if (!frm.doc.customer) {
@@ -53,7 +50,7 @@ frappe.ui.form.on('Sales Invoice', {
 				method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.money_in_words',
 				args: {number: frm.doc.total},
 				callback: (r) => frm.doc.in_words = r.message,
-				async: false
+				async: false  // TODO: 26 Dic 2023 -> check why this is needed
 			});
 		} else {
 			frm.doc.in_words = '';

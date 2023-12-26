@@ -4,6 +4,23 @@ from frappe.utils import in_words
 
 
 class SalesInvoice(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+		from grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice_item.sales_invoice_item import SalesInvoiceItem
+
+		customer: DF.Link
+		customer_name: DF.Data | None
+		in_words: DF.Data | None
+		items: DF.Table[SalesInvoiceItem]
+		posting_date: DF.Date | None
+		posting_time: DF.Time | None
+		total: DF.Currency
+	# end: auto-generated types
 	pass
 
 
