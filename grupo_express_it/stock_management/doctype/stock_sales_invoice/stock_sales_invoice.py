@@ -1,3 +1,4 @@
+import frappe
 from frappe.model.document import Document
 
 
@@ -20,4 +21,34 @@ class StockSalesInvoice(Document):
 		taxes: DF.Currency
 		total: DF.Currency
 	# end: auto-generated types
-	pass
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_policy_items(doctype, txt, searchfield, start, page_len, filters):
+	"""Returns items to be used for calculating taxes and charges"""
+
+	print(doctype)
+	print(txt)
+	print(searchfield)
+	print(start, page_len)
+	print(filters)
+
+	policy = frappe.qb.DocType('Policy')
+	policy_item = frappe.qb.DocType("Policy Item")
+
+	sql = (
+		frappe.qb.from_(policy_item)
+		.inner_join(policy).on(policy.name == policy_item.parent)
+		.where(policy.company == filters.get("company"))
+		.where(policy_item.item.like(f"%{txt}%"))
+		.orderby(policy.posting_date)
+	).select(
+		'name',
+		policy.name.as_('policy'), policy.posting_date.as_('date'),
+		'item', 'qty', 'uom', 'unit_price'
+	)
+
+	print(sql)
+
+	return sql.run(as_dict=True)
