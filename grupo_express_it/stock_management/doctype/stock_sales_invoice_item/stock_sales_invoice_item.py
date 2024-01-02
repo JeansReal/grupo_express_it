@@ -14,10 +14,11 @@ class StockSalesInvoiceItem(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
+		policy: DF.Link | None
 		policy_item: DF.Link | None
 		price: DF.Currency
 		qty: DF.Float
 		total: DF.Currency
-		uom: DF.Literal["Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "KG", "Libras"]
+		uom: DF.Literal["", "Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "KG", "Libras"]
 	# end: auto-generated types
 	pass
