@@ -23,32 +23,41 @@ class StockSalesInvoice(Document):
 	# end: auto-generated types
 
 
-@frappe.whitelist()
+@frappe.whitelist(methods=['GET'])
 @frappe.validate_and_sanitize_search_inputs
-def get_policy_items(doctype, txt, searchfield, start, page_len, filters):
+def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dict):
 	"""Returns items to be used for calculating taxes and charges"""
-
-	print(doctype)
-	print(txt)
-	print(searchfield)
-	print(start, page_len)
-	print(filters)
+	# TODO: Implement start and page_len
 
 	policy = frappe.qb.DocType('Policy')
-	policy_item = frappe.qb.DocType("Policy Item")
+	policy_item = frappe.qb.DocType(doctype)  # We can use the hardcoded doctype string
 
-	sql = (
+	sql_query = (
 		frappe.qb.from_(policy_item)
 		.inner_join(policy).on(policy.name == policy_item.parent)
-		.where(policy.company == filters.get("company"))
-		.where(policy_item.item.like(f"%{txt}%"))
-		.orderby(policy.posting_date)
-	).select(
-		'name',
-		policy.name.as_('policy'), policy.posting_date.as_('date'),
-		'item', 'qty', 'uom', 'unit_price'
+		.select('name', policy.name.as_('policy'), policy.posting_date.as_('date'), 'item', 'qty', 'uom', 'unit_price')
+		.where(policy.company == filters['company'])  # Mandatory. will throw if not present
+		.orderby(policy.posting_date, policy_item.qty)
 	)
 
-	print(sql)
+	# TODO: This can be simplified? maybe a Dict. Something like a mapping
+	if txt:
+		sql_query = sql_query.where(policy_item.item.like(f"%{txt}%"))
+	if policy_field := filters.get('policy'):
+		sql_query = sql_query.where(policy.name == policy_field)
+	if policy_date_field := filters.get('policy_date'):
+		sql_query = sql_query.where(policy.posting_date.between(*policy_date_field))
+	if uom_field := filters.get('uom'):
+		sql_query = sql_query.where(policy_item.uom == uom_field)
+	if qty_field := filters.get('qty'):
+		sql_query = sql_query.where(policy_item.qty >= qty_field)  # TODO: check if this is correct or even necessary
+	if unit_price_field := filters.get('unit_price'):
+		sql_query = sql_query.where(policy_item.unit_price <= unit_price_field)
 
-	return sql.run(as_dict=True)
+	results = sql_query.run(as_dict=as_dict)
+
+	for result in results:
+		result['qty'] = frappe.format_value(result['qty'], df={'fieldtype': 'Float'})
+		result['unit_price'] = frappe.format_value(result['unit_price'], df={'fieldtype': 'Currency'}, currency='NIO')
+
+	return results

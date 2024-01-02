@@ -53,7 +53,6 @@
    "reqd": 1
   },
   {
-   "allow_bulk_edit": 1,
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
@@ -166,7 +165,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-26 15:10:57.351655",
+ "modified": "2023-12-29 21:29:23.702822",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
