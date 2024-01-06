@@ -80,3 +80,15 @@
 		}
 	}
 }
+
+#page-Stock\ Sales\ Invoice {
+
+	// Change All Tables
+	.form-grid {
+		.grid-row > .row {
+			.col.grid-static-col[data-fieldtype="Select"], select[data-fieldtype="Select"] {
+				text-align: center !important; // Center this two types of elements
+			}
+		}
+	}
+}

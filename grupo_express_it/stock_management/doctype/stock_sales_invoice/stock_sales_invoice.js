@@ -22,7 +22,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 			frappe.throw(__('Please select Company first'));
 		}
 
-		new frappe.ui.form.MultiSelectDialog({
+		const dialog = new frappe.ui.form.MultiSelectDialog({
 			doctype: 'Policy Item', target: frm, size: 'extra-large', add_filters_group: false,
 			primary_action_label: __('Add Items'),
 
@@ -65,10 +65,59 @@ frappe.ui.form.on("Stock Sales Invoice", {
 			},
 
 			action(selections, args) {
-				console.log(selections);
-				console.log(args);
+				if (selections.length === 0) {
+					frappe.show_alert(__("Please select {0}", [this.doctype]));
+					return;
+				}
+
+				this.results.forEach(item => {
+					if (selections.includes(item.name)) {
+						let unit_price = parseFloat(item.unit_price.replace(/[^\d.]/g, '')); // TODO: QUICK FIX
+
+						frm.add_child('items', {
+							policy: item.policy,
+							policy_item: item.name,
+							item: item.item,
+							available_qty: item.qty,
+							unit_price: unit_price,
+
+							uom: item.uom
+						});
+					}
+				});
+
+				frm.refresh_field('items');
+				dialog.dialog.hide(); // Close the Dialog from the MultiSelectDialog class
 			}
 		});
+	},
+
+	// Custom METHODS
+	calculate_totals(frm, item_row) {
+		// This calculates Items table totals, and Invoice Totals
+
+		if (item_row.qty > item_row.available_qty) {
+			frappe.throw('La cantidad no puede ser mayor a la cantidad disponible');
+		}
+
+		if (item_row.price < item_row.unit_price) {
+			frappe.show_alert({message: 'El precio del item {0} es menor al precio de la poliza', indicator: 'yellow'});
+		}
+
+		item_row.total = item_row.qty * item_row.price; // Item Total
+
+		frm.doc.subtotal = frm.get_sum('items', 'total'); // Sub Total
+		frm.doc.taxes = frm.doc.subtotal * 0.15; // Taxes. I.V.A
+		frm.doc.total = frm.doc.subtotal + frm.doc.taxes; // Total
+
+		frm.refresh_fields(['items', 'subtotal', 'taxes', 'total']);
 	}
+
+});
+
+frappe.ui.form.on("Stock Sales Invoice Item", {
+
+	qty: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
+	price: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
 
 });
