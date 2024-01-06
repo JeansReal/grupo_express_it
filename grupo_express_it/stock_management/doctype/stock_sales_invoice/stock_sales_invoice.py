@@ -38,6 +38,7 @@ def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dic
 		.select('name', policy.name.as_('policy'), policy.posting_date.as_('date'), 'item', 'qty', 'uom', 'unit_price')
 		.where(policy.company == filters['company'])  # Mandatory. will throw if not present
 		.orderby(policy.posting_date, policy_item.qty)
+		.limit(page_len).offset(start)
 	)
 
 	# TODO: This can be simplified? maybe a Dict. Something like a mapping
@@ -56,7 +57,7 @@ def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dic
 
 	results = sql_query.run(as_dict=as_dict)
 
-	for result in results:
+	for result in results:  # TODO: We can optimize this by formatting directly from SQL
 		result['qty'] = frappe.format_value(result['qty'], df={'fieldtype': 'Float'})
 		result['unit_price'] = frappe.format_value(result['unit_price'], df={'fieldtype': 'Currency'}, currency='NIO')
 

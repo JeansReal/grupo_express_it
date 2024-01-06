@@ -2,17 +2,26 @@ frappe.ui.form.on("Stock Sales Invoice", {
 
 	setup(frm) {
 		frm.page.sidebar.toggle(false);
+	},
+
+	before_load(frm) {
+		if (frm.is_new()) {
+			frm.clear_table("items"); // FIXME: Can we make table to be required, but empty at creation
+		}
 
 		frm.set_df_property("items", "cannot_add_rows", true);  // cannot add rows manually, only via policy_items_dialog
 	},
 
 	refresh(frm) {
 		frm.add_custom_button(__('Agregar desde Poliza'), () => frm.events.policy_items_dialog(frm));
-		frm.events.policy_items_dialog(frm); // TODO: DELETE THIS LINE
 	},
 
 	// Custom METHOD
 	policy_items_dialog(frm) {
+		if (!frm.doc.company) {
+			frappe.throw(__('Please select Company first'));
+		}
+
 		new frappe.ui.form.MultiSelectDialog({
 			doctype: 'Policy Item', target: frm, size: 'extra-large', add_filters_group: false,
 			primary_action_label: __('Add Items'),
