@@ -18,6 +18,10 @@ Pricing Rule,Regla de Precios
 Margin Type,Tipo de Margen
 
 Policy,Póliza
+Policy Item, Producto de Póliza
+
+Stock Sales Invoice,Factura de Venta de Inventario
+Stock Sales Invoice Item,Producto de Factura de Venta de Inventario
 
 Exchange Rate,Tipo de Cambio
 
@@ -48,5 +52,7 @@ Comment,Comentar
 List View,Lista
 Report View,Reporte
 Load More,Cargar Más
+Like, Como
+
 
 Set,Set
