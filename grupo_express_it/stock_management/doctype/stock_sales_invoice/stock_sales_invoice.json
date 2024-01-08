@@ -14,8 +14,10 @@
   "amended_from",
   "invoice_no",
   "column_break_fiku",
-  "company",
+  "customer",
   "column_break_fsfs",
+  "company",
+  "column_break_ghwx",
   "section_break_qgjc",
   "column_break_bdjq",
   "profit_margin",
@@ -177,11 +179,26 @@
    "label": "Invoice No",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Stock Customer",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_ghwx",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-07 18:25:54.780200",
+ "modified": "2024-01-08 11:06:37.301850",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",

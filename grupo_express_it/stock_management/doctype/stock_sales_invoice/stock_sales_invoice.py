@@ -15,6 +15,7 @@ class StockSalesInvoice(Document):
 		amended_from: DF.Link | None
 		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		currency_exchange: DF.Currency
+		customer: DF.Link
 		invoice_no: DF.Data
 		items: DF.Table[StockSalesInvoiceItem]
 		posting_date: DF.Date
