@@ -23,6 +23,9 @@ Policy Item, Producto de Póliza
 Stock Sales Invoice,Factura de Inventario
 Stock Sales Invoice Item,Producto de Factura de Inventario
 
+Profit Margin %, Margen de Ganancia %
+Available Quantity,Cantidad Disponible
+
 Exchange Rate,Tipo de Cambio
 
 Print,Imprimir
