@@ -82,7 +82,6 @@
 }
 
 #page-Stock\ Sales\ Invoice {
-
 	// Change All Tables
 	.form-grid {
 		.grid-row > .row {
@@ -90,5 +89,37 @@
 				text-align: center !important; // Center this two types of elements
 			}
 		}
+	}
+}
+
+.modal {
+
+	.modal-dialog.modal-xl {
+		max-width: 1240px; // Extra 100px
+	}
+
+	.modal-body {
+
+		div[data-fieldname="results_area"] > .results {
+			height: 450px !important; // Content Table
+		}
+
+		// Adjusting width of columns in the policy_items_dialog() modal
+		.list-item__content:nth-child(2), .list-item__content:nth-child(8) {
+			flex: 0.8; // Policy and Total Price Fields
+		}
+
+		.list-item__content:nth-child(3), .list-item__content:nth-child(7) {
+			flex: 0.6; // Date and Unit Price Fields
+		}
+
+		.list-item__content:nth-child(4) {
+			flex: 3; // Item Field
+		}
+
+		.list-item__content:nth-child(5), .list-item__content:nth-child(6) {
+			flex: 0.5; // Qty and UOM Field
+		}
+
 	}
 }
