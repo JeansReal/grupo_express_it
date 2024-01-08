@@ -20,8 +20,8 @@ Margin Type,Tipo de Margen
 Policy,Póliza
 Policy Item, Producto de Póliza
 
-Stock Sales Invoice,Factura de Venta de Inventario
-Stock Sales Invoice Item,Producto de Factura de Venta de Inventario
+Stock Sales Invoice,Factura de Inventario
+Stock Sales Invoice Item,Producto de Factura de Inventario
 
 Exchange Rate,Tipo de Cambio
 
@@ -49,10 +49,11 @@ Apply Filters,Aplicar Filtros
 Connections,Conexiones
 Comment,Comentar
 
-List View,Lista
-Report View,Reporte
+List View,Vida de Lista
+Report View,Vista de Reporte
 Load More,Cargar Más
-Like, Como
+Like,Como
 
+Company,Empresa
 
 Set,Set
