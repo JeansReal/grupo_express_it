@@ -77,10 +77,11 @@ frappe.ui.form.on("Stock Sales Invoice", {
 						frm.add_child('items', {
 							policy: item.policy,
 							policy_item: item.name,
-							item: item.item,
+							item: item.item.trim(), // Sanitize Field(if it comes bad from policy)
 							available_qty: item.qty,
 							unit_price: unit_price,
-							uom: item.uom
+							uom: item.uom,
+							price: unit_price * (1 + (frm.doc.profit_margin / 100)) // Sugested Sale Price
 						});
 					}
 				});
@@ -116,6 +117,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 
 frappe.ui.form.on("Stock Sales Invoice Item", {
 
+	item: (frm, cdt, cdn) => locals[cdt][cdn].item = locals[cdt][cdn].item.trim(), // Sanitize Field
 	qty: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
 	price: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
 
