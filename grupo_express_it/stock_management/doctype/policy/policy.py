@@ -22,7 +22,7 @@ class Policy(Document):
 		items: DF.Table[PolicyItem]
 		nationalization_costs: DF.Table[PolicyNationalizationCost]
 		policy: DF.Data
-		posting_date: DF.Date | None
+		posting_date: DF.Date
 		provider: DF.Data | None
 		total_cif: DF.Currency
 		total_cost: DF.Currency
