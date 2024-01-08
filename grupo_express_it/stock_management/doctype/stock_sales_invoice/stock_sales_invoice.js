@@ -42,7 +42,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 			],
 
 			// columns to visualize on as table
-			columns: ['policy', 'date', 'item', 'qty', 'uom', 'unit_price'],
+			columns: ['policy', 'date', 'item', 'qty', 'uom', 'unit_price', 'total_price'],
 
 			// Override get_fields() method to reorder fields
 			get_fields() {
@@ -80,7 +80,6 @@ frappe.ui.form.on("Stock Sales Invoice", {
 							item: item.item,
 							available_qty: item.qty,
 							unit_price: unit_price,
-
 							uom: item.uom
 						});
 					}
@@ -101,7 +100,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 		}
 
 		if (item_row.price < item_row.unit_price) {
-			frappe.show_alert({message: 'El precio del item {0} es menor al precio de la poliza', indicator: 'yellow'});
+			frappe.show_alert({message: `El precio del item #${item_row.idx}: ${item_row.item}. Es menor que el costo.`, indicator: 'red'});
 		}
 
 		item_row.total = item_row.qty * item_row.price; // Item Total

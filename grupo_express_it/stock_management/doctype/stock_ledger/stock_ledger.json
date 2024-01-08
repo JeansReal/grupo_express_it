@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "creation": "2024-01-04 07:01:22.288634",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "item",
+  "column_break_wixk",
+  "voucher_type",
+  "voucher_no",
+  "section_break_wesi",
+  "actual_qty",
+  "qty_after_transaction",
+  "column_break_aikb",
+  "valuation_rate",
+  "uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Policy Item"
+  },
+  {
+   "fieldname": "column_break_wixk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Link",
+   "label": "Voucher Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Dynamic Link",
+   "label": "Voucher",
+   "options": "voucher_type"
+  },
+  {
+   "fieldname": "section_break_wesi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "valuation_rate",
+   "fieldtype": "Currency",
+   "label": "Valuation Rate"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Data",
+   "label": "Stock UOM"
+  },
+  {
+   "fieldname": "actual_qty",
+   "fieldtype": "Float",
+   "label": "Qty Change"
+  },
+  {
+   "fieldname": "qty_after_transaction",
+   "fieldtype": "Float",
+   "label": "Qty After Transaction"
+  },
+  {
+   "fieldname": "column_break_aikb",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "hide_toolbar": 1,
+ "in_create": 1,
+ "links": [],
+ "modified": "2024-01-04 07:22:56.421760",
+ "modified_by": "Administrator",
+ "module": "Stock Management",
+ "name": "Stock Ledger",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

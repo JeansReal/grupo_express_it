@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "prompt",
+ "autoname": "field:invoice_no",
  "creation": "2023-10-30 09:31:54.108850",
  "default_view": "List",
  "doctype": "DocType",
@@ -12,11 +12,13 @@
   "section_break_riaj",
   "column_break_gdom",
   "amended_from",
+  "invoice_no",
   "column_break_fiku",
   "company",
   "column_break_fsfs",
   "section_break_qgjc",
   "column_break_bdjq",
+  "profit_margin",
   "column_break_iqfq",
   "column_break_hzkv",
   "posting_date",
@@ -65,8 +67,7 @@
    "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "7",
-   "reqd": 1
+   "precision": "7"
   },
   {
    "bold": 1,
@@ -161,15 +162,30 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "default": "10",
+   "fieldname": "profit_margin",
+   "fieldtype": "Percent",
+   "label": "Profit Margin %",
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "invoice_no",
+   "fieldtype": "Data",
+   "label": "Invoice No",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-12-29 21:29:23.702822",
+ "modified": "2024-01-07 18:25:54.780200",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
- "naming_rule": "Set by user",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

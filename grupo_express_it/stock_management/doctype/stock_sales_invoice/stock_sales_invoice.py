@@ -15,8 +15,10 @@ class StockSalesInvoice(Document):
 		amended_from: DF.Link | None
 		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		currency_exchange: DF.Currency
+		invoice_no: DF.Data
 		items: DF.Table[StockSalesInvoiceItem]
 		posting_date: DF.Date
+		profit_margin: DF.Percent
 		subtotal: DF.Currency
 		taxes: DF.Currency
 		total: DF.Currency
@@ -32,11 +34,12 @@ def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dic
 	policy = frappe.qb.DocType('Policy')
 	policy_item = frappe.qb.DocType(doctype)  # We can use the hardcoded doctype string
 
+	# TODO: total_price need to be the available stock qty * unit_price
 	sql_query = (
 		frappe.qb.from_(policy_item)
 		.inner_join(policy).on(policy.name == policy_item.parent)
-		.select('name', policy.name.as_('policy'), policy.posting_date.as_('date'), 'item', 'qty', 'uom', 'unit_price')
-		.where(policy.company == filters['company'])  # Mandatory. will throw if not present
+		.select('name', policy.name.as_('policy'), policy.posting_date.as_('date'), 'item', 'qty', 'uom', 'unit_price', 'total_price')
+		.where(policy.company == filters['company'])  # Mandatory. Will throw if not present
 		.orderby(policy.posting_date, policy_item.qty)
 		.limit(page_len).offset(start)
 	)
@@ -58,7 +61,8 @@ def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dic
 	results = sql_query.run(as_dict=as_dict)
 
 	for result in results:  # TODO: We can optimize this by formatting directly from SQL
-		result['qty'] = frappe.format_value(result['qty'], df={'fieldtype': 'Float'})
-		result['unit_price'] = frappe.format_value(result['unit_price'], df={'fieldtype': 'Currency'}, currency='NIO')
+		result['qty'] = frappe.utils.fmt_money(result['qty'], precision=2)
+		result['unit_price'] = frappe.utils.fmt_money(result['unit_price'], precision=2, currency='NIO')
+		result['total_price'] = frappe.utils.fmt_money(result['total_price'], precision=2, currency='NIO')
 
 	return results
