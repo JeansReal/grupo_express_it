@@ -25,6 +25,12 @@ class StockSalesInvoice(Document):
 		total: DF.Currency
 	# end: auto-generated types
 
+	def before_validate(self):
+		# These are here for a final check before saving. THESE are the Most Important fields.
+		self.subtotal = sum(item.total for item in self.items)
+		self.taxes = self.subtotal * 0.15
+		self.total = self.subtotal + self.taxes
+
 
 @frappe.whitelist(methods=['GET'])
 @frappe.validate_and_sanitize_search_inputs
