@@ -4,6 +4,8 @@ Stock,Inventario
 Sales Invoice,Factura de Venta
 
 Customer,Cliente
+Stock Customer,Cliente de Inventario
+
 Customer Name,Nombre del Cliente
 In Words,En Palabras
 Posting Time,Hora de Contabilización

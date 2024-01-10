@@ -14,9 +14,12 @@ frappe.ui.form.on('Policy', {
 	},
 
 	// Sanitize Fields
-	policy: (frm) => frm.events.sanitize_string_field(frm, 'policy'),
-	invoice: (frm) => frm.events.sanitize_string_field(frm, 'invoice'),
-	provider: (frm) => frm.events.sanitize_string_field(frm, 'provider'),
+	policy: (frm) => {
+		frm.doc.policy = frm.doc.policy.trim().replace(/\s*-?\s*(\d+)\s*-?\s*/g, ' - $1'); // L - ##### - YYYY
+		frm.refresh_field('policy');
+	},
+	invoice: (frm) => frm.events.sanitize_string_field(frm.doc,'invoice'),
+	provider: (frm) => frm.events.sanitize_string_field(frm.doc,'provider'),
 
 	exchange_rate: (frm) => {
 		(frm.doc.cif_costs).forEach((row) => {
@@ -28,9 +31,9 @@ frappe.ui.form.on('Policy', {
 	},
 
 	// START Custom Functions
-	sanitize_string_field(frm, field) {
-		frm.doc[field] = frm.doc[field].trim();
-		frm.refresh_field(field);
+	sanitize_string_field(doc, field, child = false) {
+		doc[field] = doc[field].trim().replace(/\s+/g, ' '); // Remove Extra Spaces
+		if (!child) cur_frm.refresh_field(field);                                  // If not Child refresh field(doc)
 	},
 
 	calculate_exchange_rate(frm, table, table_row) {
@@ -113,7 +116,7 @@ frappe.ui.form.on('Policy', {
 
 frappe.ui.form.on("Policy Item", {
 	items_remove: (frm) => frm.events.calculate_items_totals(frm, 'item_removed'), // FIXME: Quick Fix
-	item: (frm, cdt, cdn) => locals[cdt][cdn].item = locals[cdt][cdn].item.trim(), // Sanitize Item Code
+	item: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'item', true),
 	qty: (frm, cdt, cdn) => frm.events.calculate_items_totals(frm, locals[cdt][cdn]),
 	fob_unit_price: (frm, cdt, cdn) => frm.events.calculate_items_totals(frm, locals[cdt][cdn])
 });
@@ -125,8 +128,8 @@ frappe.ui.form.on('Policy CIF Cost', {
 		frm.refresh_field('cif_costs');  // FIXME: Optimize, Only Update Row
 	},
 
-	provider: (frm, cdt, cdn) => locals[cdt][cdn].provider = locals[cdt][cdn].provider.trim(),          // Sanitize Field
-	description: (frm, cdt, cdn) => locals[cdt][cdn].description = locals[cdt][cdn].description.trim(), // Sanitize Field
+	provider: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'provider', true),
+	description: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'description', true),
 
 	type: (frm) => frm.events.calculate_cif_costs(frm),
 	amount_usd: (frm, cdt, cdn) => {
@@ -139,9 +142,9 @@ frappe.ui.form.on('Policy CIF Cost', {
 frappe.ui.form.on('Policy Nationalization Cost', {
 	nationalization_costs_remove: (frm) => frm.events.calculate_nationalization_costs(frm),
 
-	provider: (frm, cdt, cdn) => locals[cdt][cdn].provider = locals[cdt][cdn].provider.trim(),        // Sanitize Fields
-	description: (frm, cdt, cdn) => locals[cdt][cdn].description = locals[cdt][cdn].description.trim(),
-	reference: (frm, cdt, cdn) => locals[cdt][cdn].reference = locals[cdt][cdn].reference.trim(),
+	provider: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'provider', true),
+	description: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'description', true),
+	reference: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'reference', true),
 
 	type: (frm) => frm.events.calculate_nationalization_costs(frm),
 	amount_usd: (frm, cdt, cdn) => frm.trigger('exchange_rate', cdt, cdn), // Recalculate Amount in NIO

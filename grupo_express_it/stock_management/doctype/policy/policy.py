@@ -36,7 +36,7 @@ class Policy(Document):
 
 	def before_validate(self):
 		# These are here for a final check before saving. THESE are the Most Important fields.
-		# FIXME: How about the others?
+		# FIXME: How about the others. EG: policy_name: L - ##### - YYYY
 		self.total_qty = self.total_cost = 0.00  # noqa type: ignore # FIXME
 
 		for item in self.items:
