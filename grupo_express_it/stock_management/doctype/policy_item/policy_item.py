@@ -10,6 +10,7 @@ class PolicyItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		actual_qty: DF.Float
 		cif_total_nio: DF.Currency
 		cif_total_usd: DF.Currency
 		customs_taxes: DF.Currency
@@ -23,6 +24,7 @@ class PolicyItem(Document):
 		parentfield: DF.Data
 		parenttype: DF.Data
 		qty: DF.Float
+		stock_value: DF.Currency
 		total_price: DF.Currency
 		unit_price: DF.Currency
 		uom: DF.Literal["", "Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "KG", "Libras"]

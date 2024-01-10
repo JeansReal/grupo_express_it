@@ -48,12 +48,11 @@ class Policy(Document):
 	def on_cancel(self):
 		raise NotImplementedError('No esta permitido la cancelacion por ahora.')
 
-	def on_submit(self):  # TODO: Or before_submit?
+	def before_submit(self):
 		""" At this point the document is no longer editable """
+		self.per_billed = 0
+		self.status = 'Not Billed'
 
-		# TODO: WORKING
-		raise NotImplementedError('No esta permitido la cancelacion por ahora.')
-
-		self.db_set('per_billed', 0, False)
-		self.db_set('status', 'Not Billed', False)
-
+		for item in self.items:
+			item.actual_qty = item.qty           # At this exact moment all items are in stock
+			item.stock_value = item.total_price
