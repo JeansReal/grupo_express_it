@@ -13,13 +13,10 @@ frappe.ui.form.on('Policy', {
 		}
 	},
 
-	refresh(frm) {},
-	onload_post_render(frm) {},
-	validate(frm) {},
-
-	policy: (frm) => frm.events.sanitize_field(frm, 'policy'),
-	invoice: (frm) => frm.events.sanitize_field(frm, 'invoice'),
-	provider: (frm) => frm.events.sanitize_field(frm, 'provider'),
+	// Sanitize Fields
+	policy: (frm) => frm.events.sanitize_string_field(frm, 'policy'),
+	invoice: (frm) => frm.events.sanitize_string_field(frm, 'invoice'),
+	provider: (frm) => frm.events.sanitize_string_field(frm, 'provider'),
 
 	exchange_rate: (frm) => {
 		(frm.doc.cif_costs).forEach((row) => {
@@ -31,7 +28,7 @@ frappe.ui.form.on('Policy', {
 	},
 
 	// START Custom Functions
-	sanitize_field(frm, field) {
+	sanitize_string_field(frm, field) {
 		frm.doc[field] = frm.doc[field].trim();
 		frm.refresh_field(field);
 	},
@@ -43,6 +40,9 @@ frappe.ui.form.on('Policy', {
 
 	calculate_items_totals(frm, item_row = null) {
 		if (item_row) {
+			item_row.qty = flt(item_row.qty); // FIXES: the issue with Paste event -> Sanitize Fields. Invalid returns 0
+			item_row.fob_unit_price = flt(item_row.fob_unit_price);
+
 			item_row.fob_total_price = item_row.qty * item_row.fob_unit_price; // Calculate Item Row Total FOB Price
 
 			frm.doc.total_qty = frm.get_sum('items', 'qty');              // Calculate Total QTY
@@ -63,7 +63,7 @@ frappe.ui.form.on('Policy', {
 				row.insurance_cost = insuranceFactor * row.fob_total_price; // Calculate Insurance
 
 				row.cif_total_usd = row.fob_total_price + row.freight_cost + row.insurance_cost; // Calculate CIF
-				row.cif_total_nio = row.cif_total_usd * frm.doc.exchange_rate;                   // Calculate CIF in NIO
+				row.cif_total_nio = row.cif_total_usd * (frm.doc.exchange_rate || 0.00);         // Calculate CIF in NIO
 
 				row.customs_taxes = customsTaxesFactor * row.cif_total_usd;                 // Calculate Customs Taxes
 				row.nationalization_total = nationalizationFactor * row.cif_total_usd;      // Calculate Nationalization
