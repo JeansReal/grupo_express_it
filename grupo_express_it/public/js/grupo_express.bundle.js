@@ -46,7 +46,7 @@ frappe.ui.form.ControlTable = class ControlTable extends frappe.ui.form.ControlT
 		if (this.visible_columns && this.visible_columns.length > 0) return; // Just Run Once per Grid
 
 		// TODO: Optimize Using: for of this.docfields. With or without Logical (AND OR) Assignment. Setting the Array Length
-		this.visible_columns = this.docfields.map(df => [df, df.columns]);
+		this.visible_columns = this.docfields.filter(df => df.in_list_view).map(df => [df, df.columns]);
 		this.total_columns = this.docfields
 			.filter((df) => frappe.model.is_numeric_field(df.fieldtype) && !['exchange_rate', 'fob_unit_price', 'unit_price'].includes(df.fieldname))
 			.map(df => df.fieldname);
