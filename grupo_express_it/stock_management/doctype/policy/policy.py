@@ -46,7 +46,7 @@ class Policy(Document):
 			self.total_cost += item.total_price  # Calculate Total Cost
 
 	def on_cancel(self):
-		raise NotImplementedError('No esta permitido la cancelacion por ahora.')
+		raise NotImplementedError('Por ahora no esta permitida la cancelacion.')
 
 	def before_submit(self):
 		""" At this point the document is no longer editable """
