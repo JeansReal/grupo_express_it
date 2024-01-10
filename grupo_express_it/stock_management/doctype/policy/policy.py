@@ -21,9 +21,11 @@ class Policy(Document):
 		invoice: DF.Data | None
 		items: DF.Table[PolicyItem]
 		nationalization_costs: DF.Table[PolicyNationalizationCost]
+		per_billed: DF.Percent
 		policy: DF.Data
 		posting_date: DF.Date
 		provider: DF.Data | None
+		status: DF.Literal["Draft", "Not Billed", "Partly Billed", "Fully Billed", "Cancelled"]
 		total_cif: DF.Currency
 		total_cost: DF.Currency
 		total_customs_taxes: DF.Currency
@@ -42,3 +44,16 @@ class Policy(Document):
 		for item in self.items:
 			self.total_qty += item.qty           # Calculate Total QTY
 			self.total_cost += item.total_price  # Calculate Total Cost
+
+	def on_cancel(self):
+		raise NotImplementedError('No esta permitido la cancelacion por ahora.')
+
+	def on_submit(self):  # TODO: Or before_submit?
+		""" At this point the document is no longer editable """
+
+		# TODO: WORKING
+		raise NotImplementedError('No esta permitido la cancelacion por ahora.')
+
+		self.db_set('per_billed', 0, False)
+		self.db_set('status', 'Not Billed', False)
+

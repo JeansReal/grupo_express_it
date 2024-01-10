@@ -11,7 +11,9 @@
  "field_order": [
   "section_break_ulpa",
   "column_break_jkjt",
+  "status",
   "amended_from",
+  "per_billed",
   "column_break_9llxh",
   "company",
   "column_break_6rsat",
@@ -90,7 +92,6 @@
   {
    "fieldname": "provider",
    "fieldtype": "Data",
-   "in_standard_filter": 1,
    "label": "Provider"
   },
   {
@@ -128,7 +129,6 @@
    "fieldname": "invoice",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Invoice No"
   },
   {
@@ -277,11 +277,28 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "per_billed",
+   "fieldtype": "Percent",
+   "label": "Billed"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nNot Billed\nPartly Billed\nFully Billed\nCancelled",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-10 06:30:20.886691",
+ "modified": "2024-01-10 07:54:10.331402",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
