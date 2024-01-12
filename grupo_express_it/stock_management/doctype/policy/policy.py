@@ -37,16 +37,12 @@ class Policy(Document):
 	# end: auto-generated types
 
 	def before_validate(self):
-		# These are here for a final check before saving. THESE are the Most Important fields.
-		# FIXME: How about the others. EG: policy_name: L - ##### - YYYY
+		# These are here for a final check before saving  FIXME: How about the others. EG: policy_name: L - ##### - YYYY
 		self.total_qty = self.total_cost = 0.00  # noqa type: ignore # FIXME
 
 		for item in self.items:
 			self.total_qty += item.qty           # Calculate Total QTY
 			self.total_cost += item.total_price  # Calculate Total Cost
-
-	def on_cancel(self):
-		raise NotImplementedError('Por ahora no esta permitida la cancelacion.')
 
 	def before_submit(self):
 		""" At this point the document is no longer editable """
@@ -56,3 +52,6 @@ class Policy(Document):
 		for item in self.items:
 			item.actual_qty = item.qty           # At this exact moment all items are in stock
 			item.stock_value = item.total_price
+
+	def on_cancel(self):
+		raise NotImplementedError('Por ahora no esta permitida la cancelacion.')
