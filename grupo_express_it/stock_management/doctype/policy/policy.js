@@ -13,9 +13,17 @@ frappe.ui.form.on('Policy', {
 		}
 	},
 
+	validate(frm) {
+		frm.doc.items.forEach((row) => {
+			if (flt(row.unit_price) === 0) {
+				frappe.throw({message: `<b>Producto</b> en la fila <b>#${row.idx}</b>: Tiene valores en 0.`, title: __('Missing Values Required')});
+			}
+		});
+	},
+
 	// Sanitize Fields
 	policy: (frm) => {
-		frm.doc.policy = frm.doc.policy.trim().replace(/\s*-?\s*(\d+)\s*-?\s*/g, ' - $1'); // L - ##### - YYYY
+		frm.doc.policy = frm.doc.policy.trim().replace(/^.*?(\d+).*$/, 'L - $1'); // L - #####
 		frm.refresh_field('policy');
 	},
 	invoice: (frm) => frm.events.sanitize_string_field(frm.doc,'invoice'),
