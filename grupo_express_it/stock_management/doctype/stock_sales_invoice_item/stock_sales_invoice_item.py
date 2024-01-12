@@ -10,7 +10,7 @@ class StockSalesInvoiceItem(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		available_qty: DF.Float
+		actual_qty: DF.Float
 		item: DF.Data
 		parent: DF.Data
 		parentfield: DF.Data

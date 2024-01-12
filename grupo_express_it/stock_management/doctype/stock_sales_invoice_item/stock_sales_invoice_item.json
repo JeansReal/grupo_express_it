@@ -10,7 +10,7 @@
   "policy_item",
   "item",
   "column_break_ukzg",
-  "available_qty",
+  "actual_qty",
   "unit_price",
   "section_break_wpjr",
   "qty",
@@ -21,6 +21,7 @@
  ],
  "fields": [
   {
+   "bold": 1,
    "columns": 1,
    "fieldname": "qty",
    "fieldtype": "Float",
@@ -30,7 +31,9 @@
    "reqd": 1
   },
   {
+   "bold": 1,
    "columns": 3,
+   "fetch_from": ".",
    "fieldname": "item",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -60,6 +63,7 @@
    "reqd": 1
   },
   {
+   "bold": 1,
    "columns": 1,
    "fieldname": "total",
    "fieldtype": "Currency",
@@ -75,6 +79,7 @@
    "fieldtype": "Link",
    "label": "Policy Item",
    "options": "Policy Item",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -103,8 +108,8 @@
    "fieldtype": "Section Break"
   },
   {
-   "bold": 1,
    "columns": 1,
+   "fetch_from": "policy_item.unit_price",
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -115,25 +120,26 @@
    "read_only": 1
   },
   {
-   "bold": 1,
-   "columns": 1,
-   "fieldname": "available_qty",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Available Quantity",
-   "non_negative": 1,
-   "precision": "2",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_ukzg",
    "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "policy_item.actual_qty",
+   "fieldname": "actual_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Cantidad Disponible",
+   "non_negative": 1,
+   "precision": "2",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-01-07 17:18:36.280471",
+ "modified": "2024-01-10 10:28:56.312015",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice Item",
