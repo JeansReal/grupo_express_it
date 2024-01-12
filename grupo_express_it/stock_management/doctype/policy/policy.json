@@ -2,7 +2,6 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:{policy} - {YYYY}",
  "creation": "2023-07-26 19:17:37.104782",
  "default_view": "List",
  "doctype": "DocType",
@@ -11,11 +10,11 @@
  "field_order": [
   "section_break_ulpa",
   "column_break_jkjt",
-  "status",
   "amended_from",
   "column_break_9llxh",
   "company",
   "column_break_6rsat",
+  "status",
   "per_billed",
   "section_break_m8ye",
   "policy",
@@ -104,7 +103,7 @@
   },
   {
    "bold": 1,
-   "description": "Formato: L - ##### - A\u00d1O",
+   "description": "Formato: L - #####",
    "fieldname": "policy",
    "fieldtype": "Data",
    "in_standard_filter": 1,
@@ -301,11 +300,11 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-10 09:02:55.048828",
+ "modified": "2024-01-11 21:19:54.583782",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
- "naming_rule": "Expression",
+ "naming_rule": "By script",
  "owner": "Administrator",
  "permissions": [
   {
@@ -331,6 +330,7 @@
    "role": "System Manager",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

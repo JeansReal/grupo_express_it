@@ -1,3 +1,4 @@
+import frappe
 from frappe.model.document import Document
 
 
@@ -36,8 +37,12 @@ class Policy(Document):
 		total_qty: DF.Float
 	# end: auto-generated types
 
+	def autoname(self):
+		""" Set name as Policy Name. TODO: We assume that policy comes sanitized from the form: L - ##### """
+		self.name = f'{self.policy} - {frappe.utils.getdate(self.posting_date).year}'
+
 	def before_validate(self):
-		# These are here for a final check before saving  FIXME: How about the others. EG: policy_name: L - ##### - YYYY
+		# These are here for a final check before saving. TODO: How about the others?
 		self.total_qty = self.total_cost = 0.00  # noqa type: ignore # FIXME
 
 		for item in self.items:
