@@ -15,7 +15,6 @@
   "company",
   "column_break_6rsat",
   "status",
-  "per_billed",
   "section_break_m8ye",
   "policy",
   "invoice",
@@ -33,6 +32,7 @@
   "total_qty",
   "total_cost",
   "column_break_oost",
+  "per_billed",
   "column_break_gph5",
   "total_fob",
   "column_break_myn4",
@@ -281,6 +281,7 @@
    "fieldname": "per_billed",
    "fieldtype": "Percent",
    "hidden": 1,
+   "in_list_view": 1,
    "label": "Billed"
   },
   {
@@ -299,8 +300,16 @@
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2024-01-11 21:19:54.583782",
+ "links": [
+  {
+   "is_child_table": 1,
+   "link_doctype": "Stock Sales Invoice Item",
+   "link_fieldname": "policy",
+   "parent_doctype": "Stock Sales Invoice",
+   "table_fieldname": "items"
+  }
+ ],
+ "modified": "2024-01-16 11:08:00.609759",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
