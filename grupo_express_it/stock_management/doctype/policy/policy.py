@@ -43,7 +43,7 @@ class Policy(Document):
 
 	def before_validate(self):
 		# These are here for a final check before saving. TODO: How about the others?
-		self.total_qty = self.total_cost = 0.00  # noqa type: ignore # FIXME
+		self.total_qty, self.total_cost = 0.00, 0.00  # noqa type: ignore # FIXME
 
 		for item in self.items:
 			self.total_qty += item.qty           # Calculate Total QTY
