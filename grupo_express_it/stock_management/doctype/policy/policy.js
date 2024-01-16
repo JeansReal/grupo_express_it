@@ -15,7 +15,7 @@ frappe.ui.form.on('Policy', {
 
 	validate(frm) {
 		frm.doc.items.forEach((row) => {
-			if (flt(row.unit_price) === 0) {
+			if (row.unit_price === 0) {
 				frappe.throw({message: `<b>Producto</b> en la fila <b>#${row.idx}</b>: Tiene valores en 0.`, title: __('Missing Values Required')});
 			}
 		});
@@ -80,7 +80,7 @@ frappe.ui.form.on('Policy', {
 				row.nationalization_total = nationalizationFactor * row.cif_total_usd;      // Calculate Nationalization
 
 				row.total_price = row.cif_total_nio + row.customs_taxes + row.nationalization_total; // Calculate Total Price
-				row.unit_price = row.total_price / row.qty || 0;									 // Calculate Unit Price
+				row.unit_price = row.total_price / row.qty || 0.00;									 // Calculate Unit Price
 			});
 
 			frm.doc.total_cost = frm.get_sum('items', 'total_price') || 0.00; // Calculate Total Cost

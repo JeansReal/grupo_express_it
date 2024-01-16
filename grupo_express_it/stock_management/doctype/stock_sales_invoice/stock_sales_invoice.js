@@ -13,7 +13,29 @@ frappe.ui.form.on("Stock Sales Invoice", {
 	},
 
 	refresh(frm) {
-		frm.add_custom_button(__('Agregar desde Poliza'), () => frm.events.policy_items_dialog(frm));
+		frm.add_custom_button('Agregar desde Poliza', () => frm.events.policy_items_dialog(frm));
+		if (!frm.is_new())
+			frm.add_custom_button('Actualizar Cantidad Disponible', () => frm.call('update_actual_qty', {for_update: true}, () => frappe.show_alert('Cantidades Actualizadas')));
+	},
+
+	validate: async (frm) => {
+		frm.doc.items.forEach((row) => {
+			if (row.total === 0) {
+				frappe.throw({message: `<b>Producto</b> en la fila <b>#${row.idx}</b>: Tiene valores en 0.`, title: __('Missing Values Required')});
+			}
+			if (row.price < row.unit_price) {
+				frappe.throw(`<b>Producto</b> en la fila <b>#${row.idx}</b>: Precio de Venta <b>es menor</b> que el Precio de Costo.`);
+			}
+		});
+
+		// This updates the UI without touching the DB. Throws error if QTY is not available else updates the fields along the form.save()
+		await frm.call('update_actual_qty', {for_update: false}).then((r) => {
+			frm.doc.items.forEach((row) => {
+				if (row.qty > row.actual_qty) {
+					frappe.throw(`<b>Producto</b> en la fila <b>#${row.idx}</b>: Cantidad a Facturar <b>es mayor</b> que la Cantidad Disponible.`);
+				}
+			});
+		});
 	},
 
 	company(frm) {
@@ -41,7 +63,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 				{fieldtype: 'Column Break'},
 				{
 					fieldtype: 'Link', label: __('Policy'), fieldname: 'policy', options: 'Policy', bold: true,
-					get_query: () => ({filters: {company: frm.doc.company, docstatus: 1}}) // TODO: Only Active Policies
+					get_query: () => ({filters: {company: frm.doc.company, docstatus: 1}}) // TODO: Only Active Policies(With Stock)
 				},
 				{fieldtype: 'Section Break', hide_border: true},
 				{fieldtype: 'DateRange', label: __('Policy Date'), fieldname: 'policy_date'},
@@ -85,7 +107,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 							policy: item.policy,
 							policy_item: item.name,
 							item: item.item,
-							actual_qty: item.actual_qty,
+							actual_qty: flt(item.actual_qty),
 							unit_price: unit_price,
 							uom: item.uom,
 							price: unit_price * (1 + (frm.doc.profit_margin / 100)) // Suggested Sale Price
@@ -99,18 +121,10 @@ frappe.ui.form.on("Stock Sales Invoice", {
 		});
 	},
 
-	// Custom METHODS
 	calculate_totals(frm, item_row) {
 		// This calculates Items table totals, and Invoice Totals
-
-		if (item_row.qty > item_row.actual_qty) {
-			item_row.qty = 0.00; // Reset the QTY
-			frappe.throw('La cantidad a facturar no puede ser mayor a la cantidad disponible.');
-		}
-
-		if (item_row.price < item_row.unit_price) {
-			frappe.show_alert({message: `El precio del item #${item_row.idx}: ${item_row.item}. Es menor que el costo.`, indicator: 'red'});
-		}
+		item_row.qty = flt(item_row.qty); // FIXES: the issue with Paste event -> Sanitize Fields. Invalid returns 0
+		item_row.price = flt(item_row.price);
 
 		item_row.total = item_row.qty * item_row.price; // Item Total
 
@@ -125,5 +139,5 @@ frappe.ui.form.on("Stock Sales Invoice", {
 frappe.ui.form.on("Stock Sales Invoice Item", {
 	item: (frm, cdt, cdn) => locals[cdt][cdn].item = locals[cdt][cdn].item.trim(), // Sanitize Field if edited manually
 	qty: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
-	price: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn]),
+	price: (frm, cdt, cdn) => frm.events.calculate_totals(frm, locals[cdt][cdn])
 });
