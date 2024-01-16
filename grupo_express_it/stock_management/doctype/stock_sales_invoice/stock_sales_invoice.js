@@ -14,8 +14,9 @@ frappe.ui.form.on("Stock Sales Invoice", {
 
 	refresh(frm) {
 		frm.add_custom_button('Agregar desde Poliza', () => frm.events.policy_items_dialog(frm));
-		if (!frm.is_new())
+		if (!frm.is_new()) {
 			frm.add_custom_button('Actualizar Cantidad Disponible', () => frm.call('update_actual_qty', {for_update: true}, () => frappe.show_alert('Cantidades Actualizadas')));
+		}
 	},
 
 	validate: async (frm) => {
@@ -63,7 +64,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 				{fieldtype: 'Column Break'},
 				{
 					fieldtype: 'Link', label: __('Policy'), fieldname: 'policy', options: 'Policy', bold: true,
-					get_query: () => ({filters: {company: frm.doc.company, docstatus: 1}}) // TODO: Only Active Policies(With Stock)
+					get_query: () => ({filters: {company: frm.doc.company, docstatus: 1, status: ["!=", "Fully Billed"]}})
 				},
 				{fieldtype: 'Section Break', hide_border: true},
 				{fieldtype: 'DateRange', label: __('Policy Date'), fieldname: 'policy_date'},

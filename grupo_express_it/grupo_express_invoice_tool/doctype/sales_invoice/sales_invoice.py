@@ -21,7 +21,6 @@ class SalesInvoice(Document):
 		posting_time: DF.Time | None
 		total: DF.Currency
 	# end: auto-generated types
-	pass
 
 
 @frappe.whitelist(allow_guest=False)
