@@ -11,8 +11,8 @@
  "field_order": [
   "section_break_riaj",
   "column_break_gdom",
-  "amended_from",
   "invoice_no",
+  "amended_from",
   "column_break_fiku",
   "customer",
   "column_break_fsfs",
@@ -168,8 +168,10 @@
   {
    "default": "10",
    "fieldname": "profit_margin",
-   "fieldtype": "Percent",
+   "fieldtype": "Float",
    "label": "Profit Margin %",
+   "non_negative": 1,
+   "precision": "2",
    "reqd": 1
   },
   {
@@ -198,7 +200,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2024-01-08 11:06:37.301850",
+ "modified": "2024-01-11 22:10:39.799726",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice",
