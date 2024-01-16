@@ -16,7 +16,7 @@ class StockSalesInvoiceItem(Document):
 		parentfield: DF.Data
 		parenttype: DF.Data
 		policy: DF.Link
-		policy_item: DF.Link | None
+		policy_item: DF.Link
 		price: DF.Currency
 		qty: DF.Float
 		total: DF.Currency

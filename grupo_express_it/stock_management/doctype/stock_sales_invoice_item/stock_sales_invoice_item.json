@@ -80,6 +80,7 @@
    "label": "Policy Item",
    "options": "Policy Item",
    "read_only": 1,
+   "reqd": 1,
    "search_index": 1
   },
   {
@@ -110,6 +111,7 @@
   {
    "columns": 1,
    "fetch_from": "policy_item.unit_price",
+   "fetch_if_empty": 1,
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -126,20 +128,20 @@
   {
    "columns": 1,
    "fetch_from": "policy_item.actual_qty",
+   "fetch_if_empty": 1,
    "fieldname": "actual_qty",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Cantidad Disponible",
    "non_negative": 1,
    "precision": "2",
-   "read_only": 1,
-   "search_index": 1
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-01-10 10:28:56.312015",
+ "modified": "2024-01-13 07:26:57.732303",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice Item",
