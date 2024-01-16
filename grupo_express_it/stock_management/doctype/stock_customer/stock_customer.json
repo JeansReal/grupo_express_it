@@ -43,9 +43,13 @@
    "label": "Address"
   }
  ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-01-08 11:05:59.639411",
+ "links": [
+  {
+   "link_doctype": "Stock Sales Invoice",
+   "link_fieldname": "customer"
+  }
+ ],
+ "modified": "2024-01-16 11:14:00.438794",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Customer",
