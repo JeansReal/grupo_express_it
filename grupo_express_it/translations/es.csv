@@ -22,6 +22,11 @@ Margin Type,Tipo de Margen
 Policy,Póliza
 Policy Item, Producto de Póliza
 
+Billed,Facturado
+Not Billed,No Facturado
+Partly Billed,Parcialmente Facturado
+Fully Billed,Totalmente Facturado
+
 Stock Sales Invoice,Factura de Inventario
 Stock Sales Invoice Item,Producto de Factura de Inventario
 
@@ -53,7 +58,7 @@ Apply Filters,Aplicar Filtros
 Connections,Conexiones
 Comment,Comentar
 
-List View,Vida de Lista
+List View,Vista de Lista
 Report View,Vista de Reporte
 Load More,Cargar Más
 
@@ -64,5 +69,7 @@ Not Like,No es Como
 Is,Esta
 
 Company,Empresa
+
+Submit this document to confirm,Valide este documento para confirmarlo
 
 Set,Set
