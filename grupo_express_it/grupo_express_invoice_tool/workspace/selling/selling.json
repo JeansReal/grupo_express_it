@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"D9STkrh5Zg\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Selling Management<br></span>\",\"col\":12}},{\"id\":\"cqst0X5msd\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"38uAzBALhp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":4}},{\"id\":\"eR0PhHkvaq\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":4}},{\"id\":\"cLGRkzzNe5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":4}},{\"id\":\"UJZNM6duWR\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"-rGrZ43r6Z\",\"type\":\"card\",\"data\":{\"card_name\":\"Reportes\",\"col\":4}}]",
+ "content": "[{\"id\":\"D9STkrh5Zg\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Selling Management<br></span>\",\"col\":12}},{\"id\":\"cqst0X5msd\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"38uAzBALhp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sales Invoice\",\"col\":4}},{\"id\":\"eR0PhHkvaq\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":4}},{\"id\":\"cLGRkzzNe5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":4}},{\"id\":\"UJZNM6duWR\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"c1cy5ZjXam\",\"type\":\"header\",\"data\":{\"text\":\"Reportes\",\"col\":12}},{\"id\":\"xq5Hun0_cE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Facturas de Venta\",\"col\":3}}]",
  "creation": "2021-04-07 09:08:54.888627",
  "custom_blocks": [],
  "docstatus": 0,
@@ -11,27 +11,8 @@
  "idx": 0,
  "is_hidden": 0,
  "label": "Selling",
- "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Reportes",
-   "link_count": 1,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Facturas de Venta",
-   "link_count": 0,
-   "link_to": "Facturas de Venta",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  }
- ],
- "modified": "2023-07-26 22:54:41.229381",
+ "links": [],
+ "modified": "2024-01-17 10:07:23.252355",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Selling",
@@ -50,6 +31,13 @@
    "label": "Customer",
    "link_to": "Customer",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Facturas de Venta",
+   "link_to": "Facturas de Venta",
+   "type": "Report"
   },
   {
    "doc_view": "List",

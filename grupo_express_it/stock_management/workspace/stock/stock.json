@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"K7h5J-Fhad\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock Management</span><br>\",\"col\":12}},{\"id\":\"PYfC6GMfoO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CPzba7YRYY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Policy\",\"col\":4}},{\"id\":\"e9Y-2Y4eS5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Sales Invoice\",\"col\":4}},{\"id\":\"B_O_iZoDZe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}}]",
+ "content": "[{\"id\":\"K7h5J-Fhad\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Stock Management</span><br>\",\"col\":12}},{\"id\":\"PYfC6GMfoO\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"CPzba7YRYY\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Policy\",\"col\":4}},{\"id\":\"e9Y-2Y4eS5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Stock Sales Invoice\",\"col\":4}},{\"id\":\"B_O_iZoDZe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"id\":\"7AymVTzmSP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"mzFtkToOsu\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reportes <br></b></span>\",\"col\":12}},{\"id\":\"BGfQl4SlTc\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Reporte de Poliza Detallado\",\"col\":3}}]",
  "creation": "2023-07-26 22:50:29.445737",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Stock",
  "links": [],
- "modified": "2024-01-08 11:11:30.544223",
+ "modified": "2024-01-17 10:05:42.652726",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock",
@@ -48,6 +48,13 @@
    "link_to": "Stock Sales Invoice",
    "stats_filter": "",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Reporte de Poliza Detallado",
+   "link_to": "Reporte de Poliza Detallado",
+   "type": "Report"
   }
  ],
  "title": "Stock"
