@@ -309,7 +309,7 @@
    "table_fieldname": "items"
   }
  ],
- "modified": "2024-01-16 11:08:00.609759",
+ "modified": "2024-01-17 11:41:08.349240",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
@@ -326,6 +326,7 @@
    "role": "Desk User",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
