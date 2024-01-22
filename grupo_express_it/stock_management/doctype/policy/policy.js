@@ -15,10 +15,13 @@ frappe.ui.form.on('Policy', {
 
 	validate(frm) {
 		frm.doc.items.forEach((row) => {
-			if (row.unit_price === 0) {
+			if (row.unit_price === 0) { // Unit Price is like compare against 'qty' or 'fob_unit_price'
 				frappe.throw({message: `<b>Producto</b> en la fila <b>#${row.idx}</b>: Tiene valores en 0.`, title: __('Missing Values Required')});
 			}
 		});
+		if (frm.doc.total_cif <= 0 || frm.doc.grand_total_nationalization <= 0) {
+			frappe.throw({message: `<b>Costos CIF</b> o <b>Costos de Nacionalizacion</b>: Tiene valores en 0.`, title: __('Missing Values Required')});
+		}
 	},
 
 	// Sanitize Fields
@@ -31,22 +34,18 @@ frappe.ui.form.on('Policy', {
 
 	exchange_rate: (frm) => {
 		(frm.doc.cif_costs).forEach((row) => {
-			row.exchange_rate = frm.doc.exchange_rate; // Update Exchange Rate in CIF Costs
-			frm.events.calculate_exchange_rate(frm, 'cif_costs', row); // Recalculate Amount in NIO
+			row.exchange_rate = frm.doc.exchange_rate;           // Update Exchange Rate in CIF Costs rows
+			row.amount_nio = row.amount_usd * row.exchange_rate; // Recalculate Amount in NIO
 		});
 
 		frm.events.calculate_items_totals(frm);  // Recalculate on Exchange Rate Change
+		frm.refresh_field('cif_costs');               // Refresh Amount in NIO in CIF Table
 	},
 
 	// START Custom Functions
 	sanitize_string_field(doc, field, child = false) {
 		doc[field] = doc[field].trim().replace(/\s+/g, ' '); // Remove Extra Spaces
 		if (!child) cur_frm.refresh_field(field);                                  // If not Child refresh field(doc)
-	},
-
-	calculate_exchange_rate(frm, table, table_row) {
-		table_row.amount_nio = table_row.amount_usd * table_row.exchange_rate;
-		frm.refresh_field(table);  // FIXME: Optimize, Only Update Row
 	},
 
 	calculate_items_totals(frm, item_row = null) {
@@ -91,31 +90,36 @@ frappe.ui.form.on('Policy', {
 		refresh_many(['items', 'total_cost']); // Always Refresh. Even when its empty. So we can clear the footer. See grid_make_footer()
 	},
 
-	calculate_table_totals(frm, table, table_amount, frm_total_field, child_type_to_frm_mapping) {
-		Object.values(child_type_to_frm_mapping).forEach(field => frm.doc[field] = 0); // Reset the totals to recalculate
+	calculate_table_totals(frm, table, table_field, frm_total_field, child_type_to_frm_mapping) {
+		// First Calculate Totals by Type. This creates a Object with frm.doc properties. // TODO: No fallback to avoid errors
+		let results = (frm.doc[table] || []).reduce((acc, row) => {
+			acc[frm_total_field] += row[table_field] || 0; // Total is the sum of the table fields. Avoid extra loop: frm.get_sum('cif_costs', 'amount_usd');
+			acc[child_type_to_frm_mapping[row.type]] = (acc[child_type_to_frm_mapping[row.type]] || 0) + (row[table_field] || 0);
+			return acc;
+		}, {[frm_total_field]: 0});
 
-		// First Calculate Totals by Type || No fallback to avoid errors. User Must Select a Type
-		(frm.doc[table] || []).forEach((row) => {
-			if (child_type_to_frm_mapping.hasOwnProperty(row.type)) { // If the row Type is included in the Options
-				frm.doc[child_type_to_frm_mapping[row.type]] += row[table_amount]; // Sum the selected field into parent doc
-			}
-		});
-
-		// Total Comes from the Sum of the fields. Zero if no items in Table. Avoid extra loop: frm.get_sum('cif_costs', 'amount_usd');
-		frm.doc[frm_total_field] = Object.values(child_type_to_frm_mapping).reduce((acc, field) => acc + frm.doc[field], 0);
-
-		frm.refresh_fields([frm_total_field, ...Object.keys(child_type_to_frm_mapping)]);
+		Object.assign(frm.doc, results); // Assign the results to the form doc(frm_total_field + child_type_to_frm_mapping)
 
 		frm.events.calculate_items_totals(frm);  // We Must Recalculate Items Totals
+		refresh_many([table, frm_total_field, ...Object.values(child_type_to_frm_mapping)]); // Finally Refresh all
 	},
 
-	calculate_cif_costs(frm) {
-		frm.events.calculate_table_totals(frm, 'cif_costs', 'amount_usd', 'total_cif',
-			{'Flete': 'total_freight', 'Seguro': 'total_insurance'}
-		);
+	calculate_cif_costs(frm, item_row = null) {
+		if (item_row) {
+			item_row.amount_usd = flt(item_row.amount_usd);                  // FIXES: the issue with Paste event -> Sanitize Fields. Invalid returns 0
+			item_row.amount_nio = item_row.amount_usd * item_row.exchange_rate; // Recalculate Amount in NIO. Has no effect on Totals
+		}
+		frm.events.calculate_table_totals(frm, 'cif_costs', 'amount_usd', 'total_cif', {'Flete': 'total_freight', 'Seguro': 'total_insurance'});
 	},
 
-	calculate_nationalization_costs(frm) {
+	calculate_nationalization_costs(frm, item_row = null) {
+		if (item_row) {
+			item_row.amount_usd = flt(item_row.amount_usd);  // FIXES: the issue with Paste event -> Sanitize Fields. Invalid returns 0
+			item_row.exchange_rate = flt(item_row.exchange_rate);
+
+			item_row.amount_nio = (item_row.amount_usd * item_row.exchange_rate) || flt(item_row.amount_nio); // Calculate Amount in NIO
+		}
+
 		frm.events.calculate_table_totals(frm, 'nationalization_costs', 'amount_nio', 'grand_total_nationalization',
 			{'Impuestos Aduaneros': 'total_customs_taxes', 'Nacionalizacion': 'total_nationalization_costs'}
 		);
@@ -140,11 +144,7 @@ frappe.ui.form.on('Policy CIF Cost', {
 	description: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'description', true),
 
 	type: (frm) => frm.events.calculate_cif_costs(frm),
-	amount_usd: (frm, cdt, cdn) => {
-		frm.events.calculate_cif_costs(frm);    // Recalculate Totals(CIF and Items)
-		frm.trigger('exchange_rate', cdt, cdn); // Recalculate Amount in NIO
-	},
-	exchange_rate: (frm, cdt, cdn) => frm.events.calculate_exchange_rate(frm, 'cif_costs', locals[cdt][cdn]) // Recalculate Amount in NIO. Has no effect on Totals
+	amount_usd: (frm, cdt, cdn) => frm.events.calculate_cif_costs(frm, locals[cdt][cdn]) // Recalculate Totals(CIF and Items)
 });
 
 frappe.ui.form.on('Policy Nationalization Cost', {
@@ -155,10 +155,8 @@ frappe.ui.form.on('Policy Nationalization Cost', {
 	reference: (frm, cdt, cdn) => frm.events.sanitize_string_field(locals[cdt][cdn], 'reference', true),
 
 	type: (frm) => frm.events.calculate_nationalization_costs(frm),
-	amount_usd: (frm, cdt, cdn) => frm.trigger('exchange_rate', cdt, cdn), // Recalculate Amount in NIO
-	exchange_rate: (frm, cdt, cdn) => {
-		frm.events.calculate_exchange_rate(frm, 'nationalization_costs', locals[cdt][cdn]);
-		frm.events.calculate_nationalization_costs(frm); // Recalculate Totals
-	},
-	amount_nio: (frm) => frm.events.calculate_nationalization_costs(frm)
+	amount_usd: (frm, cdt, cdn) => frm.trigger('amount_nio', cdt, cdn),
+	exchange_rate: (frm, cdt, cdn) => frm.trigger('amount_nio', cdt, cdn),
+	amount_nio: (frm, cdt, cdn) => frm.events.calculate_nationalization_costs(frm, locals[cdt][cdn]) // Recalculate Item Fields and Form Totals
 });
+// 160
