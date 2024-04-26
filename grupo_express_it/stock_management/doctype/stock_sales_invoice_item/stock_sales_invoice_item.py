@@ -21,6 +21,6 @@ class StockSalesInvoiceItem(Document):
 		qty: DF.Float
 		total: DF.Currency
 		unit_price: DF.Currency
-		uom: DF.Literal["", "Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "KG", "Libras"]
+		uom: DF.Literal["", "Unidad", "Docenas", "Millar", "Gruesas", "Yardas", "Metros", "Rollo", "Set", "Paquetes", "Pieza", "Pares", "KG", "Libras"]
 	# end: auto-generated types
 	pass
