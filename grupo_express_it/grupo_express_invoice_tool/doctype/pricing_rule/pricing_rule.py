@@ -17,7 +17,7 @@ class PricingRule(Document):
 		parent: DF.Data
 		parentfield: DF.Data
 		parenttype: DF.Data
-		uom: DF.Literal["Bultos", "Unidades", "Libra", "Kilos", "Docenas", "Piezas"]
+		uom: DF.Literal["Bultos", "Unidades", "Libra", "Kilos", "Docenas", "Piezas", "M2", "M3"]
 		valuation_rate: DF.Currency
 	# end: auto-generated types
 	pass
