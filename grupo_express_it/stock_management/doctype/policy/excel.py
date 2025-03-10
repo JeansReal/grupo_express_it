@@ -21,8 +21,34 @@ CHILD_COLUMNS = [
 	{'col': 'E', 'style': 'date',                                                            'label': 'FECHA', 'attr': 'posting_date'},
 	{'col': 'G', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'a9d18e', 'label': 'MONTO $', 'attr': 'amount_usd'},
 	{'col': 'H', 'style': 'currency',                                                        'label': 'TCO', 'attr': 'exchange_rate'},
-	{'col': 'L', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'bdd7ee', 'label': 'MONTO A PAGAR', 'attr': '=SUM(I{row}:K{row})'}
 ]
+
+
+def _register_styles(wb: Workbook) -> None:
+	number_format = '#,##0.00'
+	font_bold = Font(bold=True, size=10)
+	side = Side(style='medium')                                    # Default Side for the Border
+	border = Border(left=side, right=side, top=side, bottom=side)  # Default Border
+
+	table_header_style = {
+		'font': font_bold, 'border': border,
+		'alignment': Alignment(horizontal='center', vertical='center', wrap_text=True)
+	}
+	number_style = {
+		'font': Font(size=10), 'number_format': number_format, 'alignment': Alignment(horizontal='right', indent=1)
+	}
+
+	header = NamedStyle(name='table-header', **table_header_style)
+	pre_header = NamedStyle(name='table-pre-header', **table_header_style, fill=PatternFill('solid', fgColor='bdd7ee'))
+
+	text_center = NamedStyle(name='text-center', alignment=Alignment(horizontal='center'))
+	date = NamedStyle(name='date', number_format='DD/MM/YYYY;@', alignment=Alignment(horizontal='center'))
+
+	number = NamedStyle(name='number', **number_style)
+	currency = NamedStyle(name='currency', **{**number_style, 'number_format': '#,##0.00##'})  # Adding 4 Decimal Places
+	total_style = NamedStyle(name='table-total', **{**number_style, 'font': font_bold}, border=border)
+
+	[wb.add_named_style(style=style) for style in [header, pre_header, text_center, date, number, currency, total_style]]
 
 
 def _table_pre_header(ws: Worksheet, row: int, col: int, value: str, col_range: [str, str]) -> int:
@@ -72,37 +98,10 @@ def _table_builder(ws: Worksheet, current_row: int, columns: list[dict], data: l
 	ws.cell(row=current_row, column=2, value="TOTAL").style = 'table-header'
 	ws.merge_cells(f'B{current_row}:D{current_row}')
 
-	return current_row
+	return current_row  # Returns the Total Row
 
 
-def _register_styles(wb: Workbook) -> None:
-	number_format = '#,##0.00'
-	font_bold = Font(bold=True, size=10)
-	side = Side(style='medium')                                    # Default Side for the Border
-	border = Border(left=side, right=side, top=side, bottom=side)  # Default Border
-
-	table_header_style = {
-		'font': font_bold, 'border': border,
-		'alignment': Alignment(horizontal='center', vertical='center', wrap_text=True)
-	}
-	number_style = {
-		'font': Font(size=10), 'number_format': number_format, 'alignment': Alignment(horizontal='right', indent=1)
-	}
-
-	header = NamedStyle(name='table-header', **table_header_style)
-	pre_header = NamedStyle(name='table-pre-header', **table_header_style, fill=PatternFill('solid', fgColor='bdd7ee'))
-
-	text_center = NamedStyle(name='text-center', alignment=Alignment(horizontal='center'))
-	date = NamedStyle(name='date', number_format='DD/MM/YYYY;@', alignment=Alignment(horizontal='center'))
-
-	number = NamedStyle(name='number', **number_style)
-	currency = NamedStyle(name='currency', **{**number_style, 'number_format': '#,##0.00##'})  # Adding 4 Decimal Places
-	total_style = NamedStyle(name='table-total', **{**number_style, 'font': font_bold}, border=border)
-
-	[wb.add_named_style(style=style) for style in [header, pre_header, text_center, date, number, currency, total_style]]
-
-
-def _policy_header(ws, policy: Policy) -> None:
+def _policy_header(ws: Worksheet, policy: Policy) -> None:
 	for (cell, label) in [
 		("A1", "Liquidación de Importación"),
 		("A2", "Registro:"),       ("B2", policy.name),
@@ -122,7 +121,7 @@ def _policy_header(ws, policy: Policy) -> None:
 	ws['J4'].number_format = 'C$ 00.000000'  # Currency Exchange Format
 
 
-def _policy_items(ws, current_row: int, policy_items: list[PolicyItem]) -> int:
+def _policy_items(ws: Worksheet, current_row: int, policy_items: list[PolicyItem]) -> int:
 	columns = [
 		{'col': 'A', 'width': 10, 'style': 'number',                   'total': True,                         'label': 'CANT.', 'attr': 'qty'},
 		{'col': 'B', 'width': 60,                                                                             'label': 'DESCRIPCIÓN', 'attr': 'item'},
@@ -131,10 +130,10 @@ def _policy_items(ws, current_row: int, policy_items: list[PolicyItem]) -> int:
 		{'col': 'E', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'FOB DÓLARES $', 'attr': '=A{row}*D{row}'},
 		{'col': 'F', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'FLETES $', 'attr': 'freight_cost'},
 		{'col': 'G', 'width': 10, 'style': 'number',                   'total': True,                         'label': 'SEGUROS $', 'attr': 'insurance_cost'},
-		{'col': 'H', 'width': 12, 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'a9d18e', 'label': 'CIF DÓLARES $', 'attr': '=E{row}+F{row}+G{row}'},
-		{'col': 'I', 'width': 12, 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'f2f2f2', 'label': 'CIF CORDOBAS', 'attr': '=H{row}*$J$4'},
-		{'col': 'J', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'IMPUESTOS ADUANEROS', 'attr': 'customs_taxes'},
-		{'col': 'K', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'COSTOS DE NAC.', 'attr': 'nationalization_total'},
+		{'col': 'H', 'width': 11, 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'a9d18e', 'label': 'CIF DÓLARES $', 'attr': '=E{row}+F{row}+G{row}'},
+		{'col': 'I', 'width': 12, 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'f2f2f2', 'label': 'CIF CORDOBAS C$', 'attr': '=H{row}*$J$4'},
+		{'col': 'J', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'IMPUESTOS ADUANEROS C$', 'attr': 'customs_taxes'},
+		{'col': 'K', 'width': 12, 'style': 'number',                   'total': True,                         'label': 'COSTOS DE NAC. C$', 'attr': 'nationalization_total'},
 		{'col': 'L', 'width': 15, 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'f2f2f2', 'label': 'TOTAL COSTOS NACIONAL. C$', 'attr': '=J{row}+K{row}'},
 		{'col': 'M', 'width': 15, 'style': 'number', 'fill': 'deebf7', 'total': True, 'total_fill': 'a9d18e', 'label': 'COSTO TOTAL PRODUCTO C$', 'attr': '=I{row}+L{row}'},
 		{'col': 'N', 'width': 12, 'style': 'number', 'fill': 'deebf7',                                        'label': 'COSTO UNITARIO C$', 'attr': '=M{row}/A{row}'}
@@ -150,26 +149,37 @@ def _policy_items(ws, current_row: int, policy_items: list[PolicyItem]) -> int:
 	return _table_builder(ws=ws, current_row=current_row, columns=columns, data=policy_items)
 
 
-def _policy_cif_costs(ws, current_row: int, cif_costs: list[PolicyCIFCost]) -> int:
+def _policy_cif_costs(ws: Worksheet, current_row: int, cif_costs: list[PolicyCIFCost]) -> int:
 	columns = CHILD_COLUMNS + [
 		{'col': 'F', 'label': 'REFERENCIA', 'attr': 'type'},
-		{'col': 'I', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'bdd7ee', 'label': 'SUB TOTAL', 'attr': '=G{row}*H{row}'}
+		{'col': 'I', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'bdd7ee', 'label': 'TOTAL C$', 'attr': '=G{row}*H{row}'}
 	]
 
-	current_row = _table_pre_header(ws=ws, row=current_row, col=2, value='VALOR CIF (FOB + FLETES + SEGUROS)', col_range=['B', 'L'])
+	current_row = _table_pre_header(ws=ws, row=current_row, col=2, value='VALOR CIF (FOB + FLETES + SEGUROS)', col_range=['B', 'I'])
 	return _table_builder(ws=ws, current_row=current_row, columns=columns, data=cif_costs)
 
 
-def _policy_nationalization_cost(ws, current_row: int, nationalization_cost: list[PolicyNationalizationCost]) -> int:
+def _policy_nationalization_cost(ws: Worksheet, current_row: int, nationalization_cost: list[PolicyNationalizationCost]) -> int:
 	columns = CHILD_COLUMNS + [
-		{'col': 'F',                                                           'label': 'REFERENCIA', 'attr': 'reference'},
+		{'col': 'F',                                                                             'label': 'REFERENCIA', 'attr': 'reference'},
 		{'col': 'I', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'bdd7ee', 'label': 'SUB TOTAL', 'attr': 'amount_nio'},  # FIXME: this sould be a formula, but sometimes the amount_usd(col[G]) is not set
-		{'col': 'J', 'style': 'number', 'total': True, 'total_fill': 'f2f2f2', 'label': 'IVA', 'attr': 'iva'},
-		{'col': 'K', 'style': 'number', 'total': True, 'total_fill': 'f2f2f2', 'label': 'RETENCION', 'attr': '=0'}  # Virtual
+		{'col': 'J', 'style': 'number',                   'total': True, 'total_fill': 'f2f2f2', 'label': 'I.V.A', 'attr': 'iva'},
+		{'col': 'K', 'style': 'number',                   'total': True, 'total_fill': 'f2f2f2', 'label': 'RETENCION', 'attr': '=0'},  # Virtual
+		{'col': 'L', 'style': 'number', 'fill': 'f2f2f2', 'total': True, 'total_fill': 'bdd7ee', 'label': 'MONTO A PAGAR', 'attr': '=SUM(I{row}:K{row})'}
 	]
 
 	current_row = _table_pre_header(ws=ws, row=current_row, col=2, value='GASTOS DE NACIONALIZACION', col_range=['B', 'L'])
 	return _table_builder(ws=ws, current_row=current_row, columns=columns, data=nationalization_cost)
+
+
+def _total(ws: Worksheet, current_row: int, cif_total_row: int, nat_total_row: int):
+	# This is a little Hacky, but it works: It must be formulas
+	current_row = _table_pre_header(ws=ws, row=current_row, col=2, value='TOTAL COSTO DE MERCADERIA + COSTOS NACIONALIZACION', col_range=['B', 'F']) - 1  # pre-header returns next row
+
+	ws.cell(row=current_row, column=column_index_from_string('G'), value=f'=G{cif_total_row} + G{nat_total_row}').style = 'table-total'
+	ws.cell(row=current_row, column=column_index_from_string('I'), value=f'=I{cif_total_row} + I{nat_total_row}').style = 'table-total'
+	ws.cell(row=current_row, column=column_index_from_string('J'), value=f'=J{nat_total_row}').style = 'table-total'
+	ws.cell(row=current_row, column=column_index_from_string('L'), value=f'=I{cif_total_row} + L{nat_total_row}').style = 'table-total'
 
 
 @frappe.whitelist(allow_guest=False)
@@ -194,8 +204,9 @@ def download(policy: str):
 	}, position=0)
 
 	current_row = _policy_items(ws, current_row=8, policy_items=policy.items)
-	current_row = _policy_cif_costs(ws, current_row=current_row + 4, cif_costs=policy.cif_costs)
-	_policy_nationalization_cost(ws, current_row=current_row + 4, nationalization_cost=policy.nationalization_costs)
+	cif_total_row = _policy_cif_costs(ws, current_row=current_row + 4, cif_costs=policy.cif_costs)
+	nat_total_row = _policy_nationalization_cost(ws, current_row=cif_total_row + 4, nationalization_cost=policy.nationalization_costs)
+	_total(ws, current_row=nat_total_row + 3, cif_total_row=cif_total_row, nat_total_row=nat_total_row)
 
 	xlsx_file = BytesIO()
 	wb.save(xlsx_file)
