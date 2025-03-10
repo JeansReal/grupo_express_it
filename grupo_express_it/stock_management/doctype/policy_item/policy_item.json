@@ -6,21 +6,33 @@
  "engine": "InnoDB",
  "field_order": [
   "qty",
+  "column_break_mnvm",
   "item",
   "uom",
+  "column_break_yyda",
   "fob_unit_price",
+  "column_break_gdcn",
   "fob_total_price",
+  "section_break_ozki",
+  "column_break_cpka",
   "freight_cost",
   "insurance_cost",
+  "column_break_smvm",
   "cif_total_usd",
   "cif_total_nio",
+  "column_break_fpgb",
   "customs_taxes",
   "nationalization_total",
+  "column_break_loec",
   "total_price",
   "unit_price",
-  "column_break_tdyt",
+  "section_break_rcrc",
+  "column_break_eodu",
+  "column_break_thhq",
   "actual_qty",
-  "stock_value"
+  "column_break_tdyt",
+  "stock_value",
+  "column_break_wkbk"
  ],
  "fields": [
   {
@@ -55,6 +67,7 @@
   {
    "bold": 1,
    "columns": 1,
+   "description": "Costo Unitario FOB",
    "fieldname": "fob_unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -67,6 +80,7 @@
    "bold": 1,
    "columns": 1,
    "default": "0.00",
+   "description": "Valor FOB Total",
    "fieldname": "fob_total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -97,6 +111,7 @@
   },
   {
    "columns": 1,
+   "description": "Impuestos Aduaneros",
    "fieldname": "customs_taxes",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -108,10 +123,11 @@
   },
   {
    "columns": 1,
+   "description": "Gastos de Nacionalizaci\u00f3n",
    "fieldname": "nationalization_total",
    "fieldtype": "Currency",
    "in_list_view": 1,
-   "label": "Nacionalizacion C$",
+   "label": "Nacionalizaci\u00f3n C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -120,6 +136,7 @@
   {
    "bold": 1,
    "columns": 1,
+   "description": "Costo Unitario Nacionalizado",
    "fieldname": "unit_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -131,6 +148,7 @@
   },
   {
    "columns": 1,
+   "description": "CIF + Impuestos + Nacionalizaci\u00f3n",
    "fieldname": "total_price",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -143,6 +161,7 @@
   {
    "bold": 1,
    "columns": 1,
+   "description": "FOB + Flete + Seguro",
    "fieldname": "cif_total_usd",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -170,17 +189,18 @@
   {
    "bold": 1,
    "columns": 1,
+   "description": "Cantidad De Inventario Disponible para Facturar",
    "fieldname": "actual_qty",
    "fieldtype": "Float",
    "label": "Cantidad Disponible",
    "non_negative": 1,
    "precision": "2",
-   "read_only": 1,
-   "search_index": 1
+   "read_only": 1
   },
   {
    "bold": 1,
    "columns": 1,
+   "description": "Valor del Inventario Disponible para Facturar",
    "fieldname": "stock_value",
    "fieldtype": "Currency",
    "label": "Valor del Inventario Disponible C$",
@@ -188,11 +208,65 @@
    "options": "Currency:NIO:name",
    "precision": "2",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ozki",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_mnvm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_yyda",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_gdcn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: parent.status != 'Draft';",
+   "fieldname": "section_break_rcrc",
+   "fieldtype": "Section Break",
+   "label": "Inventario Disponible"
+  },
+  {
+   "fieldname": "column_break_fpgb",
+   "fieldtype": "Column Break",
+   "label": "Costos de Nacionalizaci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_cpka",
+   "fieldtype": "Column Break",
+   "label": "Costos de Flete y Seguro"
+  },
+  {
+   "fieldname": "column_break_smvm",
+   "fieldtype": "Column Break",
+   "label": "Valor CIF"
+  },
+  {
+   "fieldname": "column_break_loec",
+   "fieldtype": "Column Break",
+   "label": "Valoraci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_thhq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_eodu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wkbk",
+   "fieldtype": "Column Break"
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2024-05-27 11:43:07.293777",
+ "modified": "2025-03-10 00:49:01.543215",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Item",

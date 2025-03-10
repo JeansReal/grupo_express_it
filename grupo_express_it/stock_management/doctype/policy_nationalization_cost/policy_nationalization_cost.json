@@ -7,13 +7,19 @@
  "engine": "InnoDB",
  "field_order": [
   "provider",
+  "column_break_empy",
   "description",
   "reference",
   "posting_date",
+  "column_break_iyov",
   "type",
+  "section_break_tuiv",
   "amount_usd",
+  "column_break_fwtr",
   "exchange_rate",
+  "column_break_jqcu",
   "amount_nio",
+  "column_break_rzdg",
   "iva"
  ],
  "fields": [
@@ -71,7 +77,7 @@
    "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "7"
+   "precision": "6"
   },
   {
    "bold": 1,
@@ -89,18 +95,41 @@
    "columns": 1,
    "fieldname": "iva",
    "fieldtype": "Currency",
-   "ignore_user_permissions": 1,
    "in_list_view": 1,
    "label": "I.V.A C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2"
+  },
+  {
+   "fieldname": "column_break_empy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_iyov",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_tuiv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_fwtr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jqcu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rzdg",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-02-08 17:00:20.976437",
+ "modified": "2025-03-09 22:47:53.502599",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy Nationalization Cost",

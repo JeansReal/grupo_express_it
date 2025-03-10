@@ -6,11 +6,16 @@
  "engine": "InnoDB",
  "field_order": [
   "provider",
+  "column_break_pefh",
   "description",
-  "type",
   "posting_date",
+  "column_break_wfke",
+  "type",
+  "section_break_fvgk",
   "amount_usd",
+  "column_break_smkp",
   "exchange_rate",
+  "column_break_ajdh",
   "amount_nio"
  ],
  "fields": [
@@ -22,6 +27,7 @@
    "label": "Provider"
   },
   {
+   "bold": 1,
    "columns": 1,
    "fieldname": "type",
    "fieldtype": "Select",
@@ -38,7 +44,6 @@
    "label": "Date"
   },
   {
-   "bold": 1,
    "columns": 1,
    "fieldname": "exchange_rate",
    "fieldtype": "Currency",
@@ -46,13 +51,12 @@
    "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "7",
+   "precision": "6",
    "read_only": 1
   },
   {
    "bold": 1,
    "columns": 1,
-   "default": "0.00",
    "fieldname": "amount_usd",
    "fieldtype": "Currency",
    "in_list_view": 1,
@@ -78,12 +82,32 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Description"
+  },
+  {
+   "fieldname": "column_break_pefh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wfke",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_fvgk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_smkp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ajdh",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-01-10 08:32:37.950906",
+ "modified": "2025-03-09 22:45:41.429443",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy CIF Cost",

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_copy": 1,
  "allow_import": 1,
  "allow_rename": 1,
  "creation": "2023-07-26 19:17:37.104782",
@@ -29,11 +30,12 @@
   "cif_costs",
   "nationalization_costs",
   "section_break_2pl7",
+  "column_break_gph5",
   "total_qty",
   "total_cost",
   "column_break_oost",
   "per_billed",
-  "column_break_gph5",
+  "valor_fob_column",
   "total_fob",
   "column_break_myn4",
   "total_cif",
@@ -91,7 +93,9 @@
   {
    "fieldname": "provider",
    "fieldtype": "Data",
-   "label": "Provider"
+   "in_standard_filter": 1,
+   "label": "Provider",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_m8ye",
@@ -115,6 +119,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "bold": 1,
    "fieldname": "posting_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -127,12 +132,13 @@
    "fieldname": "invoice",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Invoice No"
+   "label": "Invoice No",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_2pl7",
    "fieldtype": "Section Break",
-   "label": "Totals"
+   "label": "Totales"
   },
   {
    "fieldname": "column_break_oost",
@@ -140,7 +146,8 @@
   },
   {
    "fieldname": "column_break_myn4",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "label": "Costos CIF (FOB + Flete + Seguro)"
   },
   {
    "fieldname": "section_break_txgw",
@@ -168,7 +175,7 @@
    "default": "0.00",
    "fieldname": "total_cif",
    "fieldtype": "Currency",
-   "label": "Total Costo CIF $",
+   "label": "Costo Global CIF $",
    "non_negative": 1,
    "precision": "2",
    "read_only": 1
@@ -193,16 +200,18 @@
   },
   {
    "fieldname": "column_break_gph5",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "label": "Valoraci\u00f3n"
   },
   {
    "fieldname": "column_break_xf34",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "label": "Costos de Nacionalizaci\u00f3n"
   },
   {
    "fieldname": "nationalization_costs",
    "fieldtype": "Table",
-   "label": "Costos de Nacionalizacion",
+   "label": "Costos de Nacionalizaci\u00f3n",
    "options": "Policy Nationalization Cost"
   },
   {
@@ -216,20 +225,19 @@
    "read_only": 1
   },
   {
-   "bold": 1,
    "fieldname": "exchange_rate",
    "fieldtype": "Currency",
    "label": "Tasa de Cambio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "7",
+   "precision": "6",
    "reqd": 1
   },
   {
    "default": "0.00",
    "fieldname": "total_nationalization_costs",
    "fieldtype": "Currency",
-   "label": "Total de Nacionalizacion C$",
+   "label": "Total de Nacionalizaci\u00f3n C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -240,7 +248,7 @@
    "default": "0.00",
    "fieldname": "grand_total_nationalization",
    "fieldtype": "Currency",
-   "label": "Costo Global de Nacionalizacion C$",
+   "label": "Costo Global de Nacionalizaci\u00f3n C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
    "precision": "2",
@@ -281,10 +289,10 @@
    "fieldtype": "Percent",
    "hidden": 1,
    "in_list_view": 1,
-   "label": "Billed"
+   "label": "Billed",
+   "read_only": 1
   },
   {
-   "bold": 1,
    "default": "Draft",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -292,10 +300,16 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
+   "no_copy": 1,
    "options": "Draft\nNot Billed\nPartly Billed\nFully Billed\nCancelled",
    "read_only": 1,
    "reqd": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "valor_fob_column",
+   "fieldtype": "Column Break",
+   "label": "Costo FOB"
   }
  ],
  "is_submittable": 1,
@@ -308,11 +322,11 @@
    "table_fieldname": "items"
   }
  ],
- "modified": "2024-01-30 10:21:15.848684",
+ "modified": "2025-03-10 00:48:24.365861",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Policy",
- "naming_rule": "By script",
+ "naming_rule": "Set by user",
  "owner": "Administrator",
  "permissions": [
   {
