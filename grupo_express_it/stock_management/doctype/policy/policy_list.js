@@ -6,6 +6,15 @@ frappe.listview_settings['Policy'] = {
 
 	onload(listview) {
 		listview.page.sidebar.toggle(false);
+
+		listview.page.add_action_item('Excel', () => {
+			let docs = listview.get_checked_items(true);
+
+			docs.forEach((doc, i) => {
+				window.open('/api/method/grupo_express_it.stock_management.doctype.policy.excel.download?policy=' + doc);
+				frappe.show_progress('Descargando Polizas', i, docs.length + 1, 'Descargando ' + doc, true);
+			});
+		});
 	},
 
 	get_indicator: (doc) => [__(doc.status), {
@@ -15,5 +24,11 @@ frappe.listview_settings['Policy'] = {
 		'Fully Billed': 'green',
 		'Cancelled': 'red',
 	}[doc.status], 'status,=,' + doc.status],
+
+	button: {
+      show: () => true,
+      get_label: () => 'Excel', get_description: () => '',
+      action: (doc) => window.open('/api/method/grupo_express_it.stock_management.doctype.policy.excel.download?policy=' + doc.name),
+    }
 
 }
