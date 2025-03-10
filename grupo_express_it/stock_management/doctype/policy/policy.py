@@ -19,13 +19,13 @@ class Policy(Document):
 		company: DF.Literal["", "Grupo SyM, S.A.", "Grupo Express, S.A.", "Importadora Internacional, S.A.", "Grupo de Importaciones Express, S.A."]
 		exchange_rate: DF.Currency
 		grand_total_nationalization: DF.Currency
-		invoice: DF.Data | None
+		invoice: DF.Data
 		items: DF.Table[PolicyItem]
 		nationalization_costs: DF.Table[PolicyNationalizationCost]
 		per_billed: DF.Percent
 		policy: DF.Data
 		posting_date: DF.Date
-		provider: DF.Data | None
+		provider: DF.Data
 		status: DF.Literal["Draft", "Not Billed", "Partly Billed", "Fully Billed", "Cancelled"]
 		total_cif: DF.Currency
 		total_cost: DF.Currency
