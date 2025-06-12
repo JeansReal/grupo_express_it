@@ -121,6 +121,10 @@ def get_policy_items(doctype, txt, searchfield, start, page_len, filters, as_dic
 		sql_query = sql_query.where(policy_item.actual_qty >= actual_qty_field)  # TODO: check if this is correct or necessary
 	if unit_price_field := filters.get('unit_price'):
 		sql_query = sql_query.where(policy_item.unit_price <= unit_price_field)
+	if stock_value_field := filters.get('stock_value'):
+		sql_query = sql_query.where(policy_item.stock_value <= stock_value_field)
+	if stock_value_field := filters.get('stock_value_min'):
+		sql_query = sql_query.where(policy_item.stock_value >= stock_value_field)
 
 	results = sql_query.run(as_dict=as_dict)
 

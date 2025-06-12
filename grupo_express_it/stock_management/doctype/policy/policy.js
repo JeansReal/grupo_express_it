@@ -29,7 +29,7 @@ frappe.ui.form.on('Policy', {
 			frappe.show_alert({
 				message: 'No se han registrado <b>Costos CIF y/o Costos de Nacionalización</b>',
 				indicator: "yellow",
-			}, duration = 5);
+			}, 5);
 		}
 	},
 
@@ -43,8 +43,6 @@ frappe.ui.form.on('Policy', {
 		frm.events.validate_zero(frm, 'grand_total_nationalization', `<b>Costos de Nacionalización</b>: Tiene valores en 0.`, 'nationalization_costs');
 		frm.events.validate_zero(frm, 'total_customs_taxes', `<b>Costos de Nacionalización</b>: No Tiene costos de Impuestos Aduaneros.`, 'nationalization_costs');
 		frm.events.validate_zero(frm, 'total_nationalization_costs', `<b>Costos de Nacionalización</b>: No Tiene costos de Nacionalización.`, 'nationalization_costs');
-
-		frappe.throw({message: `No te vamos a dar pase :D`, title: __('Missing Values Required')});
 	},
 
 	// Sanitize Fields
@@ -68,7 +66,7 @@ frappe.ui.form.on('Policy', {
 	// START Helpers
 	sanitize_string_field(doc, field, child = false) {
 		doc[field] = doc[field].trim().replace(/\s+/g, ' '); // Remove Extra Spaces
-		if (!child) cur_frm.refresh_field(field);                                  // If not Child refresh field(doc)
+		if (!child) cur_frm.refresh_field(field);                                  // If not, Child refresh field(doc)
 	},
 
 	validate_zero(frm, field, error_message = '', scroll_to = field) {  // FIXME: Frappe Takes as valid 0.00 for Mandatory Currency :<

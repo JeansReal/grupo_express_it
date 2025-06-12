@@ -56,8 +56,8 @@ frappe.ui.form.on("Stock Sales Invoice", {
 		const dialog = new frappe.ui.form.MultiSelectDialog({
 			doctype: 'Policy Item', target: frm, size: 'extra-large', add_filters_group: false, primary_action_label: 'Agregar Items',
 
-			// setters holds the Doctype fields we want on the form. These are set in the get_primary_filters() method.
-			setters: {actual_qty: null, unit_price: null, uom: null},
+			// setters hold the Doctype fields we want on the form. These are set in the get_primary_filters() method.
+			setters: {unit_price: null, actual_qty: null, stock_value: null, uom: null},
 
 			// data_fields holds custom fields we want on the form. But without support for get_args_for_search
 			data_fields: [
@@ -68,17 +68,18 @@ frappe.ui.form.on("Stock Sales Invoice", {
 				},
 				{fieldtype: 'Section Break', hide_border: true},
 				{fieldtype: 'DateRange', label: __('Policy Date'), fieldname: 'policy_date'},
-				{fieldtype: 'Column Break'}
+				{fieldtype: 'Column Break'},
+				{fieldtype: 'Float', label: __('Valor del Inventario Disponible C$ Minimo'), fieldname: 'stock_value_min'},
 			],
 
-			// columns to visualize in the table(These comes from the Query)
+			// columns to visualize in the table (These come from the Query)
 			columns: ['policy', 'date', 'item', 'actual_qty', 'uom', 'unit_price', 'stock_value'],
 
 			// Override get_fields() method to reorder fields. So we can have data_fields after the first field
 			get_fields() {
 				let primary_fields = this.get_primary_filters(); // name + setters
 
-				primary_fields.splice(1, 0, ...this.data_fields); // Insert data_fields after first field
+				primary_fields.splice(1, 0, ...this.data_fields); // Insert data_fields after first fields
 
 				return [...primary_fields, ...this.get_result_fields(), ...this.get_child_selection_fields()]; // Same as Super
 			},
@@ -88,6 +89,7 @@ frappe.ui.form.on("Stock Sales Invoice", {
 					query: 'grupo_express_it.stock_management.doctype.stock_sales_invoice.stock_sales_invoice.get_policy_items',
 					filters: {
 						company: frm.doc.company,
+						stock_value_min: this.dialog.fields_dict['stock_value_min'].get_value(),
 						policy: this.dialog.fields_dict['policy'].get_value(),
 						policy_date: this.dialog.fields_dict['policy_date'].get_value()
 					}

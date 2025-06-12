@@ -1,14 +1,12 @@
 [project]
 name = "grupo_express_it"
-description = "Grupo Express Invoice Tool"
-readme = "README.md"
-dynamic = ["version"]
-
-requires-python = ">=3.11"
-
 authors = [
     { name = "Agile Shift", email = "contacto@gruporeal.org" }
 ]
+description = "Grupo Express Invoice Tool"
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
 
 dependencies = []
 
