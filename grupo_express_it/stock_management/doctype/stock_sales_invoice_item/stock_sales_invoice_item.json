@@ -59,7 +59,7 @@
    "label": "Precio C$",
    "non_negative": 1,
    "options": "Currency:NIO:name",
-   "precision": "2",
+   "precision": "3",
    "reqd": 1
   },
   {
@@ -141,7 +141,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-05-16 16:02:04.875654",
+ "modified": "2025-07-01 08:16:27.223042",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice Item",
