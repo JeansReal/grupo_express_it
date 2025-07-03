@@ -12,17 +12,16 @@
 
 					// SMALL Digits Currency Fields
 					&[data-fieldname="qty"],
+					&[data-fieldname="freight_cost"],
+					&[data-fieldname="insurance_cost"] {
+						flex: 0 0 5%;
+						max-width: 5%;
+					},
 					&[data-fieldname="uom"],
 					&[data-fieldname="fob_unit_price"],
 					&[data-fieldname="unit_price"] {
 						flex: 0 0 5.5%;
 						max-width: 5.5%;
-					}
-
-					&[data-fieldname="freight_cost"],
-					&[data-fieldname="insurance_cost"] {
-						flex: 0 0 6%;
-						max-width: 6%;
 					}
 
 					// Read-Only BIG Digits Currency Fields(Totals in Local Currency)

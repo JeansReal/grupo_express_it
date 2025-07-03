@@ -2,6 +2,9 @@ frappe.ui.form.on('Policy', {
 
 	setup(frm) {
 		frm.page.sidebar.toggle(false);
+
+		$(".container.page-body").css("width", "100%");
+		$('.col.layout-main-section-wrapper').css("padding", "0 7px");
 	},
 
 	before_load(frm) {
