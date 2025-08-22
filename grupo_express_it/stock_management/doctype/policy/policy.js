@@ -17,8 +17,8 @@ frappe.ui.form.on('Policy', {
 	},
 
 	refresh(frm) {
-		frm.add_custom_button('Excel', () => {
-			window.open('/api/method/grupo_express_it.stock_management.doctype.policy.excel.download?policy='+frm.doc.name);
+		frm.add_custom_button('Descargar Excel Individual', () => {
+			window.open('/api/method/grupo_express_it.stock_management.doctype.policy.excel.unique.download?policy='+frm.doc.name);
 		});
 	},
 

@@ -48,7 +48,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "UOM",
-   "options": "\nUnidad\nDocenas\nMillar\nGruesas\nGalones\nYardas\nMetros\nRollo\nSet\nKit\nCajas\nPaquetes\nPieza\nPares\nKG\nLibras\nBolsas",
+   "options": "\nUnidad\nDocenas\nMillar\nGruesas\nGalones\nYardas\nMetros\nRollo\nSet\nKit\nCajas\nPaquetes\nPieza\nPares\nKG\nLibras\nBolsas\nJuego\nJarra",
    "reqd": 1
   },
   {
@@ -141,7 +141,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-03 11:54:50.773874",
+ "modified": "2025-08-22 11:44:49.140318",
  "modified_by": "Administrator",
  "module": "Stock Management",
  "name": "Stock Sales Invoice Item",
