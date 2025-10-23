@@ -18,7 +18,7 @@ frappe.ui.form.on('Policy', {
 
 	refresh(frm) {
 		frm.add_custom_button('Descargar Excel Individual', () => {
-			window.open('/api/method/grupo_express_it.stock_management.doctype.policy.excel.unique.download?policy='+frm.doc.name);
+			window.open(`/api/method/grupo_express_it.stock_management.doctype.policy.excel.unique.download?policy=${frm.doc.name}`);
 		});
 	},
 
@@ -122,7 +122,6 @@ frappe.ui.form.on('Policy', {
 			const insuranceFactor = frm.doc.total_insurance / frm.doc.total_fob || 0.00;
 			const customsTaxesFactor = frm.doc.total_customs_taxes / (frm.doc.total_fob + frm.doc.total_cif) || 0.00;
 			const nationalizationFactor = frm.doc.total_nationalization_costs / (frm.doc.total_fob + frm.doc.total_cif) || 0.00;
-
 
 			(frm.doc.items).forEach((row) => {
 				row.freight_cost = freightFactor * row.fob_total_price;     // Calculate Freight

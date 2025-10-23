@@ -4,7 +4,9 @@ app_publisher = "Agile Shift"
 app_description = "Invoice Tool"
 app_email = "contacto@gruporeal.org"
 app_license = "MIT"
-# required_apps = []
+required_apps = [
+	'shridarpatil/frappe_whatsapp'
+]
 
 # Includes in <head>
 # ------------------
