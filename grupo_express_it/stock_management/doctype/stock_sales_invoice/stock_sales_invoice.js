@@ -13,7 +13,9 @@ frappe.ui.form.on("Stock Sales Invoice", {
 	},
 
 	refresh(frm) {
-		frm.add_custom_button('Agregar desde Poliza', () => frm.events.policy_items_dialog(frm));
+		if (frm.doc.docstatus === 0) {
+			frm.add_custom_button('Agregar desde Poliza', () => frm.events.policy_items_dialog(frm));
+		}
 		if (!frm.is_new()) {
 			frm.add_custom_button('Actualizar Cantidad Disponible', () => frm.call('update_actual_qty', {for_update: true}, () => frappe.show_alert('Cantidades Actualizadas')));
 		}
