@@ -26,6 +26,27 @@ frappe.ui.form.on('Sales Invoice', {
 		frm.fields_dict['items'].grid.set_multiple_add('item'); // This uses our custom query.
 	},
 
+	refresh(frm) {
+		if (frm.is_new()) return;
+
+		frm.add_custom_button('Enviar por WhatsApp', () => {
+
+			if (frm.is_dirty()) {
+				frappe.throw('Por favor guarda el documento antes de Enviarlo por WhatsApp.');
+				return;
+			}
+
+			frappe.call({
+				method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.send_sales_invoice',
+				args: {doc_name: frm.doc.name},
+				callback: (r) => {
+					frappe.show_alert('Mensaje de WhatsApp enviado exitosamente.');
+					frm.refresh();
+				}
+			});
+		});
+	},
+
 	customer(frm) {
 		if (!frm.doc.customer) {
 			frm.doc.customer_name = '';

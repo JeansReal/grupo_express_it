@@ -1,3 +1,5 @@
+import fitz
+
 import frappe
 from frappe.model.document import Document
 from frappe.utils import in_words
@@ -20,7 +22,60 @@ class SalesInvoice(Document):
 		posting_date: DF.Date | None
 		posting_time: DF.Time | None
 		total: DF.Currency
+		whatsapp: DF.Check
 	# end: auto-generated types
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+		from grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice_item.sales_invoice_item import \
+			SalesInvoiceItem
+
+		customer: DF.Link
+		customer_name: DF.Data | None
+		in_words: DF.Data | None
+		items: DF.Table[SalesInvoiceItem]
+		posting_date: DF.Date | None
+		posting_time: DF.Time | None
+		total: DF.Currency
+		whatsapp: DF.Check
+# end: auto-generated types
+
+
+@frappe.whitelist(allow_guest=False)
+def send_sales_invoice(doc_name: str) -> Document:
+	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice', as_pdf=True, pdf_generator='wkhtmltopdf')
+
+	pdf = fitz.open(stream=pdf_bytes, filetype='pdf')
+	page = pdf.load_page(1)  # number of page
+	pix = page.get_pixmap(dpi=120)
+	image_bytes = pix.tobytes('jpg')
+
+	frappe.new_doc(
+		doctype='File',
+		attached_to_doctype='Sales Invoice',
+		attached_to_name=doc_name,
+		file_name=f"{doc_name}.jpg",  # Frappe automatically append a unique hash if file with same name exists
+		# file_type='JPG',
+		is_private=False,
+		content=image_bytes
+	).insert(ignore_permissions=True)
+
+	message = frappe.new_doc(
+		doctype='WhatsApp Message',
+		label=doc_name,
+		type='Outgoing',
+		to=frappe.local.conf.whatsapp_number,  # Get from site config
+		content_type='text',
+		message='Se ha notificado al cliente sobre su factura adjunta.',
+		reference_doctype='Sales Invoice',
+		reference_name=doc_name,
+	).insert(ignore_permissions=True)
+
+	return message
 
 
 @frappe.whitelist(allow_guest=False)
@@ -40,15 +95,16 @@ def money_in_words(number) -> str:
 def items_with_pricing_rule_query(doctype, txt, searchfield, start, page_len, filters):
 	""" This query the item name related to a customer """
 
-	return frappe.db.sql("""select item from `tabPricing Rule`
+	return frappe.db.sql("""select item
+							from `tabPricing Rule`
 							where parent = %(parent)s
-							and item like %(txt)s
+							  and item like %(txt)s
 							order by idx desc
-							limit %(start)s, %(page_len)s
-	""", {
-		'parent': filters.get('customer'),
-		'txt': "%%%s%%" % txt,
-		'_txt': txt.replace("%", ""),  # this is unused but leave it
-		'start': start,
-		'page_len': page_len
-	})
+								limit %(start)s, %(page_len)s
+						 """, {
+							 'parent': filters.get('customer'),
+							 'txt': "%%%s%%" % txt,
+							 '_txt': txt.replace("%", ""),  # this is unused but leave it
+							 'start': start,
+							 'page_len': page_len
+						 })
