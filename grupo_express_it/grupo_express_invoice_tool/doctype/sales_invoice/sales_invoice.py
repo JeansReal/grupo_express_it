@@ -26,7 +26,7 @@ class SalesInvoice(Document):
 	pass
 
 @frappe.whitelist(allow_guest=False)
-def send_sales_invoice(doc_name: str, items_length: int) -> None:
+def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> None:
 	frappe.publish_progress(1, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description='Generando PDF...')
 
 	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={
@@ -63,7 +63,7 @@ def send_sales_invoice(doc_name: str, items_length: int) -> None:
 			label=f"Factura {doc_name}. Página {i}",
 			type='Outgoing',
 			to=frappe.local.conf.whatsapp_number,  # Get from site config
-			content_type='image',
+			content_type='text',
 
 			use_template=True,
 			# message_type='Template',
@@ -74,7 +74,7 @@ def send_sales_invoice(doc_name: str, items_length: int) -> None:
 			# 	{"type": "text", "text": "C$ 1,850.00"}
 			# ],
 			attach=img_url,
-			message=f'{doc_name} página {i}.',
+			message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
 			reference_doctype='Sales Invoice',
 			reference_name=doc_name,
 		).insert(ignore_permissions=True)
