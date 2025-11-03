@@ -32,8 +32,8 @@ def send_sales_invoice(doc_name: str, items_length: int) -> None:
 	frappe.publish_progress(1, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description='Generando PDF...')
 
 	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={
-		'page-width': '210mm',      # A4 default width
-    	'page-height': f"{145 + (items_length * 17)}mm"# A4 Default Height 297mm | 130mm header/footer space
+		#'page-width': '210mm',      # A4 default width
+    	#'page-height': f"{145 + (items_length * 17)}mm"# A4 Default Height 297mm | 130mm header/footer space
 	}, pdf_generator='wkhtmltopdf') # 130mm for 1 item
 
 	pdf = fitz.open(stream=pdf_bytes, filetype='pdf')
@@ -58,7 +58,6 @@ def send_sales_invoice(doc_name: str, items_length: int) -> None:
 		image_files.append(file.file_url)
 		progress = int((i / total_pages) * 50)
 		frappe.publish_progress(progress, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description=f"Creando imagen {i}/{total_pages}")
-		time.sleep(0.25)
 
 	for i, img_url in enumerate(image_files, start=1):
 		frappe.new_doc(
@@ -84,7 +83,6 @@ def send_sales_invoice(doc_name: str, items_length: int) -> None:
 
 		progress = 50 + int((i / total_pages) * 50)
 		frappe.publish_progress(progress, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description=f"Enviando imagen {i}/{total_pages}")
-		time.sleep(0.25)
 
 	frappe.db.set_value('Sales Invoice', doc_name, 'whatsapp', True, update_modified=False) # Mark as sent
 
