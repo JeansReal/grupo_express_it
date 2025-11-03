@@ -63,7 +63,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> 
 			label=f"Factura {doc_name}. Página {i}",
 			type='Outgoing',
 			to=frappe.local.conf.whatsapp_number,  # Get from site config
-			content_type='text',
+			content_type='image',
 
 			use_template=True,
 			# message_type='Template',
