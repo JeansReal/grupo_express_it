@@ -40,7 +40,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> 
 	total_pages = len(pdf)
 
 	for i, page in enumerate(pdf, start=1):
-		pix = page.get_pixmap(dpi=200)
+		pix = page.get_pixmap(dpi=210)
 		image_bytes = pix.tobytes('jpg')
 
 		file = frappe.new_doc(
@@ -74,7 +74,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> 
 			# 	{"type": "text", "text": "C$ 1,850.00"}
 			# ],
 			attach=img_url,
-			message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
+			#message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
 			reference_doctype='Sales Invoice',
 			reference_name=doc_name,
 		).insert(ignore_permissions=True)
