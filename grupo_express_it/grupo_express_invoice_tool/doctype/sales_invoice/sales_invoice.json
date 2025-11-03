@@ -21,7 +21,9 @@
   "posting_date",
   "column_break_11",
   "posting_time",
-  "whatsapp"
+  "section_break_xcnw",
+  "whatsapp",
+  "column_break_bcpz"
  ],
  "fields": [
   {
@@ -115,17 +117,24 @@
    "fieldtype": "Section Break"
   },
   {
+   "bold": 1,
    "default": "0",
    "fieldname": "whatsapp",
    "fieldtype": "Check",
-   "hidden": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "WhatsApp",
-   "no_copy": 1,
    "print_hide": 1,
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_xcnw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bcpz",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [
@@ -140,7 +149,7 @@
    "link_fieldname": "reference_name"
   }
  ],
- "modified": "2025-10-31 13:25:52.954494",
+ "modified": "2025-11-03 14:37:12.088482",
  "modified_by": "Administrator",
  "module": "Grupo Express Invoice Tool",
  "name": "Sales Invoice",
