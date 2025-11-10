@@ -1,5 +1,3 @@
-import fitz
-
 import frappe
 from frappe.model.document import Document
 from frappe.utils import in_words
@@ -25,46 +23,34 @@ class SalesInvoice(Document):
 	# end: auto-generated types
 	pass
 
-@frappe.whitelist(allow_guest=False)
-def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> None:
-	frappe.publish_progress(1, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description='Generando PDF...')
 
+@frappe.whitelist(allow_guest=False)
+def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mode: str = 'jpg') -> None:
 	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={
 		#'page-width': '210mm',      # A4 default width
-    	#'page-height': f"{145 + (items_length * 17)}mm"# A4 Default Height 297mm | 130mm header/footer space
+    	#'page-height': f"{145 + (items_length * 17)}mm" # A4 Default Height 297mm | 130mm header/footer space
 	}, pdf_generator='wkhtmltopdf') # 130mm for 1 item
 
-	pdf = fitz.open(stream=pdf_bytes, filetype='pdf')
-
-	image_files = []
-	total_pages = len(pdf)
-
-	for i, page in enumerate(pdf, start=1):
-		pix = page.get_pixmap(dpi=210)
-		image_bytes = pix.tobytes('jpg')
-
+	def save_file(file_bytes, i: int = 0) -> str:
 		file = frappe.new_doc(
 			doctype='File',
 			attached_to_doctype='Sales Invoice',
 			attached_to_name=doc_name,
-			file_name=f"{doc_name}_page_{i}.jpg", # Frappe automatically append a unique hash if file with same name exists
-			file_type='JPG',
+			file_name=f"{doc_name} - {customer_name}.pdf" if mode == 'pdf' else f"{doc_name}. Página {i}.jpg",  # Frappe automatically append a unique hash if file with same name exists
+			file_type=mode, # JPG or PDF
 			is_private=False,
-			content=image_bytes
+			content=file_bytes
 		).insert(ignore_permissions=True)
 
-		image_files.append(file.file_url)
-		progress = int((i / total_pages) * 50)
-		frappe.publish_progress(progress, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description=f"Creando imagen {i}/{total_pages}")
+		return file.file_url
 
-	for i, img_url in enumerate(image_files, start=1):
+	def send_whatsapp_message(file_url: str, i: int = 0) -> None:
 		frappe.new_doc(
 			doctype='WhatsApp Message',
-			label=f"Factura {doc_name}. Página {i}",
+			label=f"{doc_name} PDF" if mode == 'pdf' else f"{doc_name}. Página {i} JPG",
 			type='Outgoing',
 			to=frappe.local.conf.whatsapp_number,  # Get from site config
 			content_type='image',
-
 			use_template=True,
 			# message_type='Template',
 			template='sales_invoice_whatsapp_notification-es',
@@ -73,14 +59,27 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str) -> 
 			# 	{"type": "text", "text": doc_name},
 			# 	{"type": "text", "text": "C$ 1,850.00"}
 			# ],
-			attach=img_url,
-			#message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
+			attach=file_url,
+			# message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
 			reference_doctype='Sales Invoice',
 			reference_name=doc_name,
-		).insert(ignore_permissions=True)
+		)#.insert(ignore_permissions=True)
 
-		progress = 50 + int((i / total_pages) * 50)
-		frappe.publish_progress(progress, title="Enviando factura por WhatsApp", doctype='Sales Invoice', docname=doc_name, description=f"Enviando imagen {i}/{total_pages}")
+	if mode == 'pdf':
+		send_whatsapp_message(save_file(pdf_bytes)) # Generate and save PDF, Then return file URL and send message
+	elif mode == 'jpg':
+		import fitz
+		pdf = fitz.open(stream=pdf_bytes, filetype='pdf')
+
+		for i, page in enumerate(pdf, start=1):
+			pix = page.get_pixmap(dpi=210)
+			image_bytes = pix.tobytes('jpg')
+
+			send_whatsapp_message(save_file(image_bytes, i), i)  # Send each page as image
+	else:
+		frappe.throw('Modo no válido. Use "pdf" o "jpg".')
+
+	frappe.msgprint('Enviado correctamente por WhatsApp', 'Exito', indicator='green')
 
 	frappe.db.set_value('Sales Invoice', doc_name, 'whatsapp', True, update_modified=False) # Mark as sent
 
