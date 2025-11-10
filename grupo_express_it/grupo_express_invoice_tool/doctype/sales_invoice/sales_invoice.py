@@ -25,7 +25,7 @@ class SalesInvoice(Document):
 
 
 @frappe.whitelist(allow_guest=False)
-def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mode: str = 'jpg') -> None:
+def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mode: str = 'pdf') -> None:
 	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={
 		#'page-width': '210mm',      # A4 default width
     	#'page-height': f"{145 + (items_length * 17)}mm" # A4 Default Height 297mm | 130mm header/footer space
