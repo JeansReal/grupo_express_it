@@ -63,7 +63,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mod
 			# message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
 			reference_doctype='Sales Invoice',
 			reference_name=doc_name,
-		)#.insert(ignore_permissions=True)
+		).insert(ignore_permissions=True)
 
 	if mode == 'pdf':
 		send_whatsapp_message(save_file(pdf_bytes)) # Generate and save PDF, Then return file URL and send message
