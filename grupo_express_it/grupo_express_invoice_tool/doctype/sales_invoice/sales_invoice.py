@@ -50,7 +50,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mod
 			label=f"{doc_name} PDF" if mode == 'pdf' else f"{doc_name}. Página {i} JPG",
 			type='Outgoing',
 			to=frappe.local.conf.whatsapp_number,  # Get from site config
-			content_type='image',
+			content_type='document' if mode == 'pdf' else 'image',
 			use_template=True,
 			# message_type='Template',
 			template='sales_invoice_whatsapp_notification-es',
