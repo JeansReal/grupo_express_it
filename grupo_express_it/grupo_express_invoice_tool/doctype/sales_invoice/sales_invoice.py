@@ -44,22 +44,25 @@ def send_sales_invoice(doc_name: str, customer_name: str, mode: str = 'pdf') -> 
 	def send_whatsapp_message(file_bytes, file_name: str, label: str) -> None:
 		file_url = save_file(file_bytes, file_name)
 
-		frappe.new_doc(
-			doctype='WhatsApp Message',
-			label=label,
-			type='Outgoing',
-			to=frappe.local.conf.whatsapp_number,  # Get from site config
-			content_type='document' if mode == 'pdf' else 'image',
-			use_template=True,
-			# message_type='Template',
-			template='sales_invoice_whatsapp_notification-es',
-			# template_parameters=[],
-			filename=file_name,
-			attach=file_url,
-			#message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
-			reference_doctype='Sales Invoice',
-			reference_name=doc_name,
-		).insert(ignore_permissions=True)
+		for recipient in frappe.get_all('WhatsApp Recipient', pluck='mobile_number'):
+			frappe.new_doc(
+				doctype='WhatsApp Message',
+				label=label,
+				type='Outgoing',
+				to=recipient,
+				content_type='document' if mode == 'pdf' else 'image',
+				use_template=True,
+				# message_type='Template',
+				template='sales_invoice_whatsapp_notification-es',
+				# template_parameters=[],
+				filename=file_name,
+				attach=file_url,
+				#message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
+				reference_doctype='Sales Invoice',
+				reference_name=doc_name,
+			).insert(ignore_permissions=True)
+
+			frappe.msgprint(f"Mensaje Enviado a {recipient}", alert=True, indicator='blue')
 
 	if mode == 'pdf':
 		send_whatsapp_message(pdf_bytes, f"{doc_name} - {customer_name}.pdf", f"{doc_name} PDF") # Generate and save PDF, Then return file URL and send message

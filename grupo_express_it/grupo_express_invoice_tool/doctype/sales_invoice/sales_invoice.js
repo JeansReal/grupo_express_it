@@ -46,10 +46,6 @@ frappe.ui.form.on('Sales Invoice', {
 				freeze: true,
 				freeze_message: 'Conectando con Meta...',
 				callback: (r) => {
-					frappe.show_alert({
-						message: 'Mensaje de WhatsApp enviado exitosamente.',
-						indicator: "green",
-					});
 					frm.refresh(); // This Updates the notification
 				}
 			});
