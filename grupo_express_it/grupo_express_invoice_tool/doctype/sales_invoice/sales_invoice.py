@@ -25,18 +25,15 @@ class SalesInvoice(Document):
 
 
 @frappe.whitelist(allow_guest=False)
-def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mode: str = 'pdf') -> None:
-	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={
-		#'page-width': '210mm',      # A4 default width
-    	#'page-height': f"{145 + (items_length * 17)}mm" # A4 Default Height 297mm | 130mm header/footer space
-	}, pdf_generator='wkhtmltopdf') # 130mm for 1 item
+def send_sales_invoice(doc_name: str, customer_name: str, mode: str = 'pdf') -> None:
+	pdf_bytes = frappe.get_print('Sales Invoice', doc_name, print_format='Sales Invoice WhatsApp', as_pdf=True, pdf_options={}, pdf_generator='wkhtmltopdf') # 130mm for 1 item
 
-	def save_file(file_bytes, i: int = 0) -> str:
+	def save_file(file_bytes, file_name: str) -> str:
 		file = frappe.new_doc(
 			doctype='File',
 			attached_to_doctype='Sales Invoice',
 			attached_to_name=doc_name,
-			file_name=f"{doc_name} - {customer_name}.pdf" if mode == 'pdf' else f"{doc_name}. Página {i}.jpg",  # Frappe automatically append a unique hash if file with same name exists
+			file_name=file_name,  # Frappe automatically append a unique hash if file with same name exists
 			file_type=mode, # JPG or PDF
 			is_private=False,
 			content=file_bytes
@@ -44,29 +41,28 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mod
 
 		return file.file_url
 
-	def send_whatsapp_message(file_url: str, i: int = 0) -> None:
+	def send_whatsapp_message(file_bytes, file_name: str, label: str) -> None:
+		file_url = save_file(file_bytes, file_name)
+
 		frappe.new_doc(
 			doctype='WhatsApp Message',
-			label=f"{doc_name} PDF" if mode == 'pdf' else f"{doc_name}. Página {i} JPG",
+			label=label,
 			type='Outgoing',
 			to=frappe.local.conf.whatsapp_number,  # Get from site config
 			content_type='document' if mode == 'pdf' else 'image',
 			use_template=True,
 			# message_type='Template',
 			template='sales_invoice_whatsapp_notification-es',
-			# template_parameters=[
-			# 	{"type": "text", "text": "Clothing Center"},
-			# 	{"type": "text", "text": doc_name},
-			# 	{"type": "text", "text": "C$ 1,850.00"}
-			# ],
+			# template_parameters=[],
+			filename=file_name,
 			attach=file_url,
-			# message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
+			#message=f"Hola, {customer_name}\n\n{doc_name} página {i}.\nAdjunto la Imagen",
 			reference_doctype='Sales Invoice',
 			reference_name=doc_name,
 		).insert(ignore_permissions=True)
 
 	if mode == 'pdf':
-		send_whatsapp_message(save_file(pdf_bytes)) # Generate and save PDF, Then return file URL and send message
+		send_whatsapp_message(pdf_bytes, f"{doc_name} - {customer_name}.pdf", f"{doc_name} PDF") # Generate and save PDF, Then return file URL and send message
 	elif mode == 'jpg':
 		import fitz
 		pdf = fitz.open(stream=pdf_bytes, filetype='pdf')
@@ -75,7 +71,7 @@ def send_sales_invoice(doc_name: str, items_length: int, customer_name: str, mod
 			pix = page.get_pixmap(dpi=210)
 			image_bytes = pix.tobytes('jpg')
 
-			send_whatsapp_message(save_file(image_bytes, i), i)  # Send each page as image
+			send_whatsapp_message(image_bytes, f"{doc_name}. Página {i}.jpg", f"{doc_name}. Página {i} JPG")  # Send each page as image
 	else:
 		frappe.throw('Modo no válido. Use "pdf" o "jpg".')
 

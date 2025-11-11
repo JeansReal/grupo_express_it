@@ -80,9 +80,9 @@ app_include_js = "grupo_express.bundle.js"
 # ---------------
 # Override standard doctype classes
 
-# override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
-# }
+override_doctype_class = {
+	"WhatsApp Message": "grupo_express_it.config.overrides.CustomWhatsAppMessage"
+}
 
 # Document Events
 # ---------------

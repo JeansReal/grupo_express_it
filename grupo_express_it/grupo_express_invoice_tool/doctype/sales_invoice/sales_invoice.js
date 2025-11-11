@@ -40,7 +40,6 @@ frappe.ui.form.on('Sales Invoice', {
 				method: 'grupo_express_it.grupo_express_invoice_tool.doctype.sales_invoice.sales_invoice.send_sales_invoice',
 				args: {
 					doc_name: frm.doc.name,
-					items_length: frm.doc.items.length,
 					customer_name: frm.doc.customer,
 					mode: 'pdf'
 				},
